@@ -1,0 +1,17 @@
+gen,categoria_iuis,enfermedad,herencia,ganancia_funcion
+RAG1,1,Inmunodeficiencia combinada severa T-B-NK+,AR,FALSE
+ADA,1,Inmunodeficiencia combinada severa por deficiencia de ADA,AR,FALSE
+IL2RG,1,Inmunodeficiencia combinada severa ligada al X,XL,FALSE
+CD40LG,1,Sindrome de hiper IgM ligado al X,XL,FALSE
+DOCK8,1,Deficiencia de DOCK8,AR,FALSE
+WAS,2,Sindrome de Wiskott-Aldrich,XL,FALSE
+STAT3,2,Sindrome de hiper IgE autosomico dominante,AD,FALSE
+BTK,3,Agammaglobulinemia ligada al X,XL,FALSE
+TNFRSF13B,3,Inmunodeficiencia comun variable por deficiencia de TACI,AR/AD,FALSE
+PIK3CD,3,Sindrome de PI3K delta activada (APDS1),AD,TRUE
+FOXP3,4,Sindrome IPEX,XL,FALSE
+STAT3,4,Enfermedad autoinmune multisistemica por ganancia de funcion de STAT3,AD,TRUE
+CYBB,5,Enfermedad granulomatosa cronica ligada al X,XL,FALSE
+STAT1,6,Candidiasis mucocutanea cronica por ganancia de funcion de STAT1,AD,TRUE
+STAT1,6,Susceptibilidad a micobacterias y virus por perdida de funcion de STAT1,AR,FALSE
+MEFV,7,Fiebre mediterranea familiar,AR,FALSE

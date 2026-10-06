@@ -1,0 +1,26 @@
+Package: ieiprio
+Title: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad
+Version: 0.0.0.9000
+Authors@R: 
+    person("Tu", "Nombre", email = "tu.correo@ejemplo.com",
+           role = c("aut", "cre"))
+Description: Lee archivos VCF, filtra variantes en genes de errores innatos
+    de la inmunidad segun la clasificacion IUIS, las anota con Ensembl VEP
+    y las prioriza segun modo de herencia y fenotipo clinico, generando un
+    reporte por paciente. Herramienta de apoyo e investigacion, no de
+    diagnostico.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 4.1)
+Imports: 
+    cli,
+    tibble
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+LazyData: true
+URL: https://github.com/TU_USUARIO/ieiprio
+BugReports: https://github.com/TU_USUARIO/ieiprio/issues
