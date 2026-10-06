@@ -1,3 +1,5 @@
+withr::local_options(list(rlib_message_verbosity = "quiet"))
+
 filtrado_mini <- function() {
   v <- iei_leer_vcf(fixture("mini.vcf"), sexo = c(P01 = "M", P02 = "F"))
   iei_filtrar(v, genes = "BTK", coordenadas = coords_prueba())
@@ -75,7 +77,7 @@ test_that("la cache evita consultar de nuevo", {
   expect_equal(llamadas, 1)
   expect_equal(a1$hgvs_c, a2$hgvs_c)
   expect_equal(attr(a2, "vep_release"), "999")
-  expect_message(iei_limpiar_cache(dir), "1 archivo")
+  expect_equal(length(iei_limpiar_cache(dir)), 1)
   a3 <- iei_anotar(f, cache = dir)
   expect_equal(llamadas, 2)
 })

@@ -1,3 +1,9 @@
+# ieiprio 0.0.5.9000
+
+* Nueva funcion `iei_priorizar()` que asigna puntaje, categoria (alta, media, baja), razones en texto y notas clinicas. Combina ClinVar, impacto, ganancia de funcion, frecuencia, compatibilidad con la herencia (incluye posibles heterocigotos compuestos y portadores) y fenotipo HPO o categoria IUIS. Descarta benignas y lo registra en la bitacora.
+* Nueva funcion `iei_pesos()` para ajustar los puntos.
+* Los tests de anotacion ya no imprimen mensajes.
+
 # ieiprio 0.0.4.9000
 
 * Nueva funcion `iei_anotar()` que consulta la API REST de Ensembl VEP (GRCh37 o GRCh38 segun el VCF) en lotes de hasta 200, elige un transcrito por variante (mismo gen, MANE Select, canonico, mayor impacto) y agrega consecuencia, HGVS, frecuencia maxima en gnomAD y ClinVar. Guarda una cache local y registra el release de Ensembl.
