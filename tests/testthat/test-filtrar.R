@@ -1,13 +1,3 @@
-coords_prueba <- function() {
-  tibble::tibble(
-    gen = c("GENA", "BTK", "BTK"),
-    build = c("GRCh38", "GRCh38", "GRCh37"),
-    chr = c("1", "X", "X"),
-    inicio = c(900L, 101349000L, 100604435L),
-    fin = c(3100L, 101391000L, 100641212L),
-    ensembl_id = NA_character_
-  )
-}
 vcf_mini <- function() {
   iei_leer_vcf(fixture("mini.vcf"), sexo = c(P01 = "M", P02 = "F"))
 }

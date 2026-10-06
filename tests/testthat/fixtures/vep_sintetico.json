@@ -1,0 +1,137 @@
+[
+ {
+  "input": "X 101360000 . C T . . .",
+  "id": ".",
+  "seq_region_name": "X",
+  "start": 101360000,
+  "end": 101360000,
+  "allele_string": "C/T",
+  "assembly_name": "GRCh38",
+  "most_severe_consequence": "missense_variant",
+  "colocated_variants": [
+   {
+    "id": "COSV00000001",
+    "allele_string": "COSMIC_MUTATION"
+   },
+   {
+    "id": "rs999001",
+    "allele_string": "C/T",
+    "clin_sig": [
+     "pathogenic",
+     "likely_pathogenic"
+    ],
+    "clin_sig_allele": "T:pathogenic;T:likely_pathogenic",
+    "frequencies": {
+     "T": {
+      "gnomade": 2e-06,
+      "gnomadg": 1e-05
+     }
+    }
+   }
+  ],
+  "transcript_consequences": [
+   {
+    "variant_allele": "T",
+    "gene_symbol": "BTK",
+    "transcript_id": "ENST_SINTETICO_2",
+    "impact": "MODERATE",
+    "consequence_terms": [
+     "missense_variant"
+    ],
+    "hgvsc": "ENST_SINTETICO_2:c.100C>T",
+    "hgvsp": "ENSP_SINTETICO_2:p.Arg34Trp"
+   },
+   {
+    "variant_allele": "T",
+    "gene_symbol": "BTK",
+    "transcript_id": "ENST_SINTETICO_1",
+    "canonical": 1,
+    "mane_select": "NM_SINTETICO.1",
+    "impact": "MODERATE",
+    "consequence_terms": [
+     "missense_variant"
+    ],
+    "hgvsc": "ENST_SINTETICO_1:c.1000C>T",
+    "hgvsp": "ENSP_SINTETICO_1:p.Arg334Trp"
+   },
+   {
+    "variant_allele": "T",
+    "gene_symbol": "GENOTRO",
+    "transcript_id": "ENST_OTRO",
+    "canonical": 1,
+    "impact": "MODIFIER",
+    "consequence_terms": [
+     "downstream_gene_variant"
+    ]
+   }
+  ]
+ },
+ {
+  "input": "X 101370000 . A G . . .",
+  "id": ".",
+  "seq_region_name": "X",
+  "start": 101370000,
+  "end": 101370000,
+  "allele_string": "A/G",
+  "assembly_name": "GRCh38",
+  "most_severe_consequence": "stop_gained",
+  "transcript_consequences": [
+   {
+    "variant_allele": "C",
+    "gene_symbol": "BTK",
+    "transcript_id": "ENST_OTRO_ALELO",
+    "canonical": 1,
+    "impact": "HIGH",
+    "consequence_terms": [
+     "frameshift_variant"
+    ]
+   },
+   {
+    "variant_allele": "G",
+    "gene_symbol": "BTK",
+    "transcript_id": "ENST_SINTETICO_1",
+    "canonical": 1,
+    "impact": "HIGH",
+    "consequence_terms": [
+     "stop_gained",
+     "splice_region_variant"
+    ],
+    "hgvsc": "ENST_SINTETICO_1:c.1500A>G",
+    "hgvsp": "ENSP_SINTETICO_1:p.Lys500Ter"
+   }
+  ]
+ },
+ {
+  "input": "1 1000 . A G . . .",
+  "id": ".",
+  "seq_region_name": "1",
+  "start": 1000,
+  "end": 1000,
+  "allele_string": "A/G",
+  "assembly_name": "GRCh38",
+  "most_severe_consequence": "intergenic_variant",
+  "colocated_variants": [
+   {
+    "id": "rs999002",
+    "allele_string": "A/G",
+    "clin_sig": [
+     "benign"
+    ],
+    "frequencies": {
+     "G": {
+      "gnomadg": 0.3
+     }
+    }
+   }
+  ],
+  "intergenic_consequences": [
+   {
+    "variant_allele": "G",
+    "impact": "MODIFIER",
+    "consequence_terms": [
+     "intergenic_variant"
+    ]
+   }
+  ]
+ }
+]

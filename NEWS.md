@@ -1,3 +1,9 @@
+# ieiprio 0.0.4.9000
+
+* Nueva funcion `iei_anotar()` que consulta la API REST de Ensembl VEP (GRCh37 o GRCh38 segun el VCF) en lotes de hasta 200, elige un transcrito por variante (mismo gen, MANE Select, canonico, mayor impacto) y agrega consecuencia, HGVS, frecuencia maxima en gnomAD y ClinVar. Guarda una cache local y registra el release de Ensembl.
+* Nueva funcion `iei_filtrar_frecuencia()` con umbrales por modo de herencia, que suma el paso a la bitacora.
+* Nueva funcion `iei_limpiar_cache()`.
+
 # ieiprio 0.0.3.9000
 
 * Nueva funcion `iei_filtrar()` que filtra por genotipo, por genes del panel (con margen para splicing) y por calidad, dejando una bitacora que se consulta con `iei_bitacora()`.
