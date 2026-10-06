@@ -1,3 +1,8 @@
+# ieiprio 0.0.3.9000
+
+* Nueva funcion `iei_filtrar()` que filtra por genotipo, por genes del panel (con margen para splicing) y por calidad, dejando una bitacora que se consulta con `iei_bitacora()`.
+* Nuevo dataset `genes_coordenadas` con la ubicacion de cada gen en GRCh37 y GRCh38, tomada de PanelApp.
+
 # ieiprio 0.0.2.9000
 
 * Nueva funcion `iei_leer_vcf()` que lee VCF comprimidos o no, separa sitios multialelicos, normaliza cromosomas, detecta el build (GRCh37 o GRCh38) y marca hemicigotos en el X de varones fuera de las regiones pseudoautosomicas. Escrita en R base, sin dependencias nuevas.

@@ -20,6 +20,8 @@ test_that("los alias y categorias apuntan a genes del panel", {
   expect_true(all(iuis_alias$gen %in% iuis_panel$gen))
   expect_true(all(iuis_categorias$gen %in% iuis_panel$gen))
   expect_true(all(hpo_genes$gen %in% iuis_panel$gen))
+  expect_true(all(genes_coordenadas$gen %in% iuis_panel$gen))
+  expect_true(all(genes_coordenadas$fin >= genes_coordenadas$inicio))
 })
 
 test_that("iei_panel filtra por evidencia, categoria y herencia", {

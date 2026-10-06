@@ -14,7 +14,21 @@
     "hgnc_previous_symbols": [
      "AGMX1"
     ],
-    "hgnc_symbol": "BTK"
+    "hgnc_symbol": "BTK",
+    "ensembl_genes": {
+     "GRch37": {
+      "82": {
+       "location": "X:100604435-100641212",
+       "ensembl_id": "ENSG00000010671"
+      }
+     },
+     "GRch38": {
+      "90": {
+       "location": "X:101349338-101390796",
+       "ensembl_id": "ENSG00000010671"
+      }
+     }
+    }
    },
    "entity_type": "gene",
    "entity_name": "BTK",
@@ -72,7 +86,21 @@
     "gene_symbol": "RAG1",
     "alias": [],
     "hgnc_previous_symbols": [],
-    "hgnc_symbol": "RAG1"
+    "hgnc_symbol": "RAG1",
+    "ensembl_genes": {
+     "GRch37": {
+      "82": {
+       "location": "11:36532259-36614706",
+       "ensembl_id": "ENSG00000166349"
+      }
+     },
+     "GRch38": {
+      "90": {
+       "location": "11:36510709-36593156",
+       "ensembl_id": "ENSG00000166349"
+      }
+     }
+    }
    },
    "entity_type": "gene",
    "entity_name": "RAG1",
@@ -93,7 +121,15 @@
      "GP91-PHOX"
     ],
     "hgnc_previous_symbols": [],
-    "hgnc_symbol": "CYBB"
+    "hgnc_symbol": "CYBB",
+    "ensembl_genes": {
+     "GRch38": {
+      "90": {
+       "location": "X:37780000-37813000",
+       "ensembl_id": "ENSG00000165168"
+      }
+     }
+    }
    },
    "entity_type": "gene",
    "entity_name": "CYBB",
@@ -164,7 +200,15 @@
     "gene_symbol": "GENROJO",
     "alias": [],
     "hgnc_previous_symbols": [],
-    "hgnc_symbol": "GENROJO"
+    "hgnc_symbol": "GENROJO",
+    "ensembl_genes": {
+     "GRch38": {
+      "90": {
+       "location": "no-es-una-ubicacion",
+       "ensembl_id": "X"
+      }
+     }
+    }
    },
    "entity_type": "gene",
    "entity_name": "GENROJO",

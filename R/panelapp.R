@@ -63,8 +63,42 @@
   alias <- unique(alias[toupper(alias$alias) != toupper(alias$gen), ])
   alias <- tibble::as_tibble(alias[order(alias$alias), ])
 
-  list(panel = panel, alias = alias,
+  coords <- do.call(rbind, lapply(seq_along(genes), function(i) {
+    .coordenadas_gen(gd[[i]], gen[i])
+  }))
+  if (is.null(coords)) {
+    coords <- data.frame(gen = character(0), build = character(0), chr = character(0),
+                         inicio = integer(0), fin = integer(0), ensembl_id = character(0))
+  }
+  coords <- tibble::as_tibble(coords[order(coords$build, coords$gen), ])
+
+  list(panel = panel, alias = alias, coordenadas = coords,
        version = .chr1(x$version), nombre = .chr1(x$name))
+}
+
+# Extrae las coordenadas de un gen desde gene_data$ensembl_genes, que tiene la
+# forma list(GRch37 = list(`82` = list(location = "X:1-2", ensembl_id = ...)),
+#            GRch38 = list(`90` = list(...))).
+.coordenadas_gen <- function(gd, gen) {
+  eg <- gd$ensembl_genes
+  if (is.null(eg) || length(eg) == 0 || is.na(gen)) return(NULL)
+  filas <- list()
+  for (nombre in names(eg)) {
+    build <- if (grepl("37", nombre)) "GRCh37" else if (grepl("38", nombre)) "GRCh38" else NA
+    if (is.na(build)) next
+    for (version in eg[[nombre]]) {
+      loc <- .chr1(version$location)
+      partes <- regmatches(loc, regexec("^([^:]+):([0-9]+)-([0-9]+)$", loc))[[1]]
+      if (length(partes) != 4) next
+      filas[[length(filas) + 1]] <- data.frame(
+        gen = gen, build = build, chr = .normalizar_chr(partes[2]),
+        inicio = as.integer(partes[3]), fin = as.integer(partes[4]),
+        ensembl_id = .chr1(version$ensembl_id), stringsAsFactors = FALSE
+      )
+      break
+    }
+  }
+  if (length(filas) == 0) NULL else do.call(rbind, filas)
 }
 
 # Une el panel de PanelApp con la curacion IUIS.

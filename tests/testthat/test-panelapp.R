@@ -46,4 +46,18 @@ test_that("PanelApp responde (en vivo)", {
   pa <- .panelapp_procesar(.panelapp_descargar(398, "8.78"))
   expect_equal(pa$version, "8.78")
   expect_true("BTK" %in% pa$panel$gen)
+  btk <- pa$coordenadas[pa$coordenadas$gen == "BTK", ]
+  expect_setequal(btk$build, c("GRCh37", "GRCh38"))
+  expect_true(all(btk$chr == "X"))
+})
+
+test_that("extrae coordenadas por build y descarta ubicaciones malformadas", {
+  co <- pa_mini()$coordenadas
+  expect_named(co, c("gen", "build", "chr", "inicio", "fin", "ensembl_id"))
+  btk <- co[co$gen == "BTK", ]
+  expect_setequal(btk$build, c("GRCh37", "GRCh38"))
+  expect_equal(btk$chr, c("X", "X"))
+  expect_equal(btk$inicio[btk$build == "GRCh38"], 101349338L)
+  expect_false("GENROJO" %in% co$gen)
+  expect_false("STAT1" %in% co$gen)
 })

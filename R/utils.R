@@ -9,3 +9,5 @@
 .agente <- function(req) {
   httr2::req_user_agent(req, "ieiprio (https://github.com/Gentlenmoron/ieiprio)")
 }
+
+`%||%` <- function(a, b) if (is.null(a)) b else a

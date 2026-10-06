@@ -43,6 +43,13 @@ if (length(faltan) > 0) {
 
 iuis_panel      <- .construir_panel(pa, curado)
 iuis_alias      <- pa$alias
+genes_coordenadas <- pa$coordenadas
+sin_coord <- setdiff(iuis_panel$gen, genes_coordenadas$gen[genes_coordenadas$build == "GRCh38"])
+if (length(sin_coord) > 0) {
+  message(length(sin_coord), " genes sin coordenadas GRCh38: ",
+          paste(utils::head(sin_coord, 10), collapse = ", "),
+          if (length(sin_coord) > 10) "...")
+}
 iuis_categorias <- .construir_categorias(curado, iuis_panel$gen)
 
 # ---- HPO --------------------------------------------------------------------
@@ -65,7 +72,9 @@ fuentes_datos <- tibble::tibble(
 )
 
 usethis::use_data(iuis_panel, iuis_alias, iuis_categorias, hpo_genes,
-                  fuentes_datos, overwrite = TRUE)
+                  genes_coordenadas, fuentes_datos, overwrite = TRUE)
 
 message("Listo. ", nrow(iuis_panel), " genes, ", nrow(iuis_alias), " alias, ",
-        nrow(hpo_genes), " pares gen fenotipo.")
+        nrow(hpo_genes), " pares gen fenotipo, ",
+        sum(genes_coordenadas$build == "GRCh38"), " genes con coordenadas GRCh38 y ",
+        sum(genes_coordenadas$build == "GRCh37"), " con GRCh37.")

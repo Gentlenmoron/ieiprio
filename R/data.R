@@ -47,3 +47,14 @@
 #' @format Un tibble con columnas `fuente`, `detalle`, `version`, `url`,
 #'   `fecha` y `md5`.
 "fuentes_datos"
+
+#' Coordenadas de los genes del panel
+#'
+#' Ubicacion de cada gen en GRCh37 (Ensembl 82) y GRCh38 (Ensembl 90) segun
+#' PanelApp. La usa [iei_filtrar()] para quedarse con variantes dentro de
+#' genes del panel.
+#'
+#' @format Un tibble con columnas `gen`, `build`, `chr` (sin prefijo chr),
+#'   `inicio`, `fin` y `ensembl_id`.
+#' @source <https://panelapp.genomicsengland.co.uk/panels/398/>
+"genes_coordenadas"
