@@ -3,4 +3,5 @@
 export(iei_actualizar_panel)
 export(iei_buscar_gen)
 export(iei_fuentes)
+export(iei_leer_vcf)
 export(iei_panel)
