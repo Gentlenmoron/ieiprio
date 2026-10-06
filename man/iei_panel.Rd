@@ -2,26 +2,30 @@
 % Please edit documentation in R/panel.R
 \name{iei_panel}
 \alias{iei_panel}
-\title{Consultar el panel de genes IUIS}
+\title{Consultar el panel de genes}
 \usage{
-iei_panel(categoria = NULL, herencia = NULL)
+iei_panel(categoria = NULL, herencia = NULL, evidencia = "verde")
 }
 \arguments{
-\item{categoria}{Vector de enteros entre 1 y 10, o \code{NULL} para todas.}
+\item{categoria}{Vector de enteros entre 1 y 10, o \code{NULL} para todas.
+Solo devuelve genes con categoria IUIS curada.}
 
-\item{herencia}{Vector de modos de herencia (\code{"AR"}, \code{"AD"}, \code{"XL"},
-\code{"XLR"}). Un gen marcado como \code{"AR/AD"} aparece si se pide \code{"AR"} o
-\code{"AD"}. \code{NULL} para todos.}
+\item{herencia}{Vector con \code{"AR"}, \code{"AD"}, \code{"XL"} o \code{"MT"}, o \code{NULL} para
+todos. Un gen \code{"AR/AD"} aparece si se pide \code{"AR"} o \code{"AD"}.}
+
+\item{evidencia}{Niveles de evidencia de PanelApp a incluir: \code{"verde"},
+\code{"ambar"}, \code{"rojo"}. Por defecto solo verde, que son los genes con
+asociacion diagnostica establecida.}
 }
 \value{
 Un tibble con la estructura de \link{iuis_panel}.
 }
 \description{
-Devuelve el panel completo o filtrado por categoria IUIS y modo de
-herencia.
+Devuelve el panel de genes de errores innatos de la inmunidad, filtrado
+por nivel de evidencia, categoria IUIS y modo de herencia.
 }
 \examples{
 iei_panel()
 iei_panel(categoria = 3)
-iei_panel(herencia = "XL")
+iei_panel(herencia = "XL", evidencia = c("verde", "ambar"))
 }

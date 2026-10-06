@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Tu Nombre \email{tu.correo@ejemplo.com}
 
+Authors:
+\itemize{
+  \item Tu Nombre \email{tu.correo@ejemplo.com}
+}
+
 }
 \keyword{internal}

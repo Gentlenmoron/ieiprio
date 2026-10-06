@@ -2,7 +2,7 @@
 % Please edit documentation in R/panel.R
 \name{iei_buscar_gen}
 \alias{iei_buscar_gen}
-\title{Buscar genes en el panel IUIS}
+\title{Buscar genes en el panel}
 \usage{
 iei_buscar_gen(genes)
 }
@@ -10,14 +10,13 @@ iei_buscar_gen(genes)
 \item{genes}{Vector de caracteres con simbolos o alias.}
 }
 \value{
-Un tibble con la columna \code{consulta} (lo que se busco) seguida de
-las columnas de \link{iuis_panel}. Un gen con varias enfermedades devuelve
-varias filas. Los genes que no estan en el panel se omiten con un aviso.
+Un tibble con la columna \code{consulta} seguida de las columnas de
+\link{iuis_panel}. Los genes que no estan en el panel se omiten con un aviso.
 }
 \description{
-Busca uno o mas genes por su simbolo oficial o por un alias conocido
-(por ejemplo \code{"TACI"} para TNFRSF13B). La busqueda no distingue
-mayusculas de minusculas.
+Busca uno o mas genes por su simbolo oficial o por un alias o simbolo
+anterior (por ejemplo \code{"TACI"} para TNFRSF13B). No distingue mayusculas.
+Busca en todo el panel, sin filtrar por evidencia.
 }
 \examples{
 iei_buscar_gen("BTK")

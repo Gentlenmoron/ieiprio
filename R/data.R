@@ -1,35 +1,49 @@
-#' Panel de genes de errores innatos de la inmunidad (IUIS)
+#' Panel de genes de errores innatos de la inmunidad
 #'
-#' Genes asociados a errores innatos de la inmunidad segun la clasificacion
-#' de la International Union of Immunological Societies (IUIS). La version
-#' actual es un panel semilla para desarrollo; se reemplazara por la
-#' clasificacion IUIS 2024 completa.
+#' Genes del panel 398 de PanelApp (Genomics England), "Primary
+#' immunodeficiency or monogenic inflammatory bowel disease", en la version
+#' indicada en [iei_fuentes()], unidos a una curacion propia de categorias
+#' IUIS. Se genera con `data-raw/construir_datos.R`.
 #'
-#' Un gen puede aparecer en mas de una fila si causa enfermedades distintas
-#' segun el modo de herencia o el mecanismo (por ejemplo STAT1).
-#'
-#' @format Un tibble con una fila por combinacion de gen y enfermedad:
+#' @format Un tibble con una fila por gen:
 #' \describe{
-#'   \item{gen}{Simbolo oficial HGNC.}
-#'   \item{categoria_iuis}{Categoria IUIS, entero de 1 a 10.}
-#'   \item{categoria_nombre}{Nombre de la categoria.}
-#'   \item{enfermedad}{Enfermedad asociada.}
-#'   \item{herencia}{Modo de herencia: AR, AD, XL, XLR o AR/AD.}
-#'   \item{ganancia_funcion}{`TRUE` si el mecanismo es ganancia de funcion.}
+#'   \item{gen}{Simbolo HGNC.}
+#'   \item{hgnc_id}{Identificador HGNC.}
+#'   \item{herencia}{AD, AR, AR/AD, XL, MT o NA.}
+#'   \item{herencia_panelapp}{Texto original de PanelApp.}
+#'   \item{evidencia}{verde, ambar o rojo segun PanelApp.}
+#'   \item{fenotipos}{Fenotipos listados en PanelApp, separados por punto y coma.}
+#'   \item{categorias_iuis}{Categorias IUIS curadas, separadas por punto y coma. NA si no estan curadas.}
+#'   \item{ganancia_funcion}{`TRUE` si el gen tiene una enfermedad por ganancia de funcion.}
 #' }
-#' @source Clasificacion IUIS de errores innatos de la inmunidad,
-#'   Journal of Clinical Immunology.
+#' @source <https://panelapp.genomicsengland.co.uk/panels/398/>
 "iuis_panel"
 
-#' Alias de simbolos de genes del panel
+#' Alias y simbolos anteriores de los genes del panel
 #'
-#' Tabla para traducir nombres antiguos o alternativos al simbolo oficial
-#' HGNC usado en [iuis_panel].
-#'
-#' @format Un tibble con dos columnas:
-#' \describe{
-#'   \item{alias}{Nombre alternativo o anterior.}
-#'   \item{gen}{Simbolo oficial HGNC.}
-#' }
-#' @source HUGO Gene Nomenclature Committee, <https://www.genenames.org>.
+#' @format Un tibble con columnas `alias` y `gen` (simbolo oficial).
+#' @source PanelApp, que a su vez toma los datos de HGNC.
 "iuis_alias"
+
+#' Categorias IUIS de los genes del panel
+#'
+#' Curacion manual de la clasificacion IUIS de errores innatos de la
+#' inmunidad. Un gen puede estar en mas de una categoria.
+#'
+#' @format Un tibble con columnas `gen`, `categoria_iuis` (1 a 10) y
+#'   `categoria_nombre`.
+#' @source Clasificacion IUIS, Journal of Clinical Immunology.
+"iuis_categorias"
+
+#' Fenotipos HPO de los genes del panel
+#'
+#' @format Un tibble con columnas `gen`, `hpo_id` y `hpo_nombre`.
+#' @source Human Phenotype Ontology, archivo genes_to_phenotype.txt,
+#'   <https://hpo.jax.org>.
+"hpo_genes"
+
+#' Registro de fuentes de los datos
+#'
+#' @format Un tibble con columnas `fuente`, `detalle`, `version`, `url`,
+#'   `fecha` y `md5`.
+"fuentes_datos"

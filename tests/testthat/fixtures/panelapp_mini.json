@@ -1,0 +1,180 @@
+{
+ "id": 398,
+ "name": "Primary immunodeficiency or monogenic inflammatory bowel disease",
+ "version": "8.78",
+ "genes": [
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:1133",
+    "gene_symbol": "BTK",
+    "alias": [
+     "ATK",
+     "XLA"
+    ],
+    "hgnc_previous_symbols": [
+     "AGMX1"
+    ],
+    "hgnc_symbol": "BTK"
+   },
+   "entity_type": "gene",
+   "entity_name": "BTK",
+   "confidence_level": "3",
+   "mode_of_inheritance": "X-LINKED: hemizygous mutation in males, biallelic mutations in females",
+   "phenotypes": [
+    "Agammaglobulinaemia, X-linked"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:18153",
+    "gene_symbol": "TNFRSF13B",
+    "alias": [
+     "TACI",
+     "CD267"
+    ],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "TNFRSF13B"
+   },
+   "entity_type": "gene",
+   "entity_name": "TNFRSF13B",
+   "confidence_level": "3",
+   "mode_of_inheritance": "BOTH monoallelic and biallelic, autosomal or pseudoautosomal",
+   "phenotypes": [
+    "Immunodeficiency, common variable, 2"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:11362",
+    "gene_symbol": "STAT1",
+    "alias": [],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "STAT1"
+   },
+   "entity_type": "gene",
+   "entity_name": "STAT1",
+   "confidence_level": "3",
+   "mode_of_inheritance": "BOTH monoallelic and biallelic, autosomal or pseudoautosomal",
+   "phenotypes": [
+    "Candidiasis, familial, 7",
+    "Immunodeficiency 31B"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:9831",
+    "gene_symbol": "RAG1",
+    "alias": [],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "RAG1"
+   },
+   "entity_type": "gene",
+   "entity_name": "RAG1",
+   "confidence_level": "3",
+   "mode_of_inheritance": "BIALLELIC, autosomal or pseudoautosomal",
+   "phenotypes": [
+    "Severe combined immunodeficiency, B cell-negative"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:2578",
+    "gene_symbol": "CYBB",
+    "alias": [
+     "NOX2",
+     "GP91-PHOX"
+    ],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "CYBB"
+   },
+   "entity_type": "gene",
+   "entity_name": "CYBB",
+   "confidence_level": "3",
+   "mode_of_inheritance": "X-LINKED: hemizygous mutation in males, biallelic mutations in females",
+   "phenotypes": [
+    "Chronic granulomatous disease, X-linked"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:6010",
+    "gene_symbol": "IL2RG",
+    "alias": [
+     "CD132"
+    ],
+    "hgnc_previous_symbols": []
+   },
+   "entity_type": "gene",
+   "entity_name": "IL2RG",
+   "confidence_level": "3",
+   "mode_of_inheritance": "X-LINKED: hemizygous mutation in males, biallelic mutations in females",
+   "phenotypes": [
+    "Severe combined immunodeficiency, X-linked"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:8977",
+    "gene_symbol": "PIK3CD",
+    "alias": [],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "PIK3CD"
+   },
+   "entity_type": "gene",
+   "entity_name": "PIK3CD",
+   "confidence_level": "3",
+   "mode_of_inheritance": "MONOALLELIC, autosomal or pseudoautosomal, NOT imprinted",
+   "phenotypes": [
+    "Activated PI3K-delta syndrome"
+   ],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:13177",
+    "gene_symbol": "IKZF2",
+    "alias": [],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "IKZF2"
+   },
+   "entity_type": "gene",
+   "entity_name": "IKZF2",
+   "confidence_level": "2",
+   "mode_of_inheritance": "MONOALLELIC, autosomal or pseudoautosomal, imprinted status unknown",
+   "phenotypes": [],
+   "evidence": [],
+   "tags": []
+  },
+  {
+   "gene_data": {
+    "hgnc_id": "HGNC:0",
+    "gene_symbol": "GENROJO",
+    "alias": [],
+    "hgnc_previous_symbols": [],
+    "hgnc_symbol": "GENROJO"
+   },
+   "entity_type": "gene",
+   "entity_name": "GENROJO",
+   "confidence_level": "1",
+   "mode_of_inheritance": "Unknown",
+   "phenotypes": [
+    "Fenotipo de prueba"
+   ],
+   "evidence": [],
+   "tags": []
+  }
+ ]
+}

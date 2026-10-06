@@ -3,33 +3,30 @@
 \docType{data}
 \name{iuis_panel}
 \alias{iuis_panel}
-\title{Panel de genes de errores innatos de la inmunidad (IUIS)}
+\title{Panel de genes de errores innatos de la inmunidad}
 \format{
-Un tibble con una fila por combinacion de gen y enfermedad:
+Un tibble con una fila por gen:
 \describe{
-\item{gen}{Simbolo oficial HGNC.}
-\item{categoria_iuis}{Categoria IUIS, entero de 1 a 10.}
-\item{categoria_nombre}{Nombre de la categoria.}
-\item{enfermedad}{Enfermedad asociada.}
-\item{herencia}{Modo de herencia: AR, AD, XL, XLR o AR/AD.}
-\item{ganancia_funcion}{\code{TRUE} si el mecanismo es ganancia de funcion.}
+\item{gen}{Simbolo HGNC.}
+\item{hgnc_id}{Identificador HGNC.}
+\item{herencia}{AD, AR, AR/AD, XL, MT o NA.}
+\item{herencia_panelapp}{Texto original de PanelApp.}
+\item{evidencia}{verde, ambar o rojo segun PanelApp.}
+\item{fenotipos}{Fenotipos listados en PanelApp, separados por punto y coma.}
+\item{categorias_iuis}{Categorias IUIS curadas, separadas por punto y coma. NA si no estan curadas.}
+\item{ganancia_funcion}{\code{TRUE} si el gen tiene una enfermedad por ganancia de funcion.}
 }
 }
 \source{
-Clasificacion IUIS de errores innatos de la inmunidad,
-Journal of Clinical Immunology.
+\url{https://panelapp.genomicsengland.co.uk/panels/398/}
 }
 \usage{
 iuis_panel
 }
 \description{
-Genes asociados a errores innatos de la inmunidad segun la clasificacion
-de la International Union of Immunological Societies (IUIS). La version
-actual es un panel semilla para desarrollo; se reemplazara por la
-clasificacion IUIS 2024 completa.
-}
-\details{
-Un gen puede aparecer en mas de una fila si causa enfermedades distintas
-segun el modo de herencia o el mecanismo (por ejemplo STAT1).
+Genes del panel 398 de PanelApp (Genomics England), "Primary
+immunodeficiency or monogenic inflammatory bowel disease", en la version
+indicada en \code{\link[=iei_fuentes]{iei_fuentes()}}, unidos a una curacion propia de categorias
+IUIS. Se genera con \code{data-raw/construir_datos.R}.
 }
 \keyword{datasets}

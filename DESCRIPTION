@@ -1,6 +1,6 @@
 Package: ieiprio
 Title: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: 
     person("Tu", "Nombre", email = "tu.correo@ejemplo.com",
            role = c("aut", "cre"))
@@ -12,11 +12,12 @@ Description: Lee archivos VCF, filtra variantes en genes de errores innatos
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.1)
 Imports: 
     cli,
+    httr2,
+    jsonlite,
     tibble
 Suggests: 
     testthat (>= 3.0.0)
@@ -24,3 +25,4 @@ Config/testthat/edition: 3
 LazyData: true
 URL: https://github.com/TU_USUARIO/ieiprio
 BugReports: https://github.com/TU_USUARIO/ieiprio/issues
+Config/roxygen2/version: 8.1.0

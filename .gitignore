@@ -5,6 +5,4 @@
 docs/
 data-raw/*.xlsx
 data-raw/hgnc_complete_set.txt
-.httr-oauth
-.DS_Store
-.quarto
+data-raw/crudos/

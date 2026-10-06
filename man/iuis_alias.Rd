@@ -3,22 +3,17 @@
 \docType{data}
 \name{iuis_alias}
 \alias{iuis_alias}
-\title{Alias de simbolos de genes del panel}
+\title{Alias y simbolos anteriores de los genes del panel}
 \format{
-Un tibble con dos columnas:
-\describe{
-\item{alias}{Nombre alternativo o anterior.}
-\item{gen}{Simbolo oficial HGNC.}
-}
+Un tibble con columnas \code{alias} y \code{gen} (simbolo oficial).
 }
 \source{
-HUGO Gene Nomenclature Committee, \url{https://www.genenames.org}.
+PanelApp, que a su vez toma los datos de HGNC.
 }
 \usage{
 iuis_alias
 }
 \description{
-Tabla para traducir nombres antiguos o alternativos al simbolo oficial
-HGNC usado en \link{iuis_panel}.
+Alias y simbolos anteriores de los genes del panel
 }
 \keyword{datasets}
