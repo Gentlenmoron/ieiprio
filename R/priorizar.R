@@ -40,7 +40,8 @@ iei_pesos <- function() {
 #' * **Herencia.** Genotipo compatible con el modo del gen suma 2. En genes
 #'   autosomicos recesivos, dos heterocigotos en el mismo gen y la misma
 #'   muestra se marcan como posible heterocigoto compuesto y suman 2; un
-#'   heterocigoto solo resta 2 y se marca como portador.
+#'   heterocigoto solo resta 2, se marca como portador y nunca queda en
+#'   prioridad alta, aunque el fenotipo encaje.
 #' * **Fenotipo.** Proporcion de los terminos HPO del paciente presentes en
 #'   el gen, escalada de 0 a 3. O 3 puntos si el gen esta en la `categoria`
 #'   IUIS indicada.
@@ -54,8 +55,12 @@ iei_pesos <- function() {
 #' @param panel,hpo,categorias Tablas de referencia. Por defecto los datos
 #'   del paquete.
 #'
-#' @return La tabla con las columnas `puntaje`, `categoria`, `razones` y
-#'   `nota`, ordenada por muestra y puntaje.
+#' @return La tabla con el desglose del puntaje (`p_clinvar`, `p_impacto`,
+#'   `p_frecuencia`, `p_herencia`, `p_fenotipo`), el `puntaje` total, la
+#'   `categoria`, las `razones`, una `nota` clinica y `acmg`, con los
+#'   criterios ACMG/AMP sugeridos (PVS1, PM2_Supporting, PM3, PP4, BA1).
+#'   Los criterios son orientativos y deben ser revisados por un
+#'   especialista. Ordenada por muestra y puntaje.
 #' @export
 #' @examples
 #' \dontrun{
@@ -75,23 +80,27 @@ iei_priorizar <- function(x, fenotipo = NULL, categoria = NULL, pesos = iei_peso
     cli::cli_abort("{.arg fenotipo} debe tener terminos HPO como {.val HP:0004313}.")
   }
   pesos <- utils::modifyList(iei_pesos(), pesos)
-  atributos <- attributes(x)[c("build", "ieiprio_bitacora", "vep_release")]
+  a <- .attrs_ieiprio(x)
 
   # ClinVar: descartar benignas
   cv <- .clasificar_clinvar(x$clinvar)
   benigna <- !is.na(cv) & cv == "benigna"
   x <- x[!benigna, ]
   cv <- cv[!benigna]
-  b <- atributos$ieiprio_bitacora
-  if (!is.null(b)) {
-    b <- rbind(b, tibble::tibble(paso = "ClinVar benigna", filas = nrow(x),
-                                 descartadas = sum(benigna)))
+  if (!is.null(a$ieiprio_bitacora)) {
+    a$ieiprio_bitacora <- rbind(a$ieiprio_bitacora,
+                                tibble::tibble(paso = "ClinVar benigna", filas = nrow(x),
+                                               descartadas = sum(benigna)))
   }
+  a$ieiprio_fenotipo <- fenotipo
+  a$ieiprio_categoria <- categoria
+  a$ieiprio_pesos <- pesos
 
   if (nrow(x) == 0) {
-    x$puntaje <- numeric(0); x$categoria <- character(0)
-    x$razones <- character(0); x$nota <- character(0)
-    return(.restaurar_atributos(x, atributos$build, b, atributos$vep_release %||% NA_character_))
+    for (v in c("p_clinvar", "p_impacto", "p_frecuencia", "p_herencia", "p_fenotipo", "puntaje"))
+      x[[v]] <- numeric(0)
+    for (v in c("categoria", "razones", "nota", "acmg")) x[[v]] <- character(0)
+    return(.poner_attrs(x, a))
   }
 
   info <- panel[match(x$gen, panel$gen), ]
@@ -132,14 +141,42 @@ iei_priorizar <- function(x, fenotipo = NULL, categoria = NULL, pesos = iei_peso
   razones <- gsub("^; |; $", "", razones)
   razones[razones == ""] <- "sin evidencia a favor"
 
+  pts <- function(...) Reduce(`+`, lapply(list(...), function(n) partes[[n]]$puntos))
+  x$p_clinvar <- pts("clinvar_p", "clinvar_c")
+  x$p_impacto <- pts("alto", "moderado")
+  x$p_frecuencia <- pts("gnomad")
+  x$p_herencia <- pts("herencia", "portador")
+  x$p_fenotipo <- pts("fenotipo")
   x$puntaje <- puntaje
   x$categoria <- ifelse(puntaje >= pesos$corte_alta, "alta",
                         ifelse(puntaje >= pesos$corte_media, "media", "baja"))
+  # Un portador en gen recesivo no explica la enfermedad por si solo.
+  tope <- h$portador_ar & x$categoria == "alta"
+  x$categoria[tope] <- "media"
+  razones[tope] <- paste0(razones[tope], "; prioridad limitada a media por ser portador")
   x$razones <- razones
   x$nota <- ifelse(nota == "", NA_character_, nota)
+  x$acmg <- .acmg_sugeridos(x, gof, h$compuesto, x$p_fenotipo)
 
   x <- x[order(x$muestra, -x$puntaje, x$gen), ]
-  .restaurar_atributos(x, atributos$build, b, atributos$vep_release %||% NA_character_)
+  .poner_attrs(x, a)
+}
+
+# Criterios ACMG/AMP que se pueden sugerir con los datos disponibles.
+# Siempre requieren revision por un especialista.
+.acmg_sugeridos <- function(x, gof, compuesto, p_fenotipo) {
+  cons <- ifelse(is.na(x$consecuencia), "", x$consecuencia)
+  nula <- grepl("stop_gained|frameshift|splice_acceptor|splice_donor|start_lost", cons)
+  af <- x$af_gnomad
+  crit <- cbind(
+    ifelse(nula & !gof, "PVS1", ""),
+    ifelse(is.na(af) | af < 1e-4, "PM2_Supporting", ""),
+    ifelse(compuesto, "PM3", ""),
+    ifelse(p_fenotipo >= 2, "PP4", ""),
+    ifelse(!is.na(af) & af > 0.05, "BA1", "")
+  )
+  out <- apply(crit, 1, function(f) paste(f[f != ""], collapse = ", "))
+  ifelse(out == "", NA_character_, out)
 }
 
 # Resume la significancia de ClinVar en: patogenica, conflicto, benigna, otra o NA.
@@ -194,7 +231,8 @@ iei_priorizar <- function(x, fenotipo = NULL, categoria = NULL, pesos = iei_peso
   sin_h <- h == ""
   nota[sin_h & nota == ""] <- "Gen sin modo de herencia conocido en PanelApp."
 
-  list(compatible = compatible, portador_ar = portador_ar, texto = texto, nota = nota)
+  list(compatible = compatible, portador_ar = portador_ar, compuesto = comp,
+       texto = texto, nota = nota)
 }
 
 .puntaje_fenotipo <- function(genes, fenotipo, categoria, hpo, categorias, maximo) {

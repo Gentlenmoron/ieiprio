@@ -52,7 +52,10 @@
      "missense_variant"
     ],
     "hgvsc": "ENST_SINTETICO_1:c.1000C>T",
-    "hgvsp": "ENSP_SINTETICO_1:p.Arg334Trp"
+    "hgvsp": "ENSP_SINTETICO_1:p.Arg334Trp",
+    "protein_id": "ENSP_SINTETICO_1",
+    "protein_start": 334,
+    "protein_end": 334
    },
    {
     "variant_allele": "T",
@@ -97,7 +100,10 @@
      "splice_region_variant"
     ],
     "hgvsc": "ENST_SINTETICO_1:c.1500A>G",
-    "hgvsp": "ENSP_SINTETICO_1:p.Lys500Ter"
+    "hgvsp": "ENSP_SINTETICO_1:p.Lys500Ter",
+    "protein_id": "ENSP_SINTETICO_1",
+    "protein_start": 500,
+    "protein_end": 500
    }
   ]
  },

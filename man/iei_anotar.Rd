@@ -15,8 +15,8 @@ iei_anotar(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 200)
 }
 \value{
 La tabla \code{x} con las columnas \code{transcrito}, \code{mane},
-\code{consecuencia}, \code{impacto}, \code{hgvs_c}, \code{hgvs_p}, \code{af_gnomad} y
-\code{clinvar}. Si la columna \code{id} estaba vacia, se completa con el rsID de
+\code{consecuencia}, \code{impacto}, \code{hgvs_c}, \code{hgvs_p}, \code{af_gnomad}, \code{clinvar},
+\code{proteina_id} y \code{pos_proteina}. Si la columna \code{id} estaba vacia, se completa con el rsID de
 Ensembl. Conserva la bitacora y agrega el atributo \code{vep_release}.
 }
 \description{

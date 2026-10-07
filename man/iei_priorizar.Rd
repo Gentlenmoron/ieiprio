@@ -29,8 +29,12 @@ iei_priorizar(
 del paquete.}
 }
 \value{
-La tabla con las columnas \code{puntaje}, \code{categoria}, \code{razones} y
-\code{nota}, ordenada por muestra y puntaje.
+La tabla con el desglose del puntaje (\code{p_clinvar}, \code{p_impacto},
+\code{p_frecuencia}, \code{p_herencia}, \code{p_fenotipo}), el \code{puntaje} total, la
+\code{categoria}, las \code{razones}, una \code{nota} clinica y \code{acmg}, con los
+criterios ACMG/AMP sugeridos (PVS1, PM2_Supporting, PM3, PP4, BA1).
+Los criterios son orientativos y deben ser revisados por un
+especialista. Ordenada por muestra y puntaje.
 }
 \description{
 Asigna a cada variante un puntaje y una categoria (alta, media o baja), con
@@ -50,7 +54,8 @@ ganancia de funcion una missense cuenta como impacto alto.
 \item \strong{Herencia.} Genotipo compatible con el modo del gen suma 2. En genes
 autosomicos recesivos, dos heterocigotos en el mismo gen y la misma
 muestra se marcan como posible heterocigoto compuesto y suman 2; un
-heterocigoto solo resta 2 y se marca como portador.
+heterocigoto solo resta 2, se marca como portador y nunca queda en
+prioridad alta, aunque el fenotipo encaje.
 \item \strong{Fenotipo.} Proporcion de los terminos HPO del paciente presentes en
 el gen, escalada de 0 a 3. O 3 puntos si el gen esta en la \code{categoria}
 IUIS indicada.

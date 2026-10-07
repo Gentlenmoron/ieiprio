@@ -1,3 +1,11 @@
+# ieiprio 0.0.6.9000
+
+* Nueva funcion `iei_reporte()` que genera un HTML autocontenido por paciente, sin Quarto ni otras dependencias. Incluye resumen, control de calidad de la muestra (histogramas de DP, GQ y fraccion alelica, het/hom, Ti/Tv), verificacion de sexo, tabla priorizada con criterios ACMG sugeridos, grafico del desglose del puntaje, fichas con diagrama de la proteina y sus dominios Pfam, matriz de coincidencia con el fenotipo, embudo del filtrado, parametros del analisis con la huella md5 del VCF, fuentes con versiones y limitaciones.
+* Nueva funcion `iei_verificar_sexo()` que estima el sexo desde el cromosoma X y lo compara con el declarado.
+* `iei_priorizar()` agrega el desglose del puntaje (`p_clinvar`, `p_impacto`, `p_frecuencia`, `p_herencia`, `p_fenotipo`) y la columna `acmg` con criterios sugeridos (PVS1, PM2_Supporting, PM3, PP4, BA1). Un portador en gen recesivo nunca queda en prioridad alta.
+* `iei_anotar()` agrega `proteina_id` y `pos_proteina`. La cache cambia de version y la anterior se ignora.
+* `iei_leer_vcf()` guarda el sexo declarado y la huella md5 del VCF, y `iei_filtrar()` el control de calidad y los parametros usados. Todo viaja hasta el reporte.
+
 # ieiprio 0.0.5.9000
 
 * Nueva funcion `iei_priorizar()` que asigna puntaje, categoria (alta, media, baja), razones en texto y notas clinicas. Combina ClinVar, impacto, ganancia de funcion, frecuencia, compatibilidad con la herencia (incluye posibles heterocigotos compuestos y portadores) y fenotipo HPO o categoria IUIS. Descarta benignas y lo registra en la bitacora.

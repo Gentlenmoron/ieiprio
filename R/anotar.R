@@ -21,8 +21,8 @@
 #' @param lote Variantes por consulta. La API acepta hasta 200.
 #'
 #' @return La tabla `x` con las columnas `transcrito`, `mane`,
-#'   `consecuencia`, `impacto`, `hgvs_c`, `hgvs_p`, `af_gnomad` y
-#'   `clinvar`. Si la columna `id` estaba vacia, se completa con el rsID de
+#'   `consecuencia`, `impacto`, `hgvs_c`, `hgvs_p`, `af_gnomad`, `clinvar`,
+#'   `proteina_id` y `pos_proteina`. Si la columna `id` estaba vacia, se completa con el rsID de
 #'   Ensembl. Conserva la bitacora y agrega el atributo `vep_release`.
 #' @export
 #' @examples
@@ -38,12 +38,14 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
   build <- attr(x, "build") %||% unique(x$build)[1]
   if (is.null(build) || is.na(build)) cli::cli_abort("No se sabe el build de {.arg x}.")
 
-  bitacora <- attr(x, "ieiprio_bitacora")
+  a <- .attrs_ieiprio(x)
   vacias <- c("transcrito", "mane", "consecuencia", "impacto", "hgvs_c",
-              "hgvs_p", "af_gnomad", "clinvar")
+              "hgvs_p", "af_gnomad", "clinvar", "proteina_id", "pos_proteina")
   if (nrow(x) == 0) {
-    for (v in vacias) x[[v]] <- if (v == "af_gnomad") numeric(0) else character(0)
-    return(.restaurar_atributos(x, build, bitacora, NA_character_))
+    for (v in vacias) x[[v]] <- if (v %in% c("af_gnomad", "pos_proteina")) numeric(0) else character(0)
+    x <- .poner_attrs(x, a)
+    attr(x, "vep_release") <- NA_character_
+    return(x)
   }
 
   clave <- paste(build, x$chr, x$pos, x$ref, x$alt, sep = "_")
@@ -78,12 +80,8 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
   for (v in vacias) x[[v]] <- anot[[v]]
   if ("id" %in% names(x)) x$id <- ifelse(is.na(x$id), anot$rsid, x$id)
 
-  .restaurar_atributos(x, build, bitacora, release)
-}
-
-.restaurar_atributos <- function(x, build, bitacora, release) {
+  x <- .poner_attrs(x, a)
   attr(x, "build") <- build
-  if (!is.null(bitacora)) attr(x, "ieiprio_bitacora") <- bitacora
   attr(x, "vep_release") <- release
   x
 }
@@ -92,7 +90,7 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
 .vep_consultar <- function(entrada, build) {
   req <- httr2::request(.vep_servidor(build)) |>
     httr2::req_url_path_append("vep", "homo_sapiens", "region") |>
-    httr2::req_url_query(canonical = 1, hgvs = 1, mane = 1,
+    httr2::req_url_query(canonical = 1, hgvs = 1, mane = 1, protein = 1,
                          af_gnomade = 1, af_gnomadg = 1) |>
     httr2::req_headers(Accept = "application/json") |>
     httr2::req_body_json(list(variants = as.list(entrada))) |>
@@ -152,7 +150,8 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
         mane = NA_character_, canonico = FALSE,
         consecuencia = .chr1(o$most_severe_consequence), impacto = NA_character_,
         hgvs_c = NA_character_, hgvs_p = NA_character_,
-        af_gnomad = af, clinvar = clinvar, rsid = rsid, stringsAsFactors = FALSE
+        af_gnomad = af, clinvar = clinvar, rsid = rsid,
+        proteina_id = NA_character_, pos_proteina = NA_real_, stringsAsFactors = FALSE
       ))
     }
     do.call(rbind, lapply(tc, function(t) data.frame(
@@ -164,7 +163,10 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
       consecuencia = paste(unlist(t$consequence_terms), collapse = "&"),
       impacto = .chr1(t$impact),
       hgvs_c = .chr1(t$hgvsc), hgvs_p = .chr1(t$hgvsp),
-      af_gnomad = af, clinvar = clinvar, rsid = rsid, stringsAsFactors = FALSE
+      af_gnomad = af, clinvar = clinvar, rsid = rsid,
+      proteina_id = .chr1(t$protein_id),
+      pos_proteina = suppressWarnings(as.numeric(.chr1(t$protein_start))),
+      stringsAsFactors = FALSE
     )))
   })
   out <- do.call(rbind, filas)
@@ -192,7 +194,8 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
              consecuencia = rep(NA_character_, n), impacto = rep(NA_character_, n),
              hgvs_c = rep(NA_character_, n), hgvs_p = rep(NA_character_, n),
              af_gnomad = rep(NA_real_, n), clinvar = rep(NA_character_, n),
-             rsid = rep(NA_character_, n), stringsAsFactors = FALSE)
+             rsid = rep(NA_character_, n), proteina_id = rep(NA_character_, n),
+             pos_proteina = rep(NA_real_, n), stringsAsFactors = FALSE)
 }
 
 # Elige un transcrito por fila: mismo gen, MANE, canonico, mayor impacto.
@@ -211,7 +214,9 @@ iei_anotar <- function(x, cache = tools::R_user_dir("ieiprio", "cache"), lote = 
   tabla[filas, , drop = FALSE]
 }
 
-.cache_ruta <- function(cache, build) file.path(cache, sprintf("vep_%s.rds", build))
+# El numero de version cambia cuando cambian las columnas guardadas; asi una
+# cache vieja se ignora en vez de mezclarse con la nueva.
+.cache_ruta <- function(cache, build) file.path(cache, sprintf("vep_v2_%s.rds", build))
 
 .cache_leer <- function(cache, build) {
   if (isFALSE(cache)) return(.vep_fila_vacia(character(0)))
@@ -260,12 +265,13 @@ iei_filtrar_frecuencia <- function(x, max_af = c(AD = 1e-4, XL = 1e-4, AR = 0.01
   umbral[is.na(umbral)] <- max_af[["AR"]]
   conservar <- is.na(x$af_gnomad) | x$af_gnomad <= umbral
 
-  atributos <- attributes(x)[c("build", "ieiprio_bitacora", "vep_release")]
-  out <- x[conservar, ]
-  b <- atributos$ieiprio_bitacora
-  if (!is.null(b)) {
-    b <- rbind(b, tibble::tibble(paso = "Frecuencia", filas = nrow(out),
-                                 descartadas = nrow(x) - nrow(out)))
+  a <- .attrs_ieiprio(x)
+  out <- .poner_attrs(x[conservar, ], a)
+  if (!is.null(a$ieiprio_bitacora)) {
+    attr(out, "ieiprio_bitacora") <- rbind(
+      a$ieiprio_bitacora,
+      tibble::tibble(paso = "Frecuencia", filas = nrow(out), descartadas = nrow(x) - nrow(out)))
   }
-  .restaurar_atributos(out, atributos$build, b, atributos$vep_release %||% NA_character_)
+  attr(out, "ieiprio_max_af") <- max_af
+  out
 }

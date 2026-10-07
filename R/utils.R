@@ -11,3 +11,14 @@
 }
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
+
+# Atributos que el paquete arrastra de una etapa a otra.
+.attrs_ieiprio <- function(x) {
+  a <- attributes(x)
+  a[names(a) %in% c("build", "vep_release", "archivo") | startsWith(names(a), "ieiprio_")]
+}
+
+.poner_attrs <- function(x, a) {
+  for (n in names(a)) attr(x, n) <- a[[n]]
+  x
+}

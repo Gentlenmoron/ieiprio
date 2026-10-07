@@ -54,7 +54,10 @@ iei_filtrar <- function(vcf, genes = NULL, evidencia = "verde",
   if (is.null(build) || is.na(build)) {
     cli::cli_abort("No se sabe el build del VCF. Vuelve a leerlo con {.fn iei_leer_vcf}.")
   }
-  if (is.null(genes)) genes <- iei_panel(evidencia = evidencia)$gen
+  genes_por_defecto <- is.null(genes)
+  if (genes_por_defecto) genes <- iei_panel(evidencia = evidencia)$gen
+  a <- .attrs_ieiprio(vcf)
+  qc <- .calcular_qc(vcf, build)
 
   bitacora <- list(c("Inicial", nrow(vcf)))
   x <- vcf
@@ -84,10 +87,18 @@ iei_filtrar <- function(vcf, genes = NULL, evidencia = "verde",
 
   b <- do.call(rbind, bitacora)
   n <- as.integer(b[, 2])
+  x <- .poner_attrs(x, a)
   attr(x, "ieiprio_bitacora") <- tibble::tibble(
     paso = b[, 1], filas = n, descartadas = c(0L, -diff(n))
   )
   attr(x, "build") <- build
+  attr(x, "ieiprio_qc") <- qc
+  attr(x, "ieiprio_parametros") <- list(
+    genes = if (genes_por_defecto) sprintf("panel PanelApp, evidencia %s (%d genes)",
+                                           paste(evidencia, collapse = "/"), length(genes))
+            else sprintf("lista propia (%d genes)", length(genes)),
+    min_dp = min_dp, min_gq = min_gq, min_ab = min_ab, solo_pass = solo_pass, margen = margen
+  )
   x
 }
 

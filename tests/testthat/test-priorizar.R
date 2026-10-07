@@ -98,6 +98,16 @@ test_that("el fenotipo HPO suma de forma proporcional", {
   expect_equal(mitad$puntaje, 5.5)
 })
 
+test_that("un portador en gen AR nunca queda en prioridad alta", {
+  cats <- tibble::tibble(gen = "GAR", categoria_iuis = 1L, categoria_nombre = "x")
+  p <- iei_priorizar(variantes(), categoria = 1, pesos = list(portador_ar = 0),
+                     panel = panel_prueba, hpo = hpo_prueba, categorias = cats)
+  r <- fila(p, "P01", 2)
+  expect_gte(r$puntaje, 9)
+  expect_equal(r$categoria, "media")
+  expect_match(r$razones, "limitada a media")
+})
+
 test_that("la categoria IUIS sospechada suma el maximo", {
   r <- fila(priorizar(categoria = 3), "P01", 5)
   expect_equal(r$puntaje, 7)

@@ -69,7 +69,7 @@ iei_leer_vcf <- function(ruta, muestras = NULL,
 
   if (length(datos) == 0) {
     cli::cli_warn("El VCF no tiene variantes.")
-    return(.vcf_vacio(build, ruta))
+    return(.marcar_vcf(.vcf_vacio(build, ruta), build, ruta, sexo))
   }
 
   campos <- strsplit(datos, "\t", fixed = TRUE)
@@ -126,8 +126,15 @@ iei_leer_vcf <- function(ruta, muestras = NULL,
     cli::cli_warn("El VCF no trae informacion para {.field {avisos}}; esas columnas quedan en NA.")
   }
 
+  .marcar_vcf(out, build, ruta, sexo)
+}
+
+.marcar_vcf <- function(out, build, ruta, sexo) {
   attr(out, "build") <- build
   attr(out, "archivo") <- normalizePath(ruta)
+  attr(out, "ieiprio_sexo") <- vapply(sexo, function(v) as.character(v), character(1))
+  attr(out, "ieiprio_vcf") <- list(archivo = basename(ruta),
+                                   md5 = unname(tools::md5sum(ruta)))
   out
 }
 
@@ -139,8 +146,6 @@ iei_leer_vcf <- function(ruta, muestras = NULL,
     gq = numeric(0), ab = numeric(0), filtro = character(0),
     build = character(0)
   )
-  attr(out, "build") <- build
-  attr(out, "archivo") <- normalizePath(ruta)
   out
 }
 
