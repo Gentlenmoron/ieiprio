@@ -1,3 +1,8 @@
+# ieiprio 0.0.7.9000
+
+* Nueva funcion `iei_analizar()` que corre todo el flujo en una linea y genera un reporte por muestra.
+* Nueva funcion `iei_ejemplo_vcf()` con un paciente ficticio que combina cinco variantes reales de ClinVar en BTK, RAG1, STAT1 y CYBB con variantes de fondo sinteticas. Se genera con `data-raw/ejemplo_vcf.R` y la seleccion queda fijada en `data-raw/ejemplo_clinvar.csv`.
+
 # ieiprio 0.0.6.9000
 
 * Nueva funcion `iei_reporte()` que genera un HTML autocontenido por paciente, sin Quarto ni otras dependencias. Incluye resumen, control de calidad de la muestra (histogramas de DP, GQ y fraccion alelica, het/hom, Ti/Tv), verificacion de sexo, tabla priorizada con criterios ACMG sugeridos, grafico del desglose del puntaje, fichas con diagrama de la proteina y sus dominios Pfam, matriz de coincidencia con el fenotipo, embudo del filtrado, parametros del analisis con la huella md5 del VCF, fuentes con versiones y limitaciones.
