@@ -24,10 +24,10 @@
 .clinvar_resumen <- function(ids) {
   if (length(ids) == 0) return(list())
   grupos <- split(ids, ceiling(seq_along(ids) / 150))
-  unlist(lapply(grupos, function(g) {
+  unlist(unname(lapply(grupos, function(g) {
     r <- .clinvar_peticion("esummary.fcgi", id = paste(g, collapse = ","))$result
     r[setdiff(names(r), "uids")]
-  }), recursive = FALSE)
+  })), recursive = FALSE)
 }
 
 # Convierte SPDI (posicion 0-based) a coordenadas VCF. Solo variantes de un nucleotido.
@@ -45,8 +45,10 @@
 
 # Tabla con una fila por variante SNV de un solo gen.
 .clinvar_procesar <- function(resumen) {
-  filas <- lapply(names(resumen), function(id) {
-    r <- resumen[[id]]
+  filas <- lapply(seq_along(resumen), function(i) {
+    r <- resumen[[i]]
+    id <- .chr1(r$uid)
+    if (is.na(id)) id <- names(resumen)[i]
     vs <- r$variation_set
     if (length(vs) != 1) return(NULL)
     spdi <- .chr1(vs[[1]]$canonical_spdi)

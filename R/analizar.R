@@ -33,7 +33,7 @@ iei_analizar <- function(vcf, sexo = NULL, fenotipo = NULL, categoria = NULL,
   cli::cli_alert_info("Filtrando {nrow(v)} filas")
   f <- iei_filtrar(v, evidencia = evidencia, ...)
   cli::cli_alert_info("Anotando {nrow(f)} variante{?s} con Ensembl VEP")
-  a <- iei_filtrar_frecuencia(iei_anotar(f))
+  a <- iei_filtrar_frecuencia(suppressMessages(iei_anotar(f)))
   p <- iei_priorizar(a, fenotipo = fenotipo, categoria = categoria)
 
   n <- table(factor(p$categoria, levels = c("alta", "media", "baja")))
