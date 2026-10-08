@@ -1,5 +1,11 @@
 # Changelog
 
+## ieiprio 0.1.0
+
+- Primera versión pública. Flujo completo desde el VCF hasta un reporte
+  HTML por paciente, con datos reproducibles de PanelApp, HPO, Ensembl
+  VEP y ClinVar.
+
 ## ieiprio 0.0.7.9000
 
 - Nueva funcion

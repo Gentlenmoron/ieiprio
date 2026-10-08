@@ -7,16 +7,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/TU_USUARIO/ieiprio/blob/master/DESCRIPTION)
+[`inst/CITATION`](https://github.com/TU_USUARIO/ieiprio/blob/master/inst/CITATION)
 
-Nombre T (2026). *ieiprio: Priorizacion de Variantes en Genes de Errores
-Innatos de la Inmunidad*. R package version 0.0.8.9000,
+Nombre T (2026). *ieiprio: Priorización de variantes en genes de errores
+innatos de la inmunidad*. Paquete de R versión 0.1.0,
 <https://gentlenmoron.github.io/ieiprio/>.
 
     @Manual{,
-      title = {ieiprio: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad},
+      title = {ieiprio: Priorización de variantes en genes de errores innatos de la inmunidad},
       author = {Tu Nombre},
       year = {2026},
-      note = {R package version 0.0.8.9000},
+      note = {Paquete de R versión 0.1.0},
       url = {https://gentlenmoron.github.io/ieiprio/},
     }
