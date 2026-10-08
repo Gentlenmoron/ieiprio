@@ -1,0 +1,8 @@
+bibentry(
+  bibtype = "Manual",
+  title = "ieiprio: Priorización de variantes en genes de errores innatos de la inmunidad",
+  author = eval(parse(text = meta$`Authors@R`)),
+  year = substr(meta$`Date/Publication` %||% format(Sys.Date()), 1, 4),
+  note = paste("Paquete de R versión", meta$Version),
+  url = "https://gentlenmoron.github.io/ieiprio/"
+)
