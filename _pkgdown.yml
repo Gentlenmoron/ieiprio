@@ -1,0 +1,48 @@
+url: https://gentlenmoron.github.io/ieiprio/
+lang: es
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#1f2a44"
+navbar:
+  structure:
+    left: [intro, reference, news]
+    right: [search, github]
+reference:
+- title: Flujo completo
+  contents:
+  - iei_analizar
+  - iei_ejemplo_vcf
+- title: Leer y verificar
+  contents:
+  - iei_leer_vcf
+  - iei_verificar_sexo
+- title: Filtrar y anotar
+  contents:
+  - iei_filtrar
+  - iei_bitacora
+  - iei_anotar
+  - iei_filtrar_frecuencia
+  - iei_limpiar_cache
+- title: Priorizar y reportar
+  contents:
+  - iei_priorizar
+  - iei_pesos
+  - iei_reporte
+- title: Panel de genes
+  contents:
+  - iei_panel
+  - iei_buscar_gen
+  - iei_actualizar_panel
+  - iei_fuentes
+- title: Datos incluidos
+  contents:
+  - iuis_panel
+  - iuis_alias
+  - iuis_categorias
+  - genes_coordenadas
+  - hpo_genes
+  - fuentes_datos
+- title: internal
+  contents:
+  - ieiprio-package

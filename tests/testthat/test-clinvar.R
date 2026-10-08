@@ -18,6 +18,16 @@ test_that(".clinvar_procesar se queda con SNV de un solo gen", {
   expect_equal(nrow(.clinvar_procesar(list())), 0)
 })
 
+test_that("el ID sale del registro aunque la lista tenga nombres con prefijo", {
+  j <- jsonlite::read_json(fixture("clinvar_esummary.json"))$result
+  r <- j[c("11", "44")]
+  names(r) <- c("1.11", "1.44")
+  expect_equal(.clinvar_procesar(r)$clinvar_id, c(11L, 44L))
+  local_mocked_bindings(.clinvar_peticion = function(endpoint, ...) list(result = c(list(uids = "x"), j["11"])))
+  res <- .clinvar_resumen(c(11L, 12L))
+  expect_equal(.clinvar_procesar(res)$clinvar_id, 11L)
+})
+
 test_that(".clinvar_elegir usa la busqueda y elige el menor ID valido", {
   j <- jsonlite::read_json(fixture("clinvar_esummary.json"))$result
   terminos <- character(0)
@@ -36,6 +46,7 @@ test_that("ClinVar en vivo", {
   v <- .clinvar_elegir("BTK", "Pathogenic")
   expect_equal(v$gen, "BTK")
   expect_equal(v$chr, "X")
+  expect_gt(v$clinvar_id, 1000)
 })
 
 test_that("iei_ejemplo_vcf avisa si no esta generado o lo devuelve", {

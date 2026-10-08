@@ -1,6 +1,6 @@
 Package: ieiprio
 Title: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad
-Version: 0.0.1.9000
+Version: 0.0.8.9000
 Authors@R: 
     person("Tu", "Nombre", email = "tu.correo@ejemplo.com",
            role = c("aut", "cre"))
@@ -20,10 +20,14 @@ Imports:
     jsonlite,
     tibble
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
 LazyData: true
-URL: https://github.com/TU_USUARIO/ieiprio
+URL: https://gentlenmoron.github.io/ieiprio/,
+    https://github.com/Gentlenmoron/ieiprio
 BugReports: https://github.com/TU_USUARIO/ieiprio/issues
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr

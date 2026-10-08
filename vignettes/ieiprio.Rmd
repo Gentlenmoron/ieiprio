@@ -1,0 +1,156 @@
+---
+title: "Analizar un paciente con ieiprio"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analizar un paciente con ieiprio}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+# Los pasos que consultan Ensembl solo se ejecutan si hay conexion habilitada.
+# Para correrlos en tu maquina: Sys.setenv(IEIPRIO_EN_VIVO = "true")
+en_vivo <- identical(Sys.getenv("IEIPRIO_EN_VIVO"), "true")
+```
+
+ieiprio toma un VCF de exoma o de panel y devuelve las variantes en genes de
+errores innatos de la inmunidad (EII) ordenadas por prioridad, con una
+explicación de cada puntaje y un reporte HTML por paciente.
+
+> **Aviso.** Es una herramienta de apoyo e investigación. No es un informe
+> diagnóstico ni reemplaza la clasificación ACMG/AMP hecha por un especialista.
+
+```{r setup}
+library(ieiprio)
+```
+
+## El caso de ejemplo
+
+El paquete trae un paciente ficticio, EJEMPLO01, varón con hipogammaglobulinemia
+e infecciones recurrentes. Su VCF mezcla cinco variantes reales tomadas de
+ClinVar con unas 4000 variantes de fondo sintéticas, ubicadas fuera de los genes
+del panel, que solo sirven para el control de calidad.
+
+| Rol | Gen | Variante | ClinVar |
+| --- | --- | --- | --- |
+| Causal | BTK | c.1632-2A>G | [265455](https://www.ncbi.nlm.nih.gov/clinvar/variation/265455/) |
+| Portador | RAG1 | c.1186C>T (p.Arg396Cys) | [13144](https://www.ncbi.nlm.nih.gov/clinvar/variation/13144/) |
+| Incierta | STAT1 | c.\*1628A>G | [333246](https://www.ncbi.nlm.nih.gov/clinvar/variation/333246/) |
+| Benigna | BTK | c.\*334T>G | [367692](https://www.ncbi.nlm.nih.gov/clinvar/variation/367692/) |
+| Benigna | CYBB | c.1314+19C>T | [35968](https://www.ncbi.nlm.nih.gov/clinvar/variation/35968/) |
+
+## Todo en una línea
+
+```{r, eval = en_vivo}
+res <- iei_analizar(
+  iei_ejemplo_vcf(),
+  sexo = "M",
+  fenotipo = c("HP:0004313", "HP:0002719"),
+  carpeta = tempdir()
+)
+res[, c("gen", "hgvs_c", "consecuencia", "puntaje", "categoria")]
+```
+
+`iei_analizar()` hace los mismos pasos que se explican abajo y deja un reporte
+HTML por muestra en `carpeta`. El resto de esta guía los recorre uno por uno.
+
+## Paso a paso
+
+### 1. Leer el VCF
+
+```{r}
+vcf <- iei_leer_vcf(iei_ejemplo_vcf(), sexo = "M")
+vcf
+```
+
+El sexo importa. En un varón, una variante homocigota en el cromosoma X fuera de
+las regiones pseudoautosómicas se marca como `hemi`, que es lo que permite
+interpretar genes ligados al X como BTK, CYBB o WAS.
+
+### 2. Verificar el sexo
+
+Un sexo mal declarado cambia toda la interpretación de los genes ligados al X.
+ieiprio lo estima con la proporción de heterocigotos en el X.
+
+```{r}
+iei_verificar_sexo(vcf)
+```
+
+### 3. Filtrar
+
+```{r}
+filtrado <- iei_filtrar(vcf)
+iei_bitacora(filtrado)
+filtrado[, c("gen", "chr", "pos", "ref", "alt", "genotipo", "dp")]
+```
+
+El panel por defecto son los genes con evidencia verde del panel 398 de PanelApp.
+Puedes ver el panel completo con `iei_panel()` o buscar un gen con
+`iei_buscar_gen("TACI")`.
+
+### 4. Anotar con Ensembl VEP
+
+```{r, eval = en_vivo}
+anotado <- iei_anotar(filtrado)
+anotado <- iei_filtrar_frecuencia(anotado)
+anotado[, c("gen", "hgvs_c", "consecuencia", "af_gnomad", "clinvar")]
+```
+
+Las respuestas de VEP se guardan en una caché local, así que volver a anotar al
+mismo paciente no consulta la API otra vez.
+
+### 5. Priorizar
+
+```{r, eval = en_vivo}
+prior <- iei_priorizar(anotado, fenotipo = c("HP:0004313", "HP:0002719"))
+prior[, c("gen", "puntaje", "categoria", "acmg")]
+cat(prior$razones, sep = "\n\n")
+```
+
+Cada punto tiene una razón escrita. Para este paciente lo esperable es esto.
+
+* **BTK c.1632-2A>G queda en prioridad alta.** Rompe el sitio aceptor de
+  splicing, ClinVar la clasifica como patogénica, está ausente en gnomAD y el
+  paciente es hemicigoto en un gen ligado al X. Es el cuadro de una
+  agammaglobulinemia ligada al X.
+* **RAG1 p.Arg396Cys queda en prioridad baja.** Es patogénica en ClinVar, pero
+  es una sola variante en un gen recesivo. El reporte lo marca como portador y
+  sugiere buscar una segunda variante si el fenotipo encaja.
+* **STAT1 c.\*1628A>G queda en prioridad baja.** Está en la región 3' no
+  traducida y su significado es incierto.
+* **Las dos benignas desaparecen** en el filtro de frecuencia o en el de
+  ClinVar, y eso queda registrado en la bitácora.
+
+Los puntos se pueden ajustar con `iei_pesos()`.
+
+### 6. Reporte
+
+```{r, eval = en_vivo}
+iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
+```
+
+El reporte es un único archivo HTML que se abre en cualquier navegador. Incluye
+el control de calidad de la muestra, la tabla priorizada con criterios ACMG
+sugeridos, fichas con el diagrama de cada proteína, la coincidencia con el
+fenotipo, el embudo del filtrado y las versiones de todas las fuentes.
+
+## Reproducibilidad
+
+Los datos incluidos están fijados a versiones concretas y cada archivo tiene su
+huella md5.
+
+```{r}
+iei_fuentes()
+```
+
+Para usar una versión más nueva del panel sin tocar los datos del paquete,
+`iei_actualizar_panel()` la descarga a tu caché.
+
+## Limitaciones
+
+* Solo analiza variantes puntuales e indels pequeños. No detecta CNV ni
+  variantes estructurales.
+* No evalúa cobertura, porque eso requiere el BAM.
+* Los criterios ACMG son sugerencias automaticas y la fase de un posible
+  heterocigoto compuesto debe confirmarse estudiando a los padres.

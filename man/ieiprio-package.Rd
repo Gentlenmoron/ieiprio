@@ -6,12 +6,15 @@
 \alias{ieiprio-package}
 \title{ieiprio: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 Lee archivos VCF, filtra variantes en genes de errores innatos de la inmunidad segun la clasificacion IUIS, las anota con Ensembl VEP y las prioriza segun modo de herencia y fenotipo clinico, generando un reporte por paciente. Herramienta de apoyo e investigacion, no de diagnostico.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/TU_USUARIO/ieiprio}
+  \item \url{https://gentlenmoron.github.io/ieiprio/}
+  \item \url{https://github.com/Gentlenmoron/ieiprio}
   \item Report bugs at \url{https://github.com/TU_USUARIO/ieiprio/issues}
 }
 
