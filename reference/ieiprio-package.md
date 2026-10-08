@@ -13,12 +13,14 @@ Useful links:
 
 - <https://github.com/Gentlenmoron/ieiprio>
 
-- Report bugs at <https://github.com/TU_USUARIO/ieiprio/issues>
+- Report bugs at <https://github.com/Gentlenmoron/ieiprio/issues>
 
 ## Author
 
-**Maintainer**: Tu Nombre <tu.correo@ejemplo.com>
+**Maintainer**: Yando Rios Vasquez <yandoriosvasquez@gmail.com>
+([ORCID](https://orcid.org/0009-0006-8594-1433))
 
 Authors:
 
-- Tu Nombre <tu.correo@ejemplo.com>
+- Yando Rios Vasquez <yandoriosvasquez@gmail.com>
+  ([ORCID](https://orcid.org/0009-0006-8594-1433))

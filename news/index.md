@@ -1,5 +1,9 @@
 # Changelog
 
+## ieiprio 0.1.1
+
+- Autor, ORCID y enlace de reportes corregidos en el DESCRIPTION.
+
 ## ieiprio 0.1.0
 
 - Primera versión pública. Flujo completo desde el VCF hasta un reporte

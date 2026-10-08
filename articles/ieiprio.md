@@ -68,7 +68,7 @@ res <- iei_analizar(
 #> ℹ Filtrando 4094 filas
 #> ℹ Anotando 5 variantes con Ensembl VEP
 #> ✔ Prioridad alta 1, media 0, baja 2
-#> ✔ Reporte en /tmp/RtmpHlKgzh/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmpdebRA8/EJEMPLO01.html
 res[, c("gen", "hgvs_c", "consecuencia", "puntaje", "categoria")]
 #> # A tibble: 3 × 5
 #>   gen   hgvs_c                        consecuencia            puntaje categoria
@@ -217,7 +217,7 @@ Los puntos se pueden ajustar con
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/RtmpHlKgzh/EJEMPLO01.html.
+#> /tmp/RtmpdebRA8/EJEMPLO01.html.
 ```
 
 El reporte es un único archivo HTML que se abre en cualquier navegador.
