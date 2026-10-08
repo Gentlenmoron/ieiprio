@@ -15,16 +15,16 @@ Useful links:
 \itemize{
   \item \url{https://gentlenmoron.github.io/ieiprio/}
   \item \url{https://github.com/Gentlenmoron/ieiprio}
-  \item Report bugs at \url{https://github.com/TU_USUARIO/ieiprio/issues}
+  \item Report bugs at \url{https://github.com/Gentlenmoron/ieiprio/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Tu Nombre \email{tu.correo@ejemplo.com}
+\strong{Maintainer}: Yando Rios Vasquez \email{yandoriosvasquez@gmail.com} (\href{https://orcid.org/0009-0006-8594-1433}{ORCID})
 
 Authors:
 \itemize{
-  \item Tu Nombre \email{tu.correo@ejemplo.com}
+  \item Yando Rios Vasquez \email{yandoriosvasquez@gmail.com} (\href{https://orcid.org/0009-0006-8594-1433}{ORCID})
 }
 
 }
