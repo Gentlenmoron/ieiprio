@@ -1,0 +1,138 @@
+# ieiprio
+
+**Priorización de variantes en genes de errores innatos de la
+inmunidad.**
+
+ieiprio toma un VCF de exoma o de panel y devuelve las variantes en
+genes de errores innatos de la inmunidad (EII) ordenadas por prioridad,
+con una explicación escrita de cada puntaje y un reporte HTML por
+paciente.
+
+> **Aviso.** Herramienta de apoyo e investigación. No es un informe
+> diagnóstico ni reemplaza la clasificación ACMG/AMP hecha por un
+> especialista.
+
+## Instalación
+
+``` r
+
+# install.packages("pak")
+pak::pak("Gentlenmoron/ieiprio")
+```
+
+## Uso
+
+``` r
+
+library(ieiprio)
+
+res <- iei_analizar(
+  iei_ejemplo_vcf(),                      # o la ruta a tu VCF
+  sexo = "M",
+  fenotipo = c("HP:0004313", "HP:0002719"),
+  carpeta = "reportes"
+)
+```
+
+Eso lee el VCF, filtra por genes del panel y calidad, anota con Ensembl
+VEP, filtra por frecuencia en gnomAD, prioriza y deja un reporte HTML
+por muestra. La [guía de
+uso](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html)
+recorre cada paso con un paciente de ejemplo.
+
+## Qué hace
+
+| Paso | Función | Qué aporta |
+|----|----|----|
+| Leer | [`iei_leer_vcf()`](https://gentlenmoron.github.io/ieiprio/reference/iei_leer_vcf.md) | VCF comprimido o no, multialélicos, GRCh37 o GRCh38, hemicigotos en el X |
+| Verificar | [`iei_verificar_sexo()`](https://gentlenmoron.github.io/ieiprio/reference/iei_verificar_sexo.md) | Estima el sexo desde el X y lo compara con el declarado |
+| Filtrar | [`iei_filtrar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar.md) | Genes del panel, profundidad, calidad y fracción alélica, con bitácora |
+| Anotar | [`iei_anotar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_anotar.md) | Consecuencia, HGVS, gnomAD y ClinVar vía Ensembl VEP, con caché |
+| Priorizar | [`iei_priorizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_priorizar.md) | Puntaje explicado, herencia, compuestos, fenotipo HPO y ACMG sugerido |
+| Reportar | [`iei_reporte()`](https://gentlenmoron.github.io/ieiprio/reference/iei_reporte.md) | HTML con control de calidad, gráficos, diagramas de proteína y trazabilidad |
+
+## Datos y reproducibilidad
+
+El panel sale del [panel 398 de
+PanelApp](https://panelapp.genomicsengland.co.uk/panels/398/) y los
+fenotipos de la [Human Phenotype Ontology](https://hpo.jax.org), ambos
+fijados a una versión y con huella md5.
+[`iei_fuentes()`](https://gentlenmoron.github.io/ieiprio/reference/iei_fuentes.md)
+muestra qué versión usa el paquete instalado.
+
+## Limitaciones
+
+Solo analiza variantes puntuales e indels pequeños. No detecta CNV ni
+variantes estructurales y no evalúa cobertura, porque eso requiere el
+BAM.
+
+# Package index
+
+## Flujo completo
+
+- [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
+  : Analizar un VCF de principio a fin
+- [`iei_ejemplo_vcf()`](https://gentlenmoron.github.io/ieiprio/reference/iei_ejemplo_vcf.md)
+  : Ruta del VCF de ejemplo
+
+## Leer y verificar
+
+- [`iei_leer_vcf()`](https://gentlenmoron.github.io/ieiprio/reference/iei_leer_vcf.md)
+  : Leer un archivo VCF
+- [`iei_verificar_sexo()`](https://gentlenmoron.github.io/ieiprio/reference/iei_verificar_sexo.md)
+  : Verificar el sexo de las muestras desde el cromosoma X
+
+## Filtrar y anotar
+
+- [`iei_filtrar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar.md)
+  : Filtrar variantes por genotipo, panel y calidad
+- [`iei_bitacora()`](https://gentlenmoron.github.io/ieiprio/reference/iei_bitacora.md)
+  : Ver la bitacora del filtrado
+- [`iei_anotar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_anotar.md)
+  : Anotar variantes con Ensembl VEP
+- [`iei_filtrar_frecuencia()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar_frecuencia.md)
+  : Filtrar por frecuencia poblacional segun el modo de herencia
+- [`iei_limpiar_cache()`](https://gentlenmoron.github.io/ieiprio/reference/iei_limpiar_cache.md)
+  : Borrar la cache de anotaciones
+
+## Priorizar y reportar
+
+- [`iei_priorizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_priorizar.md)
+  : Priorizar variantes
+- [`iei_pesos()`](https://gentlenmoron.github.io/ieiprio/reference/iei_pesos.md)
+  : Pesos por defecto de la priorizacion
+- [`iei_reporte()`](https://gentlenmoron.github.io/ieiprio/reference/iei_reporte.md)
+  : Generar el reporte HTML de un paciente
+
+## Panel de genes
+
+- [`iei_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_panel.md)
+  : Consultar el panel de genes
+- [`iei_buscar_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_buscar_gen.md)
+  : Buscar genes en el panel
+- [`iei_actualizar_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_actualizar_panel.md)
+  : Descargar una version actualizada del panel desde PanelApp
+- [`iei_fuentes()`](https://gentlenmoron.github.io/ieiprio/reference/iei_fuentes.md)
+  : Fuentes y versiones de los datos del paquete
+
+## Datos incluidos
+
+- [`iuis_panel`](https://gentlenmoron.github.io/ieiprio/reference/iuis_panel.md)
+  : Panel de genes de errores innatos de la inmunidad
+- [`iuis_alias`](https://gentlenmoron.github.io/ieiprio/reference/iuis_alias.md)
+  : Alias y simbolos anteriores de los genes del panel
+- [`iuis_categorias`](https://gentlenmoron.github.io/ieiprio/reference/iuis_categorias.md)
+  : Categorias IUIS de los genes del panel
+- [`genes_coordenadas`](https://gentlenmoron.github.io/ieiprio/reference/genes_coordenadas.md)
+  : Coordenadas de los genes del panel
+- [`hpo_genes`](https://gentlenmoron.github.io/ieiprio/reference/hpo_genes.md)
+  : Fenotipos HPO de los genes del panel
+- [`fuentes_datos`](https://gentlenmoron.github.io/ieiprio/reference/fuentes_datos.md)
+  : Registro de fuentes de los datos
+
+# Articles
+
+### All vignettes
+
+- [Analizar un paciente con
+  ieiprio](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.md):
