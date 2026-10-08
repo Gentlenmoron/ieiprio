@@ -6,11 +6,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad • ieiprio</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad">
 <meta name="description" content="Lee archivos VCF, filtra variantes en genes de errores innatos de la inmunidad segun la clasificacion IUIS, las anota con Ensembl VEP y las prioriza segun modo de herencia y fenotipo clinico, generando un reporte por paciente. Herramienta de apoyo e investigacion, no de diagnostico.">
 <meta property="og:description" content="Lee archivos VCF, filtra variantes en genes de errores innatos de la inmunidad segun la clasificacion IUIS, las anota con Ensembl VEP y las prioriza segun modo de herencia y fenotipo clinico, generando un reporte por paciente. Herramienta de apoyo e investigacion, no de diagnostico.">
 <meta property="og:image" content="https://gentlenmoron.github.io/ieiprio/logo.svg">
@@ -19,7 +25,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">ieiprio</a>
 
@@ -33,6 +39,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/ieiprio.html">Get started</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/parametros.html">Guía de parámetros</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
@@ -61,6 +73,12 @@
 <p><strong>Aviso.</strong> Herramienta de apoyo e investigación. No es un informe diagnóstico ni reemplaza la clasificación ACMG/AMP hecha por un especialista.</p>
 </blockquote>
 <div class="section level2">
+<h2 id="por-qué-importa">Por qué importa<a class="anchor" aria-label="anchor" href="#por-qu%C3%A9-importa"></a>
+</h2>
+<p>Los errores innatos de la inmunidad son más de 500 enfermedades causadas por variantes en genes distintos. Muchos pacientes pasan años con infecciones recurrentes antes de llegar a un diagnóstico, y un diagnóstico molecular cambia el tratamiento (reposición de inmunoglobulinas, trasplante, terapias dirigidas) y permite estudiar a la familia.</p>
+<p>Un exoma tiene decenas de miles de variantes. Encontrar la que explica el cuadro exige cruzar el panel de genes correcto, la calidad del dato, la frecuencia en la población, lo que se sabe en ClinVar, el modo de herencia de cada gen y el fenotipo del paciente. ieiprio hace ese cruce de forma ordenada y, sobre todo, <strong>explica cada decisión</strong>, para que quien interpreta pueda revisar el razonamiento y no solo un resultado.</p>
+</div>
+<div class="section level2">
 <h2 id="instalación">Instalación<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -79,7 +97,7 @@
 <span>  fenotipo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HP:0004313"</span>, <span class="st">"HP:0002719"</span><span class="op">)</span>,</span>
 <span>  carpeta <span class="op">=</span> <span class="st">"reportes"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Eso lee el VCF, filtra por genes del panel y calidad, anota con Ensembl VEP, filtra por frecuencia en gnomAD, prioriza y deja un reporte HTML por muestra. La <a href="https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html">guía de uso</a> recorre cada paso con un paciente de ejemplo.</p>
+<p>Eso lee el VCF, filtra por genes del panel y calidad, anota con Ensembl VEP, filtra por frecuencia en gnomAD, prioriza y deja un reporte HTML por muestra. La <a href="https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html">guía de uso</a> recorre cada paso con un paciente de ejemplo, y la <a href="https://gentlenmoron.github.io/ieiprio/articles/parametros.html">guía de parámetros</a> explica cada opción, qué significa y cuándo cambiarla.</p>
 </div>
 <div class="section level2">
 <h2 id="qué-hace">Qué hace<a class="anchor" aria-label="anchor" href="#qu%C3%A9-hace"></a>

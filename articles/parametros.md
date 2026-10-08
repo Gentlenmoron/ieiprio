@@ -1,0 +1,298 @@
+# Guía de parámetros
+
+Esta guía explica cada parámetro del paquete, qué significa, qué valor
+usa por defecto y cuándo conviene cambiarlo. Está ordenada en el mismo
+orden en que corre el análisis. Si es la primera vez que usas ieiprio,
+empieza por la [guía de
+uso](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.md) y
+vuelve aquí cuando necesites ajustar algo.
+
+## El flujo en una imagen
+
+Cada función recibe la tabla de la anterior y le agrega información.
+
+| Paso | Función | Entra | Sale |
+|----|----|----|----|
+| 1 | [`iei_leer_vcf()`](https://gentlenmoron.github.io/ieiprio/reference/iei_leer_vcf.md) | archivo VCF | una fila por variante y muestra |
+| 2 | [`iei_filtrar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar.md) | tabla del paso 1 | variantes en genes del panel con buena calidad |
+| 3 | [`iei_anotar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_anotar.md) | tabla del paso 2 | consecuencia, HGVS, gnomAD y ClinVar |
+| 4 | [`iei_filtrar_frecuencia()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar_frecuencia.md) | tabla del paso 3 | variantes raras según la herencia del gen |
+| 5 | [`iei_priorizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_priorizar.md) | tabla del paso 4 | puntaje, categoría, razones y ACMG sugerido |
+| 6 | [`iei_reporte()`](https://gentlenmoron.github.io/ieiprio/reference/iei_reporte.md) | tabla del paso 5 | un HTML por paciente |
+
+[`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
+corre los seis pasos con una sola llamada y acepta los parámetros más
+usados de cada uno.
+
+## 1. Leer el VCF con `iei_leer_vcf()`
+
+| Parámetro | Qué es | Por defecto | Cuándo cambiarlo |
+|----|----|----|----|
+| `ruta` | Archivo `.vcf` o `.vcf.gz` | obligatorio | siempre |
+| `muestras` | Qué columnas de muestra leer | todas | VCF familiares o de varios pacientes, cuando quieres solo uno |
+| `build` | Versión del genoma de referencia | `"auto"` | solo si el VCF no declara su genoma en el encabezado |
+| `sexo` | Sexo de cada muestra, `"M"` o `"F"` | sin indicar | indícalo siempre que lo sepas |
+
+**Por qué importa el sexo.** Los varones tienen una sola copia del
+cromosoma X fuera de las regiones pseudoautosómicas. Una variante en
+BTK, CYBB, WAS, IL2RG o CD40LG en un varón es **hemicigota** y puede
+explicar la enfermedad por sí sola. En una mujer la misma variante suele
+indicar una **portadora**. Sin el sexo, el paquete no puede hacer esa
+distinción.
+
+``` r
+
+# Un paciente
+v <- iei_leer_vcf("paciente.vcf.gz", sexo = "M")
+
+# Un trío, leyendo las tres muestras con su sexo
+v <- iei_leer_vcf("trio.vcf.gz", sexo = c(HIJO = "M", MADRE = "F", PADRE = "M"))
+```
+
+Después de leer conviene revisar que el sexo declarado coincida con el
+que se estima desde el cromosoma X con `iei_verificar_sexo(v)`. Si no
+coincide, puede haber un error de etiqueta de la muestra y no tiene
+sentido seguir hasta aclararlo.
+
+## 2. Filtrar con `iei_filtrar()`
+
+| Parámetro | Qué es | Por defecto | Cuándo cambiarlo |
+|----|----|----|----|
+| `genes` | Lista de genes a analizar | panel de PanelApp | si quieres un panel propio, por ejemplo solo genes de deficiencias de anticuerpos |
+| `evidencia` | Niveles de PanelApp a incluir | `"verde"` | agrega `"ambar"` para investigación o cuando el caso no se resuelve |
+| `min_dp` | Profundidad mínima de lectura | 10 | súbelo con exomas de alta cobertura, bájalo con paneles poco profundos |
+| `min_gq` | Calidad mínima del genotipo | 20 | rara vez |
+| `min_ab` | Fracción alélica mínima en heterocigotos | 0.2 | bájalo si buscas mosaicismo |
+| `solo_pass` | Exigir FILTER igual a PASS | `TRUE` | `FALSE` si tu VCF no trae filtros confiables |
+| `margen` | Pares de bases añadidos a cada lado del gen | 20 | súbelo para incluir más región intrónica |
+
+**Qué significa cada medida de calidad.**
+
+- **DP (profundidad).** Cuántas lecturas cubren la posición. Con pocas
+  lecturas el genotipo es poco confiable.
+- **GQ (calidad del genotipo).** Qué tan seguro está el programa que
+  llamó la variante de que el genotipo es correcto. Va de 0 a 99.
+- **Fracción alélica.** Proporción de lecturas que muestran el alelo
+  alternativo. En un heterocigoto real ronda 0.5. Valores muy bajos
+  suelen ser artefactos o mosaicismo.
+
+**Los niveles de evidencia de PanelApp.** Verde significa que la
+asociación entre el gen y la enfermedad tiene evidencia suficiente para
+uso diagnóstico. Ámbar significa evidencia moderada y rojo evidencia
+débil. El panel incluido tiene esta distribución.
+
+``` r
+
+table(iuis_panel$evidencia)
+#> 
+#> ambar  rojo verde 
+#>    72   140   371
+```
+
+Para armar un panel propio puedes partir de las categorías IUIS.
+
+``` r
+
+anticuerpos <- iei_panel(categoria = 3)$gen
+anticuerpos
+#> [1] "BTK"    "PIK3CD"
+```
+
+La función devuelve la tabla filtrada y guarda una **bitácora** con
+cuántas variantes quedaron en cada paso. Se consulta con
+[`iei_bitacora()`](https://gentlenmoron.github.io/ieiprio/reference/iei_bitacora.md)
+y aparece en el reporte como un embudo.
+
+## 3. Anotar con `iei_anotar()`
+
+| Parámetro | Qué es | Por defecto | Cuándo cambiarlo |
+|----|----|----|----|
+| `cache` | Carpeta donde se guardan las respuestas | carpeta de usuario de R | `FALSE` para forzar una consulta nueva |
+| `lote` | Variantes por consulta a la API | 200 | bájalo si la conexión es inestable |
+
+La anotación consulta Ensembl VEP y agrega estas columnas.
+
+| Columna | Qué contiene |
+|----|----|
+| `consecuencia` | efecto en el transcrito, por ejemplo `missense_variant` o `splice_acceptor_variant` |
+| `impacto` | HIGH, MODERATE, LOW o MODIFIER |
+| `hgvs_c`, `hgvs_p` | nomenclatura en ADN codificante y en proteína |
+| `af_gnomad` | frecuencia más alta en gnomAD; `NA` si nunca se observó |
+| `clinvar` | clasificación de ClinVar para ese alelo exacto |
+| `proteina_id`, `pos_proteina` | proteína y posición, para el diagrama del reporte |
+
+Para cada variante se elige un solo transcrito, en este orden de
+preferencia. Primero uno del mismo gen asignado en el filtro, luego el
+MANE Select (el transcrito de referencia acordado entre Ensembl y NCBI),
+luego el canónico y al final el de mayor impacto.
+
+## 4. Filtrar por frecuencia con `iei_filtrar_frecuencia()`
+
+| Parámetro | Qué es | Por defecto |
+|----|----|----|
+| `max_af` | Frecuencia máxima en gnomAD según la herencia del gen | AD y XL 0.0001; AR, AR/AD y MT 0.01 |
+
+**Por qué el umbral depende de la herencia.** Una enfermedad dominante
+rara no puede deberse a una variante que tiene una de cada cien personas
+sanas. En cambio, en una enfermedad recesiva los portadores sanos pueden
+ser bastante más frecuentes que los afectados. Por eso el corte es más
+estricto para genes AD y ligados al X. Las variantes ausentes de gnomAD
+siempre pasan.
+
+``` r
+
+# Más permisivo para genes AR en una población poco representada en gnomAD
+iei_filtrar_frecuencia(anotado, max_af = c(AD = 1e-4, XL = 1e-4, AR = 0.02,
+                                           `AR/AD` = 0.02, MT = 0.01))
+```
+
+## 5. Priorizar con `iei_priorizar()`
+
+| Parámetro | Qué es | Por defecto | Cuándo usarlo |
+|----|----|----|----|
+| `fenotipo` | Términos HPO del paciente | ninguno | siempre que tengas el cuadro clínico |
+| `categoria` | Categorías IUIS sospechadas | ninguna | si no manejas HPO pero sabes qué tipo de inmunodeficiencia sospechas |
+| `pesos` | Puntos de cada componente y cortes | [`iei_pesos()`](https://gentlenmoron.github.io/ieiprio/reference/iei_pesos.md) | para calibrar con casos conocidos |
+
+### Cómo describir el fenotipo
+
+La Human Phenotype Ontology (HPO) da un código a cada signo clínico.
+Algunos frecuentes en inmunodeficiencias son estos.
+
+| Código       | Término                                     |
+|--------------|---------------------------------------------|
+| `HP:0002719` | Infecciones recurrentes                     |
+| `HP:0004313` | Disminución de inmunoglobulinas circulantes |
+| `HP:0002205` | Infecciones respiratorias recurrentes       |
+| `HP:0002090` | Neumonía                                    |
+| `HP:0001888` | Linfopenia                                  |
+| `HP:0001875` | Neutropenia                                 |
+| `HP:0001508` | Falla para crecer                           |
+| `HP:0002014` | Diarrea                                     |
+| `HP:0001744` | Esplenomegalia                              |
+| `HP:0002716` | Linfadenopatía                              |
+
+Puedes buscar otros en [hpo.jax.org](https://hpo.jax.org) o directamente
+entre los términos que tienen anotados los genes del panel.
+
+``` r
+
+encontrados <- unique(hpo_genes[grepl("candid", hpo_genes$hpo_nombre, ignore.case = TRUE),
+                                c("hpo_id", "hpo_nombre")])
+head(encontrados)
+#> # A tibble: 5 × 2
+#>   hpo_id     hpo_nombre                         
+#>   <chr>      <chr>                              
+#> 1 HP:0002728 Recurrent mucocutaneous candidiasis
+#> 2 HP:0005401 Recurrent Candida infection        
+#> 3 HP:0012204 Recurrent vulvovaginal candidiasis 
+#> 4 HP:0033351 Candida esophagitis                
+#> 5 HP:0005411 Chronic intestinal candidiasis
+```
+
+### Las categorías IUIS
+
+Si no usas HPO, puedes indicar qué grupo de inmunodeficiencia sospechas
+y los genes de ese grupo suman los 3 puntos de fenotipo.
+
+| Categoría | Grupo                                                         |
+|-----------|---------------------------------------------------------------|
+| 1         | Inmunodeficiencias que afectan la inmunidad celular y humoral |
+| 2         | Inmunodeficiencias combinadas con rasgos sindrómicos          |
+| 3         | Deficiencias predominantemente de anticuerpos                 |
+| 4         | Enfermedades de desregulación inmune                          |
+| 5         | Defectos congénitos en número o función de fagocitos          |
+| 6         | Defectos de la inmunidad intrínseca e innata                  |
+| 7         | Enfermedades autoinflamatorias                                |
+| 8         | Deficiencias del complemento                                  |
+| 9         | Falla medular                                                 |
+| 10        | Fenocopias de errores innatos de la inmunidad                 |
+
+### Cómo se calcula el puntaje
+
+``` r
+
+str(iei_pesos())
+#> List of 10
+#>  $ clinvar_patogenica : num 4
+#>  $ clinvar_conflicto  : num 1
+#>  $ impacto_alto       : num 3
+#>  $ impacto_moderado   : num 1
+#>  $ ausente_gnomad     : num 1
+#>  $ herencia_compatible: num 2
+#>  $ portador_ar        : num -2
+#>  $ fenotipo_maximo    : num 3
+#>  $ corte_alta         : num 9
+#>  $ corte_media        : num 5
+```
+
+| Componente | Regla | Puntos |
+|----|----|----|
+| ClinVar | patogénica o probablemente patogénica | +4 |
+| ClinVar | interpretaciones en conflicto | +1 |
+| ClinVar | benigna | se descarta |
+| Impacto | alto (stop, frameshift, splicing canónico, pérdida de inicio) | +3 |
+| Impacto | moderado (missense, inframe); en genes de ganancia de función cuenta como alto | +1 |
+| Frecuencia | ausente en gnomAD | +1 |
+| Herencia | genotipo compatible con el gen | +2 |
+| Herencia | dos heterocigotos en un gen recesivo, posible compuesto | +2 |
+| Herencia | un solo heterocigoto en un gen recesivo, portador | −2 |
+| Fenotipo | proporción de términos HPO del paciente presentes en el gen | 0 a +3 |
+
+Con 9 puntos o más la variante es de prioridad **alta**, de 5 a 8
+**media** y con 4 o menos **baja**. Un portador en gen recesivo nunca
+pasa de media, aunque el fenotipo encaje, porque una sola variante no
+explica la enfermedad.
+
+Para cambiar un peso basta con pasar solo lo que quieres modificar.
+
+``` r
+
+iei_priorizar(anotado, fenotipo = "HP:0002719",
+              pesos = list(clinvar_patogenica = 5, corte_alta = 10))
+```
+
+### Los criterios ACMG sugeridos
+
+La columna `acmg` propone criterios del estándar ACMG/AMP que se pueden
+inferir con los datos disponibles. Son orientativos y siempre deben ser
+revisados.
+
+| Criterio | Cuándo se sugiere | Significado |
+|----|----|----|
+| PVS1 | variante nula (stop, frameshift, splicing canónico, pérdida de inicio) en un gen sin mecanismo de ganancia de función | pérdida de función, evidencia muy fuerte |
+| PM2_Supporting | ausente o con frecuencia menor a 0.0001 en gnomAD | rareza poblacional, evidencia de apoyo |
+| PM3 | posible heterocigoto compuesto en gen recesivo | se aplica si se confirma que las dos variantes están en alelos distintos |
+| PP4 | el fenotipo del paciente coincide bien con el gen | fenotipo específico, evidencia de apoyo |
+| BA1 | frecuencia mayor a 5 % en gnomAD | benigna por frecuencia, evidencia independiente |
+
+## 6. Reporte con `iei_reporte()`
+
+| Parámetro | Qué es | Por defecto |
+|----|----|----|
+| `archivo` | Ruta del HTML a crear | obligatorio |
+| `paciente` | Código de la muestra | obligatorio si hay varias |
+| `responsable` | Nombre que firma el análisis | ninguno |
+| `dominios` | Consultar dominios de proteína para los diagramas | `TRUE` |
+| `cache` | Carpeta de caché de proteínas | carpeta de usuario de R |
+
+Usa siempre un código y nunca el nombre del paciente. El reporte no
+guarda ningún otro dato personal.
+
+## Reproducir un análisis
+
+Cada reporte registra el nombre y la huella md5 del VCF, los parámetros
+de cada paso, los pesos usados y las versiones de PanelApp, HPO y
+Ensembl. Con esa información y la misma versión de ieiprio el análisis
+da el mismo resultado.
+
+``` r
+
+iei_fuentes()
+#> # A tibble: 3 × 6
+#>   fuente        detalle                                version url   fecha md5  
+#>   <chr>         <chr>                                  <chr>   <chr> <chr> <chr>
+#> 1 PanelApp      Primary immunodeficiency or monogenic… 8.78    http… 2026… 6fe8…
+#> 2 HPO           genes_to_phenotype.txt                 v2026-… http… 2026… 6dac…
+#> 3 Curacion IUIS data-raw/iuis_curado.csv               git     http… 2026… d554…
+```

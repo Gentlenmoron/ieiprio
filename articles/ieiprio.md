@@ -13,6 +13,29 @@ con una explicación de cada puntaje y un reporte HTML por paciente.
 library(ieiprio)
 ```
 
+## Para qué sirve
+
+Ante un paciente con sospecha de inmunodeficiencia primaria, el exoma o
+el panel genético devuelve miles de variantes. La mayoría son normales,
+comunes o están en genes que no tienen relación con el sistema inmune.
+ieiprio reduce esa lista a unas pocas candidatas y las ordena con una
+regla explícita.
+
+1.  Se queda con los genes de errores innatos de la inmunidad del panel
+    de PanelApp.
+2.  Descarta lo que tiene mala calidad técnica.
+3.  Pregunta a Ensembl qué le hace cada variante al gen y qué dicen
+    gnomAD y ClinVar.
+4.  Descarta lo que es demasiado frecuente para causar una enfermedad
+    rara.
+5.  Puntúa lo que queda según ClinVar, impacto, rareza, herencia y
+    fenotipo, y escribe la razón de cada punto.
+6.  Genera un reporte con control de calidad, gráficos y trazabilidad
+    completa.
+
+Cada parámetro de estos pasos se explica en detalle en la [guía de
+parámetros](https://gentlenmoron.github.io/ieiprio/articles/parametros.md).
+
 ## El caso de ejemplo
 
 El paquete trae un paciente ficticio, EJEMPLO01, varón con
@@ -45,7 +68,7 @@ res <- iei_analizar(
 #> ℹ Filtrando 4094 filas
 #> ℹ Anotando 5 variantes con Ensembl VEP
 #> ✔ Prioridad alta 1, media 0, baja 2
-#> ✔ Reporte en /tmp/Rtmp3WqMPQ/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmphrxxMR/EJEMPLO01.html
 res[, c("gen", "hgvs_c", "consecuencia", "puntaje", "categoria")]
 #> # A tibble: 3 × 5
 #>   gen   hgvs_c                        consecuencia            puntaje categoria
@@ -194,7 +217,7 @@ Los puntos se pueden ajustar con
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/Rtmp3WqMPQ/EJEMPLO01.html.
+#> /tmp/RtmphrxxMR/EJEMPLO01.html.
 ```
 
 El reporte es un único archivo HTML que se abre en cualquier navegador.

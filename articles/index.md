@@ -1,6 +1,6 @@
 # Articles
 
-### All vignettes
+### Guías
 
-- [Analizar un paciente con
-  ieiprio](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.md):
+- [Guía de
+  parámetros](https://gentlenmoron.github.io/ieiprio/articles/parametros.md):
