@@ -65,7 +65,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Analizar un paciente con ieiprio</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/TU_USUARIO/ieiprio/blob/master/vignettes/ieiprio.Rmd" class="external-link"><code>vignettes/ieiprio.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/TU_USUARIO/ieiprio/blob/v0.1.0/vignettes/ieiprio.Rmd" class="external-link"><code>vignettes/ieiprio.Rmd</code></a></small>
       <div class="d-none name"><code>ieiprio.Rmd</code></div>
     </div>
 
@@ -175,7 +175,7 @@ el control de calidad.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtrando 4094 filas</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Anotando 5 variantes con Ensembl VEP</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 0, baja 2</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/Rtmpb66OhW/EJEMPLO01.html</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpHlKgzh/EJEMPLO01.html</span></span></span>
 <span><span class="va">res</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"consecuencia"</span>, <span class="st">"puntaje"</span>, <span class="st">"categoria"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
 <span><span class="co">#&gt;   gen   hgvs_c                        consecuencia            puntaje categoria</span></span>
@@ -318,7 +318,7 @@ bitácora.</li>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">prior</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EJEMPLO01.html"</span><span class="op">)</span>, paciente <span class="op">=</span> <span class="st">"EJEMPLO01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"EJEMPLO01"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/Rtmpb66OhW/EJEMPLO01.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpHlKgzh/EJEMPLO01.html</span>.</span></span></code></pre></div>
 <p>El reporte es un único archivo HTML que se abre en cualquier
 navegador. Incluye el control de calidad de la muestra, la tabla
 priorizada con criterios ACMG sugeridos, fichas con el diagrama de cada
