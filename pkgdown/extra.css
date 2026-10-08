@@ -1,0 +1,4 @@
+/* Version y textos secundarios legibles sobre la barra azul marino */
+.navbar .nav-text, .navbar .text-muted, .navbar small { color: #9fc9e6 !important; }
+.navbar .form-control { background-color: #13355e; border-color: #4fa3d1; color: #ffffff; }
+.navbar .form-control::placeholder { color: #9fc9e6; }

@@ -3,11 +3,21 @@ lang: es
 template:
   bootstrap: 5
   bslib:
-    primary: "#1f2a44"
+    primary: "#0b2545"
+    link-color: "#1d6fa5"
+    navbar-bg: "#0b2545"
+    headings-color: "#0b2545"
 navbar:
+  bg: primary
+  type: dark
   structure:
-    left: [intro, reference, news]
+    left: [intro, articles, reference, news]
     right: [search, github]
+articles:
+- title: Guías
+  navbar: ~
+  contents:
+  - parametros
 reference:
 - title: Flujo completo
   contents:

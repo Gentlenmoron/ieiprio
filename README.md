@@ -1,4 +1,4 @@
-# ieiprio <img src="man/figures/logo.svg" align="right" height="110" alt="" />
+# ieiprio <img src="man/figures/logo.svg" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Gentlenmoron/ieiprio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Gentlenmoron/ieiprio/actions/workflows/R-CMD-check.yaml)
@@ -13,6 +13,21 @@ explicación escrita de cada puntaje y un reporte HTML por paciente.
 
 > **Aviso.** Herramienta de apoyo e investigación. No es un informe diagnóstico
 > ni reemplaza la clasificación ACMG/AMP hecha por un especialista.
+
+## Por qué importa
+
+Los errores innatos de la inmunidad son más de 500 enfermedades causadas por
+variantes en genes distintos. Muchos pacientes pasan años con infecciones
+recurrentes antes de llegar a un diagnóstico, y un diagnóstico molecular cambia
+el tratamiento (reposición de inmunoglobulinas, trasplante, terapias dirigidas)
+y permite estudiar a la familia.
+
+Un exoma tiene decenas de miles de variantes. Encontrar la que explica el cuadro
+exige cruzar el panel de genes correcto, la calidad del dato, la frecuencia en
+la población, lo que se sabe en ClinVar, el modo de herencia de cada gen y el
+fenotipo del paciente. ieiprio hace ese cruce de forma ordenada y, sobre todo,
+**explica cada decisión**, para que quien interpreta pueda revisar el
+razonamiento y no solo un resultado.
 
 ## Instalación
 
@@ -37,7 +52,9 @@ res <- iei_analizar(
 Eso lee el VCF, filtra por genes del panel y calidad, anota con Ensembl VEP,
 filtra por frecuencia en gnomAD, prioriza y deja un reporte HTML por muestra.
 La [guía de uso](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html)
-recorre cada paso con un paciente de ejemplo.
+recorre cada paso con un paciente de ejemplo, y la
+[guía de parámetros](https://gentlenmoron.github.io/ieiprio/articles/parametros.html)
+explica cada opción, qué significa y cuándo cambiarla.
 
 ## Qué hace
 
