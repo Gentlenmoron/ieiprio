@@ -1,0 +1,158 @@
+---
+title: "Casos de ejemplo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Casos de ejemplo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 8, fig.height = 6, out.width = "100%")
+en_vivo <- identical(Sys.getenv("IEIPRIO_EN_VIVO"), "true") &&
+  tryCatch({
+    httr2::request("https://rest.ensembl.org/info/ping") |>
+      httr2::req_headers(Accept = "application/json") |>
+      httr2::req_timeout(20) |>
+      httr2::req_perform()
+    TRUE
+  }, error = function(e) FALSE)
+options(ieiprio.sin_red = !en_vivo, ieiprio.silenciar_privacidad = TRUE, cli.progress_show_after = Inf)
+library(ieiprio)
+knitr::opts_chunk$set(error = en_vivo)
+knitr::knit_hooks$set(error = function(x, options) {
+  "\n> Un servicio externo no respondió mientras se construía esta página, así que este bloque no muestra resultado.\n\n"
+})
+```
+
+Tres análisis completos con datos que se pueden copiar. Los dos primeros corren
+sin conexión, porque la referencia de BTK y su anotación de Ensembl VEP vienen
+dentro del paquete.
+
+```{r}
+ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
+vep <- system.file("extdata", "btk_vep.json", package = "ieiprio")
+```
+
+## 1. Una secuencia pegada como texto
+
+Un informe de secuenciación trae la lectura de un varón como texto. Son 300
+bases de BTK, de X:101353840 a X:101354139 en GRCh38, con la base 151 cambiada
+de T a C.
+
+```{r}
+secuencia <- paste0(
+  "TGTATAATCTGTGTAATCTTATCCACTTACCAAAAGCCCAAATGTCAGATTTGCTGCTGA",
+  "ACTTGCTATACATCAGGACTTCCGGTGGGGACCACCGGACTGGAAATTTGGAGCCTACTG",
+  "AGCTTGTGTATTCATCATCCAGGACATACCCGCAAGGGATTCAGGACTTGTTGCATTAGG",
+  "ATTTGGAGGCTTGATATTTGCTTACGTTTTCTTGGCACGGTCACAAGAGTGTCACAAACA",
+  "CACACAGGCTTTCTCAAAAGTCTCTCCTCCTCAACTAGTATCTTCTACAAACGTTACTTT"
+)
+v1 <- iei_sanger(secuencia, gen = "BTK", sexo = "M", referencia = ref)
+v1
+```
+
+```{r}
+iei_dotplot(v1)
+```
+
+```{r}
+a1 <- iei_anotar(v1, vep_json = vep)
+p1 <- iei_priorizar(a1, fenotipo = c("agammaglobulinemia", "neumonía recurrente"))
+iei_tabla(p1)[, c("gen", "hgvs_c", "genotipo", "consecuencia", "puntaje", "categoria", "acmg")]
+```
+
+**Lo que deberías ver.** Una sola variante, X:101353990 T>C, hemicigota porque
+el sexo es masculino. La identidad con la referencia es 99.7 %, una base
+distinta en 300. El dot plot es una diagonal continua con la cruz roja en la
+posición 151 de la secuencia. La anotación la nombra
+ENST00000308731.8:c.1632-2A>G, una variante del sitio aceptor de splicing con
+impacto alto, y la priorización la deja en prioridad alta con PVS1_Strong,
+PM2_Supporting, PP3 y PP4. Sin conexión no hay estrellas de ClinVar, así que la
+razón muestra ClinVar patogénica sin el detalle de la revisión.
+
+## 2. Cromatogramas directo y reverso
+
+El mismo amplicón de BTK secuenciado en un varón afectado y en su hermana
+portadora. Cada caso tiene una lectura directa y una reversa.
+
+```{r}
+varon <- iei_sanger(iei_ejemplo_sanger("hemi"), gen = "BTK", sexo = "M", referencia = ref)
+portadora <- iei_sanger(iei_ejemplo_sanger("het"), gen = "BTK", sexo = "F", referencia = ref)
+rbind(varon[, c("pos", "ref", "alt", "genotipo", "ab", "lecturas")],
+      portadora[, c("pos", "ref", "alt", "genotipo", "ab", "lecturas")])
+```
+
+```{r}
+iei_cromatograma(varon)
+```
+
+```{r}
+iei_cromatograma(portadora)
+```
+
+```{r}
+consenso <- iei_consenso(portadora)
+consenso
+```
+
+```{r}
+p2 <- iei_priorizar(iei_anotar(portadora, vep_json = vep), fenotipo = "agammaglobulinemia")
+iei_reporte(p2, file.path(tempdir(), "portadora.html"), dominios = FALSE)
+```
+
+**Lo que deberías ver.** En el varón la variante es hemicigota y la fracción
+alélica es 1, porque el pico de T desaparece y solo queda C. En la portadora es
+heterocigota, con cerca de 45 % de la señal en C y el código IUPAC Y sobre la
+posición. Las dos lecturas de cada caso la ven, por eso `lecturas` vale 2. El
+consenso es la secuencia del amplicón con Y en la posición de la variante. En la
+portadora la variante queda en prioridad alta por la evidencia de la variante,
+y la nota advierte que en una mujer es portadora de un gen ligado al X. El
+reporte trae los dos cromatogramas como imagen y no trae el control de calidad
+del VCF.
+
+## 3. Un VCF y el fenotipo
+
+El exoma de ejemplo de un varón con agammaglobulinemia y neumonías
+recurrentes. Este caso necesita conexión para anotar.
+
+```{r, eval = en_vivo}
+res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M",
+                    fenotipo = c("agammaglobulinemia", "neumonía recurrente"),
+                    carpeta = tempdir())
+iei_tabla(res)[, c("gen", "hgvs_c", "genotipo", "puntaje", "categoria", "acmg_clase")]
+```
+
+```{r, eval = en_vivo}
+iei_circos(res)
+```
+
+La búsqueda por fenotipo no necesita red.
+
+```{r}
+busqueda <- iei_buscar_fenotipo(c("agammaglobulinemia", "neumonía recurrente"), n = 12)
+busqueda
+```
+
+```{r}
+plot(busqueda, tipo = "acordes")
+```
+
+```{r, eval = en_vivo}
+btk <- iei_gen("BTK")
+btk
+plot(btk)
+```
+
+**Lo que deberías ver.** De las cinco variantes de ClinVar del ejemplo quedan
+tres. BTK c.1632-2A>G queda primera en prioridad alta, con clase ACMG
+probablemente patogénica. RAG1 c.1186C>T queda en prioridad media, el tope para
+un portador, con la nota que pide buscar una segunda variante. STAT1 queda en
+prioridad baja, y las dos benignas salen en los filtros de frecuencia y de
+ClinVar. En el círculo BTK es el punto más alejado
+del centro, sobre el cromosoma X. La búsqueda por fenotipo pone arriba a los
+genes de agammaglobulinemia, CD79B, BLNK, IGLL1, BTK y CD79A, todos con
+similitud cercana a 1, y en el diagrama de cuerdas cada uno recibe cuerdas de
+los dos signos. La ficha de BTK muestra la herencia ligada al X, la categoría
+de deficiencias de anticuerpos y las variantes patogénicas de ClinVar sobre la
+proteína, con el dominio quinasa como el que más concentra.
