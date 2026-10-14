@@ -1,0 +1,35 @@
+name: Informar un error
+description: Algo no funciona como esperabas
+labels: ["error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por avisar. **No adjuntes datos de pacientes** (VCF, cromatogramas, informes ni códigos identificables). Si necesitas un ejemplo, escribe la variante a mano.
+  - type: textarea
+    id: que
+    attributes:
+      label: Qué pasó
+      description: Qué esperabas y qué ocurrió.
+    validations:
+      required: true
+  - type: textarea
+    id: codigo
+    attributes:
+      label: Código para reproducirlo
+      description: Las líneas mínimas que producen el error.
+      render: r
+    validations:
+      required: true
+  - type: textarea
+    id: mensaje
+    attributes:
+      label: Mensaje completo
+      render: text
+  - type: textarea
+    id: sesion
+    attributes:
+      label: Salida de sessionInfo()
+      render: text
+    validations:
+      required: true

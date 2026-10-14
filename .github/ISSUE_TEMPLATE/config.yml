@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Primeros pasos, privacidad y trabajo sin conexión
+    url: https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html
+    about: Revisa la instalación y el modo sin conexión antes de abrir un issue.

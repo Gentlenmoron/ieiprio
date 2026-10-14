@@ -1,0 +1,55 @@
+Package: ieiprio
+Title: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad
+Version: 1.0.0
+Authors@R: c(
+    person("Yando", "Rios Vasquez", , "yandoriosvasquez@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0006-8594-1433")),
+    person("Nico", "Pavini", , "nicoyacencio@gmail.com", role = "aut")
+  )
+Description: Reune variantes en genes de errores innatos de la inmunidad
+    desde archivos VCF, cromatogramas Sanger (.ab1 y .scf), secuencias FASTA,
+    secuencias escritas o informes en PDF y Word, las anota con Ensembl VEP,
+    ClinVar y gnomAD y las prioriza segun ClinVar, impacto, frecuencia,
+    predictores, modo de herencia, fase del VCF y similitud del fenotipo
+    clinico con cada enfermedad de la Human Phenotype Ontology, explicando
+    cada puntaje, sugiriendo criterios ACMG/AMP con su clase por puntos y
+    generando un reporte HTML. Dibuja cromatogramas, dot plots de secuencias
+    y graficos del genoma. Herramienta de apoyo e investigacion, no de
+    diagnostico.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 4.2.0)
+Imports:
+    cli,
+    httr2,
+    jsonlite,
+    rlang,
+    tibble
+Suggests:
+    bslib,
+    circlize,
+    covr,
+    dplyr,
+    DT,
+    ggplot2 (>= 3.5.0),
+    knitr,
+    patchwork,
+    pdftools,
+    plotly,
+    ragg,
+    readxl,
+    rmarkdown,
+    shiny,
+    testthat (>= 3.0.0),
+    withr,
+    writexl,
+    xml2
+Config/testthat/edition: 3
+LazyData: true
+URL: https://gentlenmoron.github.io/ieiprio/,
+    https://github.com/Gentlenmoron/ieiprio
+BugReports: https://github.com/Gentlenmoron/ieiprio/issues
+Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr

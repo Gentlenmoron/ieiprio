@@ -1,0 +1,20 @@
+name: Proponer una mejora
+description: Una función nueva, un gen que falta o un cambio en la curación
+labels: ["mejora"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Qué propones
+    validations:
+      required: true
+  - type: textarea
+    id: por_que
+    attributes:
+      label: Por qué sería útil
+      description: El caso de uso clínico o de investigación.
+  - type: textarea
+    id: referencias
+    attributes:
+      label: Referencias
+      description: Artículos, guías de ClinGen o recursos que respalden el cambio.

@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+docs/
+data-raw/*.xlsx
+data-raw/hgnc_complete_set.txt
+data-raw/crudos/
+.DS_Store
+[Cc][Ll][Aa][Uu][Dd][Ee].md
+.[Cc][Ll][Aa][Uu][Dd][Ee]/
+graphify-out/
+.mcp.json
+*.session
+.Rapp.history
