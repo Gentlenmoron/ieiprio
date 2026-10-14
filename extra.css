@@ -1,0 +1,58 @@
+/* Barra superior */
+.navbar { box-shadow: 0 2px 12px rgba(11, 37, 69, 0.18); }
+.navbar .nav-text, .navbar .text-muted, .navbar small { color: #9fc9e6 !important; }
+.navbar .form-control { background-color: #13355e; border-color: #4fa3d1; color: #ffffff; }
+.navbar .form-control::placeholder { color: #9fc9e6; }
+.navbar-brand { font-weight: 800; letter-spacing: 0.02em; }
+
+/* Texto */
+body { line-height: 1.65; font-family: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+pre, code, kbd, samp { font-family: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace !important; }
+main h1, main h2, main h3 { font-weight: 750; letter-spacing: -0.01em; }
+main h2 { margin-top: 2.6rem; padding-bottom: 0.35rem; border-bottom: 2px solid #e6edf6; }
+main h3 { margin-top: 1.8rem; color: #1d6fa5; }
+main p { max-width: 46rem; }
+.page-header h1 { font-size: 2.3rem; }
+.contents .lead, main > p:first-of-type { font-size: 1.08rem; }
+
+/* Portada */
+.template-home .page-header img.logo, .template-home h1 img { filter: drop-shadow(0 6px 14px rgba(11, 37, 69, 0.25)); }
+.template-home main > div > p > strong:first-child { font-size: 1.2rem; color: #1d6fa5; }
+
+/* Figuras */
+main img:not(.logo):not([src*="badge"]):not([src*="shields"]) {
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(11, 37, 69, 0.10);
+  background: #ffffff;
+  margin: 0.6rem 0 0.4rem 0;
+}
+.galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin: 1.2rem 0 1rem; }
+.galeria p { display: contents; }
+.galeria img { width: 100% !important; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: #ffffff; padding: 6px; margin: 0 !important; transition: transform .2s ease, box-shadow .2s ease; }
+.galeria img:hover { box-shadow: 0 10px 28px rgba(11, 37, 69, 0.18); }
+.galeria img:hover { transform: translateY(-3px) scale(1.01); }
+.galeria figcaption { font-size: 0.85rem; color: #52514e; margin-top: 0.4rem; }
+
+.portada img { width: 100%; max-width: 900px; aspect-ratio: 4 / 3; object-fit: contain; }
+
+/* Tablas */
+main table { display: table; width: auto; max-width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e6edf6; border-radius: 10px; overflow: hidden; margin: 1rem 0 1.4rem; font-size: 0.93rem; }
+main table thead th { background: #f2f6fb; color: #0b2545; font-weight: 700; border-bottom: 1px solid #dce6f2 !important; }
+main table td, main table th { padding: 0.5rem 0.8rem !important; }
+main table tbody tr:nth-child(even) { background: #fbfcfe; }
+
+/* Codigo */
+pre { border-radius: 10px; border: 1px solid #e6edf6; background: #f8fafc !important; }
+code { font-size: 0.88em; }
+pre code { font-size: 0.86rem; }
+div.sourceCode { margin: 0.8rem 0 1.2rem; }
+
+/* Citas y avisos */
+blockquote { border-left: 4px solid #1d6fa5; background: #f2f7fc; padding: 0.8rem 1rem; border-radius: 0 10px 10px 0; color: #24323f; }
+
+/* Formulas */
+.math.display { overflow-x: auto; }
+
+/* Recuadro del ejemplo minimo al inicio de cada guia */
+.ejemplo { border: 1px solid #dce6f2; border-left: 4px solid #1d6fa5; border-radius: 10px; background: #f8fbfe; padding: 0.9rem 1.1rem 0.3rem; margin: 1rem 0 1.8rem; }
+.ejemplo > p:first-child { margin-top: 0; }
