@@ -1,0 +1,137 @@
+url: https://gentlenmoron.github.io/ieiprio/
+lang: es
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0b2545"
+    secondary: "#1d6fa5"
+    link-color: "#1d6fa5"
+    navbar-bg: "#0b2545"
+    headings-color: "#0b2545"
+    body-color: "#1b1b1a"
+    border-radius: "0.6rem"
+    base_font: {google: {family: "Inter", local: false}}
+    heading_font: {google: {family: "Inter", local: false}}
+    code_font: {google: {family: "JetBrains Mono", local: false}}
+    font-size-base: "1.0rem"
+home:
+  sidebar:
+    structure: [links, license, citation, authors, dev]
+navbar:
+  bg: primary
+  type: dark
+  structure:
+    left: [intro, guias, reference, news]
+    right: [search, github]
+  components:
+    intro:
+      text: Primeros pasos
+      href: articles/ieiprio.html
+    guias:
+      text: Guías
+      menu:
+      - text: Primeros pasos
+        href: articles/ieiprio.html
+      - text: Interpretación de resultados
+        href: articles/interpretar.html
+      - text: Método y parámetros
+        href: articles/metodo.html
+      - text: Casos de ejemplo
+        href: articles/casos.html
+    reference:
+      text: Referencia
+      href: reference/index.html
+    news:
+      text: Novedades
+      href: news/index.html
+articles:
+- title: Guías
+  navbar: ~
+  contents:
+  - ieiprio
+  - interpretar
+  - metodo
+  - casos
+reference:
+- title: Flujo completo
+  contents:
+  - iei_analizar
+  - iei_ejemplo_vcf
+- title: Leer y verificar
+  contents:
+  - iei_leer_vcf
+  - iei_verificar_sexo
+  - iei_cnv
+- title: Variantes desde texto, PDF o Word
+  contents:
+  - iei_variante
+  - iei_variantes
+  - iei_extraer_variantes
+  - iei_leer_texto
+- title: Secuenciación Sanger
+  contents:
+  - iei_sanger
+  - iei_cromatograma
+  - iei_dotplot
+  - plot.iei_sanger
+  - iei_consenso
+  - iei_leer_ab1
+  - iei_leer_scf
+  - iei_ejemplo_sanger
+- title: Explorar genes y fenotipos
+  contents:
+  - iei_gen
+  - iei_buscar_fenotipo
+  - iei_buscar_hpo
+  - iei_validar_fenotipo
+- title: Filtrar y anotar
+  contents:
+  - iei_filtrar
+  - iei_bitacora
+  - iei_anotar
+  - iei_gnomad
+  - iei_filtrar_frecuencia
+  - iei_vep_entrada
+  - iei_limpiar_cache
+- title: Priorizar y reportar
+  contents:
+  - iei_priorizar
+  - iei_pesos
+  - iei_reporte
+- title: Exportar y aplicación
+  contents:
+  - iei_exportar
+  - iei_phenopacket
+  - iei_granges
+  - iei_app
+- title: Gráficos del genoma
+  contents:
+  - iei_circos
+  - iei_cariograma
+- title: Explorar resultados
+  contents:
+  - plot.iei_resultado
+  - autoplot.iei
+  - summary.iei_resultado
+  - iei_tabla
+  - iei_metadatos
+- title: Panel de genes
+  contents:
+  - iei_panel
+  - iei_buscar_gen
+  - iei_actualizar_panel
+  - iei_fuentes
+- title: Datos incluidos
+  contents:
+  - iuis_panel
+  - iuis_alias
+  - iuis_categorias
+  - genes_coordenadas
+  - hpo_genes
+  - hpo_terminos
+  - hpo_enfermedades
+  - genes_dificiles
+  - fuentes_datos
+- title: internal
+  contents:
+  - ieiprio-package

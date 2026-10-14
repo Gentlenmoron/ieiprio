@@ -1,0 +1,41 @@
+# Cobertura de las pruebas. Publica el porcentaje en el resumen de la
+# ejecucion y deja el detalle como artefacto descargable.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: test-coverage
+
+permissions: read-all
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-24.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::covr, any::DT, any::htmltools
+          needs: coverage
+      - name: Medir cobertura
+        run: |
+          cov <- covr::package_coverage(quiet = FALSE, clean = FALSE,
+                                        install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package"))
+          pct <- round(covr::percent_coverage(cov), 1)
+          cat(sprintf("## Cobertura de pruebas: %s%%\n", pct), file = Sys.getenv("GITHUB_STEP_SUMMARY"), append = TRUE)
+          por_archivo <- covr::tally_coverage(cov, by = "line")
+          resumen <- aggregate(value ~ filename, por_archivo, function(v) round(100 * mean(v > 0), 1))
+          cat("\n| Archivo | % |\n|---|---|\n", file = Sys.getenv("GITHUB_STEP_SUMMARY"), append = TRUE)
+          cat(sprintf("| %s | %s |\n", resumen$filename, resumen$value), file = Sys.getenv("GITHUB_STEP_SUMMARY"), append = TRUE, sep = "")
+          covr::report(cov, file = "cobertura.html", browse = FALSE)
+        shell: Rscript {0}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cobertura
+          path: cobertura.html
