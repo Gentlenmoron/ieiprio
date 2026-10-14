@@ -1,0 +1,85 @@
+{
+ "header": {
+  "type": "esummary"
+ },
+ "result": {
+  "uids": [
+   "11",
+   "22",
+   "33",
+   "44"
+  ],
+  "11": {
+   "uid": "11",
+   "title": "NM_000061.3(BTK):c.1A>T (p.Met1Leu)",
+   "genes": [
+    {
+     "symbol": "BTK"
+    }
+   ],
+   "germline_classification": {
+    "description": "Pathogenic"
+   },
+   "variation_set": [
+    {
+     "canonical_spdi": "NC_000023.11:101354147:C:T",
+     "variant_type": "single nucleotide variant"
+    }
+   ]
+  },
+  "22": {
+   "uid": "22",
+   "title": "del",
+   "genes": [
+    {
+     "symbol": "BTK"
+    }
+   ],
+   "germline_classification": {
+    "description": "Pathogenic"
+   },
+   "variation_set": [
+    {
+     "canonical_spdi": "NC_000023.11:101354200:CA:C"
+    }
+   ]
+  },
+  "33": {
+   "uid": "33",
+   "title": "dos genes",
+   "genes": [
+    {
+     "symbol": "A"
+    },
+    {
+     "symbol": "B"
+    }
+   ],
+   "germline_classification": {
+    "description": "Benign"
+   },
+   "variation_set": [
+    {
+     "canonical_spdi": "NC_000001.11:999:G:A"
+    }
+   ]
+  },
+  "44": {
+   "uid": "44",
+   "title": "formato viejo",
+   "genes": [
+    {
+     "symbol": "RAG1"
+    }
+   ],
+   "clinical_significance": {
+    "description": "Uncertain significance"
+   },
+   "variation_set": [
+    {
+     "canonical_spdi": "NC_000011.10:36550000:G:A"
+    }
+   ]
+  }
+ }
+}

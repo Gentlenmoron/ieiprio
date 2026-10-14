@@ -1,0 +1,18 @@
+##fileformat=VCFv4.2
+##reference=GRCh38
+##contig=<ID=chr1,length=248956422>
+##contig=<ID=chrX,length=156040895>
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype quality">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	P01	P02
+chr1	1000	.	A	G	50	PASS	.	GT:AD:DP:GQ	0/1:10,12:22:99	0/0:20,0:20:60
+1	2000	rs1	C	T,G	80	PASS	.	GT:AD:DP:GQ	1/2:0,8,9:17:70	0/1:12,10,0:22:80
+chr1	3000	.	G	A	30	LowQual	.	GT:AD:DP	0/1:5,3:8	./.:.:.
+chrX	101360000	.	C	T	99	PASS	.	GT:AD:DP:GQ	1/1:0,30:30:99	0/1:15,14:29:99
+chrX	100000	.	G	C	60	PASS	.	GT:AD:DP:GQ	0/1:10,10:20:50	1/1:0,20:20:50
+chrX	101370000	.	A	G	70	PASS	.	GT:AD:DP:GQ	1:0,25:25:90	0/0:30,0:30:90
+chrM	500	.	T	C	40	PASS	.	GT:AD:DP:GQ	1/1:0,40:40:99	1/1:0,50:50:99
+chr1	4000	.	T	C,*	20	PASS	.	GT:AD:DP:GQ	1/2:6,7,5:18:30	0/0:20,0,0:20:60
+chr1	5000	.	G	A	45	PASS	.	GT:DP:GQ	0|1:18:40	1|1:22:45

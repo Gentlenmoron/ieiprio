@@ -1,0 +1,38 @@
+[
+ {
+  "C": {
+   "input": "NM_000061.3:c.1632-2A>G",
+   "id": [
+    "rs1"
+   ],
+   "vcf_string": [
+    "X-101353990-T-C",
+    "LRG_128-37235-A-G"
+   ],
+   "hgvsg": [
+    "NC_000023.11:g.101353990T>C"
+   ]
+  }
+ },
+ {
+  "T": {
+   "input": "RAG1:p.Arg396Cys",
+   "vcf_string": [
+    "11-36574490-C-T",
+    "11-36574491-G-T"
+   ]
+  }
+ },
+ {
+  "A": {
+   "input": "rs999",
+   "vcf_string": [
+    "5-1000-G-A"
+   ]
+  }
+ },
+ {
+  "error": "No se pudo interpretar",
+  "input": "BTK:c.999999X>Y"
+ }
+]

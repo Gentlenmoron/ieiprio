@@ -1,0 +1,20 @@
+test_that("iei_buscar_fenotipo pone arriba los genes de agammaglobulinemia", {
+  b <- suppressMessages(iei_buscar_fenotipo(c("agammaglobulinemia", "neumonia recurrente"), n = 15))
+  expect_s3_class(b, "iei_busqueda")
+  expect_true(all(c("BTK", "BLNK", "CD79A", "CD79B") %in% b$gen[1:10]))
+  expect_match(b$enfermedad[b$gen == "BTK"], "agammaglobulinemia")
+  expect_equal(b$similitud, sort(b$similitud, decreasing = TRUE))
+  expect_true(all(b$similitud >= 0 & b$similitud <= 1))
+  expect_equal(attr(b, "fenotipo"), c("HP:0004432", "HP:0006532"))
+  expect_equal(dim(attr(b, "matriz")), c(2L, 15L))
+  expect_match(b$coincidencias[b$gen == "BTK"], "Agammaglobulinemia \\(igual\\)")
+  expect_output(print(b), "BTK") |> suppressMessages()
+})
+
+test_that("se puede filtrar por herencia y usar coincidencia exacta", {
+  b <- iei_buscar_fenotipo("HP:0004432", herencia = "XL", n = 5)
+  expect_true(all(grepl("XL", b$herencia)))
+  e <- iei_buscar_fenotipo("HP:0006532", similitud = "exacta", n = 30)
+  expect_true(all(e$similitud %in% c(0, 1)))
+  expect_error(iei_buscar_fenotipo(character(0)), "al menos")
+})

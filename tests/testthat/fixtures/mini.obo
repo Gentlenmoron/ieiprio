@@ -1,0 +1,33 @@
+format-version: 1.2
+data-version: hp/releases/prueba
+
+[Term]
+id: HP:0000001
+name: All
+
+[Term]
+id: HP:0000002
+name: Raiz fenotipo
+is_a: HP:0000001 ! All
+
+[Term]
+id: HP:0000003
+name: Infeccion
+synonym: "Infection" EXACT []
+synonym: "Infecc" RELATED []
+is_a: HP:0000002 ! Raiz fenotipo
+
+[Term]
+id: HP:0000004
+name: Neumonia
+alt_id: HP:0000099
+is_a: HP:0000003 ! Infeccion
+
+[Term]
+id: HP:0000005
+name: Termino obsoleto
+is_obsolete: true
+
+[Typedef]
+id: part_of
+name: part of
