@@ -9,11 +9,21 @@
 
 `ieiprio` encuentra, anota y prioriza variantes en genes de errores innatos de
 la inmunidad a partir de secuencias Sanger, FASTA, VCF o el texto de un
-informe.
+informe. Trabaja solo con lo que sale de la secuencia y de bases de datos
+curadas, para que el mismo archivo dé siempre el mismo resultado.
 
-<div class="portada">
-<img src="man/figures/cromatograma.png" width="100%" alt="Cromatograma de BTK c.1632-2A>G en una portadora, con el pico doble en la posición de la variante" />
-</div>
+## Características principales
+
+- Lee variantes desde VCF, cromatogramas Sanger (`.ab1`, `.scf`), FASTA, una
+  secuencia escrita o el texto de un informe en PDF o Word.
+- Llama variantes Sanger con detección de heterocigotos por picos dobles y las
+  muestra en el cromatograma, base por base.
+- Anota con Ensembl VEP, ClinVar y gnomAD, con caché local y modo sin conexión.
+- Prioriza con un puntaje explicado en texto y criterios ACMG por puntos.
+- Compara el fenotipo del caso (términos HPO) con cada enfermedad del panel
+  IUIS de PanelApp.
+- Entrega un reporte HTML por paciente y exporta a Excel, VCF, BED o
+  Phenopacket.
 
 ## Instalación
 
@@ -22,44 +32,13 @@ install.packages("pak")
 pak::pak("Gentlenmoron/ieiprio")
 ```
 
-Con `remotes` también funciona.
+Para tener también las guías dentro de R, instala con `remotes` y construye
+las viñetas.
 
 ```r
-remotes::install_github("Gentlenmoron/ieiprio")
-```
-
-## Ejemplo
-
-```r
-library(ieiprio)
-ab1 <- iei_ejemplo_sanger("het")
-ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
-v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
-v[, c("gen", "chr", "pos", "ref", "alt", "genotipo", "qual", "ab", "lecturas")]
-iei_cromatograma(v)
-```
-
-```
-#> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217, identidad 99.8%.
-#> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218, identidad 99.8%.
-#> # A tibble: 1 × 9
-#>   gen   chr         pos ref   alt   genotipo  qual    ab lecturas
-#>   <chr> <chr>     <int> <chr> <chr> <chr>    <dbl> <dbl>    <int>
-#> 1 BTK   X     101353990 T     C     het         45 0.445        2
-```
-
-Corre sin conexión. `iei_ejemplo_sanger()` escribe un par de cromatogramas
-`.ab1` de un amplicón de BTK con la variante patogénica c.1632-2A>G en una
-portadora. `iei_sanger()` los alinea contra la referencia GRCh38 que trae el
-paquete y encuentra la variante en las dos hebras, con 45 % de la señal en el
-alelo alternativo. El cromatograma de arriba es la salida de
-`iei_cromatograma()`.
-
-Con conexión, `iei_anotar()` y `iei_priorizar()` completan el análisis. La
-variante queda en prioridad alta con su razón escrita punto por punto.
-
-```r
-iei_priorizar(iei_anotar(v), fenotipo = c("agammaglobulinemia", "neumonía recurrente"))
+install.packages("remotes")
+remotes::install_github("Gentlenmoron/ieiprio", build_vignettes = TRUE)
+browseVignettes("ieiprio")
 ```
 
 ## Entradas
@@ -72,18 +51,17 @@ iei_priorizar(iei_anotar(v), fenotipo = c("agammaglobulinemia", "neumonía recur
 | Secuencia escrita | Texto con las bases | `iei_sanger()` |
 | Informe | PDF, Word o texto | `iei_variantes()` |
 
-## Galería
+## Flujo de trabajo
 
-<div class="galeria">
-<img src="man/figures/galeria-1-cromatograma.png" width="32%" alt="Cromatograma de una variante heterocigota" />
-<img src="man/figures/galeria-2-dotplot.png" width="32%" alt="Dot plot de una lectura Sanger frente a la referencia de BTK" />
-<img src="man/figures/galeria-3-circos.png" width="32%" alt="Genes candidatos por fenotipo sobre el genoma en círculo" />
-<img src="man/figures/galeria-4-acordes.png" width="32%" alt="Diagrama de cuerdas entre signos del caso y genes" />
-<img src="man/figures/galeria-5-cariograma.png" width="32%" alt="Genes candidatos sobre los cromosomas" />
-<img src="man/figures/galeria-6-clinvar.png" width="32%" alt="Variantes patogénicas de ClinVar sobre la proteína BTK" />
+<div class="flujo">
+<img src="man/figures/flujo.svg" width="100%" alt="Flujo de ieiprio. Las entradas VCF, Sanger o FASTA y texto pasan por filtrar, anotar y priorizar hasta el reporte HTML y la exportación. Debajo, seis gráficos: cromatograma, dot plot, variantes de ClinVar en la proteína, genoma en círculo, diagrama de cuerdas y cariograma." />
 </div>
 
-## Funciones
+*De la secuencia al reporte. En azul las entradas, en oscuro el proceso y en
+verde las salidas. Debajo, el gráfico que acompaña cada paso. Los ejemplos
+completos que los generan están en la guía [Casos de ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.html).*
+
+## Funciones disponibles
 
 | Función | Qué hace |
 | --- | --- |
@@ -109,15 +87,22 @@ iei_priorizar(iei_anotar(v), fenotipo = c("agammaglobulinemia", "neumonía recur
 | `iei_panel()`, `iei_buscar_gen()`, `iei_fuentes()` | Panel de genes y versiones de los datos |
 | `iei_app()` | Aplicación Shiny |
 
-Las guías están en <https://gentlenmoron.github.io/ieiprio/>.
-[Primeros pasos](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html)
-recorre cada entrada,
-[Interpretación de resultados](https://gentlenmoron.github.io/ieiprio/articles/interpretar.html)
-explica el puntaje y la búsqueda por fenotipo,
-[Método y parámetros](https://gentlenmoron.github.io/ieiprio/articles/metodo.html)
-trae los cálculos y
-[Casos de ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.html)
-tres análisis completos.
+## Documentación
+
+El sitio del paquete, <https://gentlenmoron.github.io/ieiprio/>, reúne la
+referencia de cada función y cuatro guías.
+
+| Guía | Contenido |
+| --- | --- |
+| [Primeros pasos](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html) | Instalación, fundamentos y cada tipo de entrada |
+| [Interpretación de resultados](https://gentlenmoron.github.io/ieiprio/articles/interpretar.html) | El puntaje, la clasificación ACMG y la búsqueda por fenotipo |
+| [Método y parámetros](https://gentlenmoron.github.io/ieiprio/articles/metodo.html) | Fórmulas, umbrales, validación y referencias |
+| [Casos de ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.html) | Tres análisis completos con datos para copiar |
+
+Las mismas guías se abren sin internet con `browseVignettes("ieiprio")` si el
+paquete se instaló con `build_vignettes = TRUE`. Las insignias de arriba
+muestran si las pruebas y la revisión del paquete pasan en macOS, Windows y
+Linux.
 
 > Herramienta de apoyo e investigación. No es un informe diagnóstico ni
 > reemplaza la clasificación ACMG/AMP hecha por un especialista.

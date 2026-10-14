@@ -33,7 +33,9 @@ main img:not(.logo):not([src*="badge"]):not([src*="shields"]) {
 .galeria img:hover { transform: translateY(-3px) scale(1.01); }
 .galeria figcaption { font-size: 0.85rem; color: #52514e; margin-top: 0.4rem; }
 
-.portada img { width: 100%; max-width: 900px; aspect-ratio: 4 / 3; object-fit: contain; }
+/* Diagrama de flujo de la portada, con los graficos de cada paso */
+.flujo img { width: 100%; max-width: 960px; box-shadow: 0 8px 30px rgba(11, 37, 69, 0.12) !important; }
+.flujo + p em, .flujo em { color: #52514e; font-size: 0.92rem; }
 
 /* Tablas */
 main table { display: table; width: auto; max-width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e6edf6; border-radius: 10px; overflow: hidden; margin: 1rem 0 1.4rem; font-size: 0.93rem; }

@@ -38,6 +38,9 @@ navbar:
         href: articles/metodo.html
       - text: Casos de ejemplo
         href: articles/casos.html
+      - text: "---------"
+      - text: Todas las guías
+        href: articles/index.html
     reference:
       text: Referencia
       href: reference/index.html

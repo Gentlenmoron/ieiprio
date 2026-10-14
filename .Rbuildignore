@@ -17,3 +17,4 @@
 ^graphify-out$
 ^\.mcp\.json$
 ^man/figures/cromatograma\.png$
+^man/figures/flujo\.svg$

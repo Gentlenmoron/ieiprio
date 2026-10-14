@@ -1,4 +1,5 @@
-# Figuras del README y de la galeria del sitio. Todas salen en 4:3, 1200 x 900
+# Figuras de la galeria (dentro del diagrama de flujo de la portada y en las
+# guias). Todas salen en 4:3, 1200 x 900
 # px (8 x 6 pulgadas a 150 dpi) con ragg. Corre de punta a punta; la ficha de
 # BTK necesita conexion y, si no la hay, la ultima figura pasa a ser el
 # ranking por fenotipo.
@@ -19,7 +20,6 @@ unlink(Sys.glob(file.path(dir, "galeria-*.png")))
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 het <- suppressMessages(iei_sanger(iei_ejemplo_sanger("het"), gen = "BTK", sexo = "F", referencia = ref))
 cromatograma <- iei_cromatograma(het, ventana = 9)
-guardar(cromatograma, "cromatograma.png")
 guardar(cromatograma, "galeria-1-cromatograma.png")
 
 hemi <- suppressMessages(iei_sanger(iei_ejemplo_sanger("hemi"), gen = "BTK", sexo = "M", referencia = ref))
@@ -39,3 +39,6 @@ if (!is.null(ficha) && !is.null(ficha$clinvar)) {
   message("Sin conexion para la ficha de BTK; se usa el ranking por fenotipo.")
   guardar(plot(b), "galeria-6-ranking.png")
 }
+
+# Despues de este script, el diagrama de la portada se arma con
+#   python3 data-raw/flujo.py
