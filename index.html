@@ -48,6 +48,8 @@
     <li><a class="dropdown-item" href="articles/interpretar.html">Interpretación de resultados</a></li>
     <li><a class="dropdown-item" href="articles/metodo.html">Método y parámetros</a></li>
     <li><a class="dropdown-item" href="articles/casos.html">Casos de ejemplo</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="articles/index.html">Todas las guías</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Referencia</a></li>
@@ -72,39 +74,30 @@
 </div>
 <!-- badges: start -->
 
-<p><code>ieiprio</code> encuentra, anota y prioriza variantes en genes de errores innatos de la inmunidad a partir de secuencias Sanger, FASTA, VCF o el texto de un informe.</p>
-<div class="portada">
-<p><img src="reference/figures/cromatograma.png" width="100%" alt="Cromatograma de BTK c.1632-2A&gt;G en una portadora, con el pico doble en la posición de la variante” /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=" instalaci class="section level2"></p>
-<h2>Instalación</h2>
+<p><code>ieiprio</code> encuentra, anota y prioriza variantes en genes de errores innatos de la inmunidad a partir de secuencias Sanger, FASTA, VCF o el texto de un informe. Trabaja solo con lo que sale de la secuencia y de bases de datos curadas, para que el mismo archivo dé siempre el mismo resultado.</p>
+<div class="section level2">
+<h2 id="características-principales">Características principales<a class="anchor" aria-label="anchor" href="#caracter%C3%ADsticas-principales"></a>
+</h2>
+<ul>
+<li>Lee variantes desde VCF, cromatogramas Sanger (<code>.ab1</code>, <code>.scf</code>), FASTA, una secuencia escrita o el texto de un informe en PDF o Word.</li>
+<li>Llama variantes Sanger con detección de heterocigotos por picos dobles y las muestra en el cromatograma, base por base.</li>
+<li>Anota con Ensembl VEP, ClinVar y gnomAD, con caché local y modo sin conexión.</li>
+<li>Prioriza con un puntaje explicado en texto y criterios ACMG por puntos.</li>
+<li>Compara el fenotipo del caso (términos HPO) con cada enfermedad del panel IUIS de PanelApp.</li>
+<li>Entrega un reporte HTML por paciente y exporta a Excel, VCF, BED o Phenopacket.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="instalación">Instalación<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Gentlenmoron/ieiprio"</span><span class="op">)</span></span></code></pre></div>
-<p>Con <code>remotes</code> también funciona.</p>
+<p>Para tener también las guías dentro de R, instala con <code>remotes</code> y construye las viñetas.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Gentlenmoron/ieiprio"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="ejemplo">Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo"></a>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gentlenmoron.github.io/ieiprio/">ieiprio</a></span><span class="op">)</span></span>
-<span><span class="va">ab1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span></span>
-<span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"btk_referencia.fa"</span>, package <span class="op">=</span> <span class="st">"ieiprio"</span><span class="op">)</span></span>
-<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="va">ab1</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="va">v</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"chr"</span>, <span class="st">"pos"</span>, <span class="st">"ref"</span>, <span class="st">"alt"</span>, <span class="st">"genotipo"</span>, <span class="st">"qual"</span>, <span class="st">"ab"</span>, <span class="st">"lecturas"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="reference/iei_cromatograma.html">iei_cromatograma</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217, identidad 99.8%.</span></span>
-<span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218, identidad 99.8%.</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 9</span></span>
-<span><span class="co">#&gt;   gen   chr         pos ref   alt   genotipo  qual    ab lecturas</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 BTK   X     101353990 T     C     het         45 0.445        2</span></span></code></pre>
-<p>Corre sin conexión. <code><a href="reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger()</a></code> escribe un par de cromatogramas <code>.ab1</code> de un amplicón de BTK con la variante patogénica c.1632-2A&gt;G en una portadora. <code><a href="reference/iei_sanger.html">iei_sanger()</a></code> los alinea contra la referencia GRCh38 que trae el paquete y encuentra la variante en las dos hebras, con 45 % de la señal en el alelo alternativo. El cromatograma de arriba es la salida de <code><a href="reference/iei_cromatograma.html">iei_cromatograma()</a></code>.</p>
-<p>Con conexión, <code><a href="reference/iei_anotar.html">iei_anotar()</a></code> y <code><a href="reference/iei_priorizar.html">iei_priorizar()</a></code> completan el análisis. La variante queda en prioridad alta con su razón escrita punto por punto.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/iei_priorizar.html">iei_priorizar</a></span><span class="op">(</span><span class="fu"><a href="reference/iei_anotar.html">iei_anotar</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>, fenotipo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"agammaglobulinemia"</span>, <span class="st">"neumonía recurrente"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Gentlenmoron/ieiprio"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"ieiprio"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="entradas">Entradas<a class="anchor" aria-label="anchor" href="#entradas"></a>
@@ -150,14 +143,15 @@
 </table>
 </div>
 <div class="section level2">
-<h2 id="galería">Galería<a class="anchor" aria-label="anchor" href="#galer%C3%ADa"></a>
+<h2 id="flujo-de-trabajo">Flujo de trabajo<a class="anchor" aria-label="anchor" href="#flujo-de-trabajo"></a>
 </h2>
-<div class="galeria">
-<p><img src="reference/figures/galeria-1-cromatograma.png" width="32%" alt="Cromatograma de una variante heterocigota"><img src="reference/figures/galeria-2-dotplot.png" width="32%" alt="Dot plot de una lectura Sanger frente a la referencia de BTK"><img src="reference/figures/galeria-3-circos.png" width="32%" alt="Genes candidatos por fenotipo sobre el genoma en círculo"><img src="reference/figures/galeria-4-acordes.png" width="32%" alt="Diagrama de cuerdas entre signos del caso y genes"><img src="reference/figures/galeria-5-cariograma.png" width="32%" alt="Genes candidatos sobre los cromosomas"><img src="reference/figures/galeria-6-clinvar.png" width="32%" alt="Variantes patogénicas de ClinVar sobre la proteína BTK"></p>
+<div class="flujo">
+<p><img src="reference/figures/flujo.svg" width="100%" alt="Flujo de ieiprio. Las entradas VCF, Sanger o FASTA y texto pasan por filtrar, anotar y priorizar hasta el reporte HTML y la exportación. Debajo, seis gráficos: cromatograma, dot plot, variantes de ClinVar en la proteína, genoma en círculo, diagrama de cuerdas y cariograma."></p>
 </div>
+<p><em>De la secuencia al reporte. En azul las entradas, en oscuro el proceso y en verde las salidas. Debajo, el gráfico que acompaña cada paso. Los ejemplos completos que los generan están en la guía <a href="https://gentlenmoron.github.io/ieiprio/articles/casos.html">Casos de ejemplo</a>.</em></p>
 </div>
 <div class="section level2">
-<h2 id="funciones">Funciones<a class="anchor" aria-label="anchor" href="#funciones"></a>
+<h2 id="funciones-disponibles">Funciones disponibles<a class="anchor" aria-label="anchor" href="#funciones-disponibles"></a>
 </h2>
 <table class="table">
 <colgroup>
@@ -276,7 +270,40 @@
 </tr>
 </tbody>
 </table>
-<p>Las guías están en <a href="https://gentlenmoron.github.io/ieiprio/" class="uri">https://gentlenmoron.github.io/ieiprio/</a>. <a href="https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html">Primeros pasos</a> recorre cada entrada, <a href="https://gentlenmoron.github.io/ieiprio/articles/interpretar.html">Interpretación de resultados</a> explica el puntaje y la búsqueda por fenotipo, <a href="https://gentlenmoron.github.io/ieiprio/articles/metodo.html">Método y parámetros</a> trae los cálculos y <a href="https://gentlenmoron.github.io/ieiprio/articles/casos.html">Casos de ejemplo</a> tres análisis completos.</p>
+</div>
+<div class="section level2">
+<h2 id="documentación">Documentación<a class="anchor" aria-label="anchor" href="#documentaci%C3%B3n"></a>
+</h2>
+<p>El sitio del paquete, <a href="https://gentlenmoron.github.io/ieiprio/" class="uri">https://gentlenmoron.github.io/ieiprio/</a>, reúne la referencia de cada función y cuatro guías.</p>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Guía</th>
+<th>Contenido</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html">Primeros pasos</a></td>
+<td>Instalación, fundamentos y cada tipo de entrada</td>
+</tr>
+<tr>
+<td><a href="https://gentlenmoron.github.io/ieiprio/articles/interpretar.html">Interpretación de resultados</a></td>
+<td>El puntaje, la clasificación ACMG y la búsqueda por fenotipo</td>
+</tr>
+<tr>
+<td><a href="https://gentlenmoron.github.io/ieiprio/articles/metodo.html">Método y parámetros</a></td>
+<td>Fórmulas, umbrales, validación y referencias</td>
+</tr>
+<tr>
+<td><a href="https://gentlenmoron.github.io/ieiprio/articles/casos.html">Casos de ejemplo</a></td>
+<td>Tres análisis completos con datos para copiar</td>
+</tr>
+</tbody>
+</table>
+<p>Las mismas guías se abren sin internet con <code>browseVignettes("ieiprio")</code> si el paquete se instaló con <code>build_vignettes = TRUE</code>. Las insignias de arriba muestran si las pruebas y la revisión del paquete pasan en macOS, Windows y Linux.</p>
 <blockquote>
 <p>Herramienta de apoyo e investigación. No es un informe diagnóstico ni reemplaza la clasificación ACMG/AMP hecha por un especialista.</p>
 </blockquote>

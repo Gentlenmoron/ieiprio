@@ -41,7 +41,7 @@ extremos, donde la calidad cae como en una lectura real.
 
 ``` r
 ab1 <- iei_ejemplo_sanger()
-#> Cromatogramas de ejemplo en /tmp/RtmpmVXcMN/sanger_1a4e522abe41.
+#> Cromatogramas de ejemplo en /tmp/RtmpXPg6Yr/sanger_18b61a1e980f.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "M", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,

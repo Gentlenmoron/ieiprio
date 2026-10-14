@@ -45,6 +45,8 @@
     <li><a class="dropdown-item" href="../articles/interpretar.html">Interpretación de resultados</a></li>
     <li><a class="dropdown-item" href="../articles/metodo.html">Método y parámetros</a></li>
     <li><a class="dropdown-item" href="../articles/casos.html">Casos de ejemplo</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">Todas las guías</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Referencia</a></li>
@@ -110,8 +112,6 @@ base 151 cambiada de T a C.</p>
 <p><img src="casos_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_anotar.html">iei_anotar</a></span><span class="op">(</span><span class="va">v1</span>, vep_json <span class="op">=</span> <span class="va">vep</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Sin consultar ClinVar (modo sin red): no hay estrellas ni PS1,</span></span>
-<span><span class="co">#&gt; PM5 o PM1.</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_priorizar.html">iei_priorizar</a></span><span class="op">(</span><span class="va">a1</span>, fenotipo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"agammaglobulinemia"</span>, <span class="st">"neumonía recurrente"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fenotipo interpretado como:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
@@ -139,13 +139,13 @@ hermana portadora. Cada caso tiene una lectura directa y una
 reversa.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">varon</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"hemi"</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpVSTNE7/sanger_1e9045ca9746</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpCRNj8s/sanger_1cb8304b73bb</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="va">portadora</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpVSTNE7/sanger_1e905d99f303</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpCRNj8s/sanger_1cb878361c12</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
@@ -182,12 +182,11 @@ reversa.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 452 more rows</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_priorizar.html">iei_priorizar</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_anotar.html">iei_anotar</a></span><span class="op">(</span><span class="va">portadora</span>, vep_json <span class="op">=</span> <span class="va">vep</span><span class="op">)</span>, fenotipo <span class="op">=</span> <span class="st">"agammaglobulinemia"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Sin consultar ClinVar (modo sin red): no hay estrellas ni PS1, PM5 o PM1.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fenotipo interpretado como:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
 <span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">p2</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"portadora.html"</span><span class="op">)</span>, dominios <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"sanger"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpVSTNE7/portadora.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpCRNj8s/portadora.html</span>.</span></span></code></pre></div>
 <p><strong>Lo que deberías ver.</strong> En el varón la variante es
 hemicigota y la fracción alélica es 1, porque el pico de T desaparece y
 solo queda C. En la portadora es heterocigota, con cerca de 45 % de la
@@ -208,9 +207,27 @@ recurrentes. Este caso necesita conexión para anotar.</p>
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_analizar.html">iei_analizar</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_vcf.html">iei_ejemplo_vcf</a></span><span class="op">(</span><span class="op">)</span>, sexo <span class="op">=</span> <span class="st">"M"</span>,</span>
 <span>                    fenotipo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"agammaglobulinemia"</span>, <span class="st">"neumonía recurrente"</span><span class="op">)</span>,</span>
 <span>                    carpeta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/iei_tabla.html">iei_tabla</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"genotipo"</span>, <span class="st">"puntaje"</span>, <span class="st">"categoria"</span>, <span class="st">"acmg_clase"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">ieiprio</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Leyendo <span style="color: #0000BB;">ejemplo.vcf.gz</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtrando 4094 filas</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Anotando 5 variantes con Ensembl VEP</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fenotipo interpretado como:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> neumonía recurrente → HP:0006532 Recurrent pneumonia</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 1, baja 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpCRNj8s/EJEMPLO01.html</span></span></span>
+<span><span class="fu"><a href="../reference/iei_tabla.html">iei_tabla</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"genotipo"</span>, <span class="st">"puntaje"</span>, <span class="st">"categoria"</span>, <span class="st">"acmg_clase"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
+<span><span class="co">#&gt;   gen   hgvs_c                        genotipo puntaje categoria acmg_clase     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> BTK   ENST00000308731.8:c.1632-2A&gt;G hemi        13.8 alta      Probablemente …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RAG1  ENST00000299440.6:c.1186C&gt;T   het          6.7 media     Probablemente …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> STAT1 <span style="color: #BB0000;">NA</span>                            het          3.6 baja      Significado in…</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_circos.html">iei_circos</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="casos_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%"></p>
 <p>La búsqueda por fenotipo no necesita red.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">busqueda</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_buscar_fenotipo.html">iei_buscar_fenotipo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"agammaglobulinemia"</span>, <span class="st">"neumonía recurrente"</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
@@ -243,7 +260,35 @@ recurrentes. Este caso necesita conexión para anotar.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">btk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_gen.html">iei_gen</a></span><span class="op">(</span><span class="st">"BTK"</span><span class="op">)</span></span>
 <span><span class="va">btk</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">BTK</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; • Herencia: XL ─ evidencia en PanelApp: verde</span></span>
+<span><span class="co">#&gt; • Mecanismo: pérdida de función o no especificado</span></span>
+<span><span class="co">#&gt; • Categoría IUIS: 3 Deficiencias predominantemente de anticuerpos (PanelApp,</span></span>
+<span><span class="co">#&gt; tabla IUIS)</span></span>
+<span><span class="co">#&gt; • Alias: ATK, PSCTK1, XLA</span></span>
+<span><span class="co">#&gt; • Ubicación: X:101,349,447-101,390,796 (GRCh38)</span></span>
+<span><span class="co">#&gt; • Fenotipos en PanelApp: Agammaglobulinemia and isolated hormone deficiency;</span></span>
+<span><span class="co">#&gt; Agammaglobulinemia, X-linked; Agammaglobulinemia, X-linked 1 (y 6 mas)</span></span>
+<span><span class="co">#&gt; • HPO: 77 términos; los más específicos: Complete or near-complete absence of</span></span>
+<span><span class="co">#&gt; specific antibody response to protein-conjugated Haemophilus influenzae type b</span></span>
+<span><span class="co">#&gt; vaccine, Enteroviral dermatomyositis syndrome, Enteroviral hepatitis,</span></span>
+<span><span class="co">#&gt; Bronchiolitis obliterans, Lymph node hypoplasia, Recurrent enteroviral</span></span>
+<span><span class="co">#&gt; infections</span></span>
+<span><span class="co">#&gt; • Proteína ENSP00000308176: 659 aa, dominios Pleckstrin homology domain, Zinc</span></span>
+<span><span class="co">#&gt; finger, Btk motif, SH3 domain, SH2 domain, Serine-threonine/tyrosine-protein</span></span>
+<span><span class="co">#&gt; kinase, catalytic domain</span></span>
+<span><span class="co">#&gt; • ClinVar (2026-10-14): patogenica 433, probablemente patogenica 136,</span></span>
+<span><span class="co">#&gt; significado incierto 220, probablemente benigna 230, benigna 72</span></span>
+<span><span class="co">#&gt; • Patogénicas y probablemente patogénicas por tipo: frameshift o indel 111,</span></span>
+<span><span class="co">#&gt; missense 90, sin sentido 57, splicing 46, otra 44, sinonima 2</span></span>
+<span><span class="co">#&gt; • Donde se concentran en la proteína: Serine-threonine/tyrosine-protein kinase,</span></span>
+<span><span class="co">#&gt; catalytic domain 112, Pleckstrin homology domain 46, fuera de dominios 23, SH2</span></span>
+<span><span class="co">#&gt; domain 22, Zinc finger, Btk motif 15, SH3 domain 8</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Grafico: plot(x) o autoplot(x); variantes de ClinVar en x$clinvar$variantes.</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">btk</span><span class="op">)</span></span></code></pre></div>
+<p><img src="casos_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="100%"></p>
 <p><strong>Lo que deberías ver.</strong> De las cinco variantes de
 ClinVar del ejemplo quedan tres. BTK c.1632-2A&gt;G queda primera en
 prioridad alta, con clase ACMG probablemente patogénica. RAG1

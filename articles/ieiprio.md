@@ -6,7 +6,7 @@ conexión.
 ``` r
 
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/RtmpTtdphv/sanger_1ecc5c0fa895.
+#> Cromatogramas de ejemplo en /tmp/Rtmp8mUYNl/sanger_1d26a34b165.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
@@ -296,8 +296,15 @@ variantes quedan en cada paso.
 ``` r
 
 anotado <- iei_anotar(filtrado)
+#> Consultando Ensembl VEP (GRCh38) para 5 variantes.
 anotado <- iei_filtrar_frecuencia(anotado)
 anotado[, c("gen", "hgvs_c", "consecuencia", "af_gnomad", "clinvar")]
+#> # A tibble: 3 × 5
+#>   gen   hgvs_c                        consecuencia             af_gnomad clinvar
+#>   <chr> <chr>                         <chr>                        <dbl> <chr>  
+#> 1 STAT1 NA                            downstream_gene_variant  0.0000263 uncert…
+#> 2 RAG1  ENST00000299440.6:c.1186C>T   missense_variant         0.0000376 pathog…
+#> 3 BTK   ENST00000308731.8:c.1632-2A>G splice_acceptor_variant NA         pathog…
 ```
 
 La anotación agrega la consecuencia en el transcrito, la nomenclatura
@@ -311,7 +318,18 @@ depende de la herencia del gen.
 ``` r
 
 prior <- iei_priorizar(anotado, fenotipo = c("agammaglobulinemia", "neumonía recurrente"))
+#> ℹ Fenotipo interpretado como:
+#> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
+#> • neumonía recurrente → HP:0006532 Recurrent pneumonia
 prior
+#> Resultado de ieiprio • 1 muestra, 3 variantes
+#> Genoma GRCh38 • Ensembl VEP 116 • prioridad alta 1, media 1, baja 1
+#> # A tibble: 3 × 8
+#>   muestra   gen   hgvs_c      hgvs_p      genotipo puntaje categoria acmg       
+#>   <chr>     <chr> <chr>       <chr>       <chr>      <dbl> <chr>     <chr>      
+#> 1 EJEMPLO01 BTK   c.1632-2A>G NA          hemi        13.8 alta      PVS1_Stron…
+#> 2 EJEMPLO01 RAG1  c.1186C>T   p.Arg396Cys het          6.7 media     PM1_Suppor…
+#> 3 EJEMPLO01 STAT1 NA          NA          het          3.6 baja      PM2_Suppor…
 ```
 
 La variante de BTK queda en prioridad alta. Rompe el sitio aceptor de
@@ -326,6 +344,8 @@ salen en el filtro de frecuencia o en el de ClinVar.
 ``` r
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
+#> Reporte de "EJEMPLO01" guardado en
+#> /tmp/Rtmp8mUYNl/EJEMPLO01.html.
 ```
 
 El argumento `paciente` es el código de la muestra y nunca un nombre.
@@ -339,6 +359,16 @@ fuentes.
 ``` r
 
 res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M", fenotipo = "agammaglobulinemia", carpeta = tempdir())
+#> 
+#> ── ieiprio ─────────────────────────────────────────────────────────────────────
+#> ℹ Leyendo ejemplo.vcf.gz
+#> ℹ Filtrando 4094 filas
+#> ℹ Anotando 5 variantes con Ensembl VEP
+#> ℹ Fenotipo interpretado como:
+#> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
+#> ✔ Prioridad alta 1, media 1, baja 1
+#> 
+#> ✔ Reporte en /tmp/Rtmp8mUYNl/EJEMPLO01.html
 ```
 
 [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
@@ -350,7 +380,7 @@ indicada.
 ``` r
 
 sanger <- iei_sanger(iei_ejemplo_sanger(), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpTtdphv/sanger_1ecc713e2c5c.
+#> Cromatogramas de ejemplo en /tmp/Rtmp8mUYNl/sanger_1d2635283a0.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -403,7 +433,6 @@ mismo que con un VCF.
 
 vep <- system.file("extdata", "btk_vep.json", package = "ieiprio")
 iei_priorizar(iei_anotar(sanger, vep_json = vep), fenotipo = "agammaglobulinemia")
-#> ℹ Sin consultar ClinVar (modo sin red): no hay estrellas ni PS1, PM5 o PM1.
 #> ℹ Fenotipo interpretado como:
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 #> Resultado de ieiprio • 1 muestra, 1 variante
@@ -445,6 +474,36 @@ la ubica, la anota, la prioriza y muestra su ficha.
 ``` r
 
 iei_variante("BTK c.1632-2A>G", genotipo = "hemi", fenotipo = "agammaglobulinemia")
+#> ℹ Sin transcrito, "BTK:c.1632-2A>G" corresponde a varias posiciones. Al anotar
+#>   se conserva la que coincide con esa nomenclatura en el transcrito MANE.
+#> ℹ Para evitarlo, indica el transcrito: "NM_000061.3:c.1632-2A>G".
+#> ℹ Fenotipo interpretado como:
+#> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
+#> 
+#> 
+#> ── BTK c.1632-2A>G ──
+#> 
+#> 
+#> 
+#> • Proteina: -
+#> 
+#> • Consecuencia: splice acceptor variant (HIGH)
+#> 
+#> • gnomAD: ausente | ClinVar: pathogenic
+#> 
+#> • Predictores: SpliceAI 0.99
+#> 
+#> • Herencia del gen: XL | Genotipo: hemi
+#> 
+#> • Fenotipos del gen: Agammaglobulinemia and isolated hormone deficiency;
+#>   Agammaglobulinemia, X-linked; Agammaglobulinemia, X-linked 1 (y 6 mas)
+#> 
+#> → Puntaje 14 (alta): ClinVar patogénica (+4); impacto alto (+3); ausente en
+#>   gnomAD (+1); predictores a favor (SpliceAI 0.99) (+1); hemicigota en gen
+#>   ligado al X (+2); fenotipo parecido con Agammaglobulinemia, X-linked
+#>   (OMIM:300755), similitud 1.00 y 1 de 1 términos exactos (+3)
+#> 
+#> → ACMG sugerido: PVS1_Strong, PM2_Supporting, PP3, PP4
 ```
 
 ## 9. CNV del VCF
@@ -479,8 +538,55 @@ y la nota de cada variante lo advierte.
 ``` r
 
 summary(prior)
+#> 
+#> ── Resumen de ieiprio ──
+#> 
+#> Genoma GRCh38, Ensembl VEP 116
+#> 
+#> ── Variantes por prioridad
+#> categoria
+#>  alta media  baja 
+#>     1     1     1
+#> 
+#> ── Por muestra
+#> # A tibble: 1 × 5
+#>   muestra    alta media  baja principal
+#>   <chr>     <int> <int> <int> <chr>    
+#> 1 EJEMPLO01     1     1     1 BTK
+#> 
+#> ── Genes con mayor puntaje
+#> # A tibble: 3 × 4
+#>   gen   variantes mejor_puntaje mejor_categoria
+#>   <chr>     <int>         <dbl> <chr>          
+#> 1 BTK           1          13.8 alta           
+#> 2 RAG1          1           6.7 media          
+#> 3 STAT1         1           3.6 baja
+#> 
+#> ── Criterios ACMG sugeridos
+#> # A tibble: 6 × 2
+#>   criterio       variantes
+#>   <chr>              <int>
+#> 1 PM2_Supporting         3
+#> 2 PP3                    2
+#> 3 PP4                    2
+#> 4 PM1_Supporting         1
+#> 5 PM5                    1
+#> 6 PVS1_Strong            1
+#> 
+#> ── Filtrado
+#> # A tibble: 6 × 3
+#>   paso            filas descartadas
+#>   <chr>           <int>       <int>
+#> 1 Inicial          4094           0
+#> 2 Genotipo         4094           0
+#> 3 Panel               5        4089
+#> 4 Calidad             5           0
+#> 5 Frecuencia          3           2
+#> 6 ClinVar benigna     3           0
 plot(prior)
 ```
+
+![](ieiprio_files/figure-html/unnamed-chunk-21-1.png)
 
 El resultado de
 [`iei_priorizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_priorizar.md)
@@ -493,8 +599,16 @@ del caso. En el círculo la distancia al centro es el puntaje.
 ``` r
 
 plot(prior, tipo = "cariotipo")
+```
+
+![](ieiprio_files/figure-html/unnamed-chunk-22-1.png)
+
+``` r
+
 plot(prior, tipo = "circos")
 ```
+
+![](ieiprio_files/figure-html/unnamed-chunk-22-2.png)
 
 [`iei_exportar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_exportar.md)
 elige el formato por la extensión. Excel guarda variantes, parámetros y

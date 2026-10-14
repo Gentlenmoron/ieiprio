@@ -70,6 +70,8 @@ conocido.
 
 ``` r
 v <- iei_validar_fenotipo(n = 20)
+#> Simulando casos ■■■■■■■■■■■                       35% | ETA:  2s
+#> Simulando casos ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 v
 #> Validacion de la busqueda por fenotipo
 #> 20 casos simulados, 5 signos por caso, 30% imprecisos, 1 al azar; 583 genes en
