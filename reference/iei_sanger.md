@@ -125,7 +125,7 @@ dice en cuantas se vieron.
 
 ``` r
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/RtmpXPg6Yr/sanger_18b64700c65f.
+#> Cromatogramas de ejemplo en /tmp/RtmpEJUhwz/sanger_19cf1d801f23.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,

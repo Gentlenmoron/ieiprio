@@ -1,5 +1,19 @@
 # Changelog
 
+## ieiprio 1.0.1
+
+- Nuevo dato `variantes_practica`, un banco de doce variantes reales de
+  ClinVar en genes conocidos y menos conocidos del panel (BTK, RAG1,
+  ADA, STAT3, PIK3CD, TNFRSF13B, FOXP3, AIRE, CYBB, NCF1, STAT1 y MEFV).
+  Cada una trae su genotipo típico, la enfermedad, tres signos HPO de
+  esa enfermedad y qué aspecto del análisis muestra.
+- La guía Primeros pasos suma la sección “Datos para practicar”, con el
+  banco, cómo explorar cualquier gen del panel, cómo simular pacientes
+  desde `hpo_enfermedades`, cómo armar secuencias propias desde la
+  referencia y las fuentes públicas que entran en el paquete.
+- Portada del sitio al estilo de catGenes, con los gráficos dentro del
+  diagrama de flujo.
+
 ## ieiprio 1.0.0
 
 La versión 1.0.0 vuelve al análisis de secuencias. El paquete trabaja

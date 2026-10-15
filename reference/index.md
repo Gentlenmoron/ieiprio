@@ -148,5 +148,7 @@
   : Fenotipos por enfermedad de los genes del panel
 - [`genes_dificiles`](https://gentlenmoron.github.io/ieiprio/reference/genes_dificiles.md)
   : Genes dificiles de analizar con lecturas cortas
+- [`variantes_practica`](https://gentlenmoron.github.io/ieiprio/reference/variantes_practica.md)
+  : Variantes reales para practicar
 - [`fuentes_datos`](https://gentlenmoron.github.io/ieiprio/reference/fuentes_datos.md)
   : Registro de fuentes de los datos

@@ -6,7 +6,7 @@ conexión.
 ``` r
 
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/Rtmp8mUYNl/sanger_1d26a34b165.
+#> Cromatogramas de ejemplo en /tmp/RtmpXthYh8/sanger_1e445e89620b.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
@@ -46,7 +46,9 @@ explica cómo leer la salida, [Método y
 parámetros](https://gentlenmoron.github.io/ieiprio/articles/metodo.md)
 describe los cálculos y [Casos de
 ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.md) trae
-tres análisis completos para copiar.
+tres análisis completos para copiar. Quien no tiene datos propios
+encuentra en la sección 11 un banco de variantes reales y las fuentes
+públicas que entran en el paquete.
 
 > Herramienta de apoyo e investigación. No es un informe diagnóstico ni
 > reemplaza la clasificación ACMG/AMP hecha por un especialista.
@@ -296,7 +298,6 @@ variantes quedan en cada paso.
 ``` r
 
 anotado <- iei_anotar(filtrado)
-#> Consultando Ensembl VEP (GRCh38) para 5 variantes.
 anotado <- iei_filtrar_frecuencia(anotado)
 anotado[, c("gen", "hgvs_c", "consecuencia", "af_gnomad", "clinvar")]
 #> # A tibble: 3 × 5
@@ -345,7 +346,7 @@ salen en el filtro de frecuencia o en el de ClinVar.
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/Rtmp8mUYNl/EJEMPLO01.html.
+#> /tmp/RtmpXthYh8/EJEMPLO01.html.
 ```
 
 El argumento `paciente` es el código de la muestra y nunca un nombre.
@@ -368,7 +369,7 @@ res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M", fenotipo = "agammaglobulinemi
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 #> ✔ Prioridad alta 1, media 1, baja 1
 #> 
-#> ✔ Reporte en /tmp/Rtmp8mUYNl/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmpXthYh8/EJEMPLO01.html
 ```
 
 [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
@@ -380,7 +381,7 @@ indicada.
 ``` r
 
 sanger <- iei_sanger(iei_ejemplo_sanger(), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/Rtmp8mUYNl/sanger_1d2635283a0.
+#> Cromatogramas de ejemplo en /tmp/RtmpXthYh8/sanger_1e443b0da1ee.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -474,37 +475,10 @@ la ubica, la anota, la prioriza y muestra su ficha.
 ``` r
 
 iei_variante("BTK c.1632-2A>G", genotipo = "hemi", fenotipo = "agammaglobulinemia")
-#> ℹ Sin transcrito, "BTK:c.1632-2A>G" corresponde a varias posiciones. Al anotar
-#>   se conserva la que coincide con esa nomenclatura en el transcrito MANE.
-#> ℹ Para evitarlo, indica el transcrito: "NM_000061.3:c.1632-2A>G".
-#> ℹ Fenotipo interpretado como:
-#> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
-#> 
-#> 
-#> ── BTK c.1632-2A>G ──
-#> 
-#> 
-#> 
-#> • Proteina: -
-#> 
-#> • Consecuencia: splice acceptor variant (HIGH)
-#> 
-#> • gnomAD: ausente | ClinVar: pathogenic
-#> 
-#> • Predictores: SpliceAI 0.99
-#> 
-#> • Herencia del gen: XL | Genotipo: hemi
-#> 
-#> • Fenotipos del gen: Agammaglobulinemia and isolated hormone deficiency;
-#>   Agammaglobulinemia, X-linked; Agammaglobulinemia, X-linked 1 (y 6 mas)
-#> 
-#> → Puntaje 14 (alta): ClinVar patogénica (+4); impacto alto (+3); ausente en
-#>   gnomAD (+1); predictores a favor (SpliceAI 0.99) (+1); hemicigota en gen
-#>   ligado al X (+2); fenotipo parecido con Agammaglobulinemia, X-linked
-#>   (OMIM:300755), similitud 1.00 y 1 de 1 términos exactos (+3)
-#> 
-#> → ACMG sugerido: PVS1_Strong, PM2_Supporting, PP3, PP4
 ```
+
+> Ensembl no respondió mientras se construía esta página, así que este
+> bloque no muestra resultado.
 
 ## 9. CNV del VCF
 
@@ -630,7 +604,225 @@ descarga del reporte y la validación de la búsqueda por fenotipo.
 iei_app()
 ```
 
-## 11. Limitaciones
+## 11. Datos para practicar
+
+No hace falta una prueba genética propia para aprender a usar el
+paquete. Esta sección junta lugares de donde sacar variantes, secuencias
+y fenotipos reales, y la forma de llevarlos a ieiprio. A diferencia de
+los casos de ejemplo, aquí no hay un resultado esperado. La idea es
+explorar.
+
+### 11.1 Un banco de variantes reales
+
+``` r
+
+knitr::kable(variantes_practica[, c("gen", "variante", "proteina", "genotipo", "enfermedad")])
+```
+
+| gen | variante | proteina | genotipo | enfermedad |
+|:---|:---|:---|:---|:---|
+| BTK | BTK c.1632-2A\>G |  | hemi | Agammaglobulinemia ligada al X |
+| RAG1 | RAG1 c.1186C\>T | p.Arg396Cys | het | Inmunodeficiencia combinada grave T-B-NK+ |
+| ADA | ADA c.646G\>A | p.Gly216Arg | hom_alt | Inmunodeficiencia combinada grave por déficit de ADA |
+| STAT3 | STAT3 c.1144C\>T | p.Arg382Trp | het | Síndrome de hiper-IgE autosómico dominante |
+| PIK3CD | PIK3CD c.3061G\>A | p.Glu1021Lys | het | Síndrome de PI3K delta activada (APDS1) |
+| TNFRSF13B | TNFRSF13B c.310T\>C | p.Cys104Arg | het | Inmunodeficiencia común variable 2 |
+| FOXP3 | FOXP3 c.1150G\>A | p.Ala384Thr | hemi | Síndrome IPEX |
+| AIRE | AIRE c.769C\>T | p.Arg257Ter | hom_alt | Poliendocrinopatía autoinmune tipo 1 (APECED) |
+| CYBB | CYBB c.676C\>T | p.Arg226Ter | hemi | Enfermedad granulomatosa crónica ligada al X |
+| NCF1 | NCF1 c.75_76del | p.Tyr26fs | hom_alt | Enfermedad granulomatosa crónica autosómica recesiva |
+| STAT1 | STAT1 c.820C\>T | p.Arg274Trp | het | Candidiasis mucocutánea crónica por ganancia de función de STAT1 |
+| MEFV | MEFV c.2080A\>G | p.Met694Val | hom_alt | Fiebre mediterránea familiar |
+
+`variantes_practica` trae doce variantes descritas en ClinVar, desde
+genes muy estudiados como BTK o CYBB hasta otros menos conocidos como
+AIRE, TNFRSF13B o NCF1. Cada fila tiene el genotipo con que suele causar
+la enfermedad y tres signos HPO de esa enfermedad, así que se analiza
+completa con una línea.
+
+``` r
+
+v <- variantes_practica[variantes_practica$gen == "STAT3", ]
+iei_variante(v$variante, genotipo = v$genotipo, fenotipo = strsplit(v$fenotipo, ";")[[1]])
+```
+
+> Ensembl no respondió mientras se construía esta página, así que este
+> bloque no muestra resultado.
+
+La columna `que_ensena` dice qué mirar en cada una.
+
+``` r
+
+knitr::kable(variantes_practica[, c("gen", "tipo", "que_ensena")])
+```
+
+| gen | tipo | que_ensena |
+|:---|:---|:---|
+| BTK | sitio aceptor de splicing | Está fuera del exón, en el sitio aceptor de splicing. Sirve para ver cómo pesan SpliceAI y PVS1 en una variante no codificante. |
+| RAG1 | missense | En heterocigosis es solo portadora, porque la enfermedad es recesiva. El puntaje no la sube a prioridad alta. |
+| ADA | missense | Missense recurrente en un gen recesivo. Causa la enfermedad cuando está en los dos alelos. |
+| STAT3 | missense | Cae en el dominio de unión al ADN y actúa como dominante negativa. Una sola copia basta. |
+| PIK3CD | missense | Ganancia de función en el dominio quinasa. El mismo gen tiene una forma recesiva por pérdida de función, así que el mecanismo cambia la lectura. |
+| TNFRSF13B | missense | Aparece también en personas sanas y se considera un factor de riesgo, no una causa suficiente. Sirve para ver cómo pesan la frecuencia en gnomAD y la evidencia del gen. |
+| FOXP3 | missense | Missense en un gen del cromosoma X. En un varón es hemicigota y basta para la enfermedad. |
+| AIRE | sin sentido | Variante sin sentido, la más frecuente en Finlandia. Sirve para ver PVS1 en un gen recesivo. |
+| CYBB | sin sentido | Sin sentido en un gen del cromosoma X. Conviene compararla con la variante benigna de CYBB del exoma de ejemplo. |
+| NCF1 | deleción con corrimiento del marco | NCF1 tiene pseudogenes casi idénticos. La nota de la variante avisa que con lecturas cortas puede pasar desapercibida. |
+| STAT1 | missense | Ganancia de función en el dominio coiled-coil. Las variantes con pérdida de función en STAT1 dan otra enfermedad, recesiva. |
+| MEFV | missense | Autoinflamatoria y frecuente en poblaciones del Mediterráneo oriental. Sirve para ver la frecuencia por grupo poblacional (grpmax). |
+
+Cambiar el genotipo o el fenotipo enseña tanto como el caso correcto.
+RAG1 en `"hom_alt"` deja de ser portadora, y STAT3 con los signos de la
+fiebre mediterránea familiar pierde el aporte del fenotipo al puntaje.
+
+### 11.2 Cualquier gen del panel
+
+``` r
+
+deficiencias_innatas <- iei_panel(categoria = 6)
+head(deficiencias_innatas[, c("gen", "herencia", "fenotipos")], 8)
+#> # A tibble: 8 × 3
+#>   gen    herencia fenotipos                                                     
+#>   <chr>  <chr>    <chr>                                                         
+#> 1 CARD9  AR       "Candidiasis, familial, 2; 212050; CARD9 deficiency; Predispo…
+#> 2 CIB1   AR       "Epidermodysplasia verruciformis 3\t618267; HPV infections an…
+#> 3 CXCR2  AR       "WHIM syndrome 2, OMIM:619407"                                
+#> 4 CXCR4  AD       "WHIM syndrome, 193670; Myelokathexis, isolated; WHIM syndrom…
+#> 5 CYBB   XL       "Immunodeficiency 34, mycobacteriosis, X-linked, 300645; Chro…
+#> 6 DBR1   AR       "DBR1 deficiency; Defects in intrinsic and innate immunity; H…
+#> 7 HMOX1  AR       "Heme oxygenase-1 deficiency, OMIM:614034; Hemolysis, nephrit…
+#> 8 IFNGR1 AR/AD    "Immunodeficiency 27A, (AR) 209950; Immunodeficiency 27B, (AD…
+```
+
+El panel tiene más de 500 genes.
+[`iei_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_panel.md)
+los filtra por categoría IUIS, herencia o nivel de evidencia, e
+[`iei_buscar_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_buscar_gen.md)
+reconoce alias como TACI o p47phox. Con un gen elegido,
+[`iei_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_gen.md)
+trae de ClinVar sus variantes patogénicas con la posición en la
+proteína, el cambio y las estrellas de revisión. Cualquiera de ellas
+entra después a
+[`iei_variante()`](https://gentlenmoron.github.io/ieiprio/reference/iei_variante.md).
+
+``` r
+
+ficha <- iei_gen("CYBB")
+head(ficha$clinvar$variantes, 10)
+#> # A tibble: 10 × 9
+#>    clinvar_id variante       clasificacion revision consecuencia cambio_proteina
+#>         <int> <chr>          <chr>         <chr>    <chr>        <chr>          
+#>  1    1196543 NM_000397.4(C… Pathogenic    criteri… missense va… M1V            
+#>  2     495863 NM_000397.4(C… Pathogenic    criteri… frameshift … V27fs          
+#>  3     862779 NM_000397.4(C… Pathogenic    criteri… nonsense     R130*          
+#>  4    1504854 NM_000397.4(C… Likely patho… criteri… missense va… S142P          
+#>  5    2630151 NM_000397.4(C… Pathogenic    criteri… frameshift … I241fs         
+#>  6     947989 NM_000397.4(C… Pathogenic    criteri… nonsense     Y280*          
+#>  7     503616 NM_000397.4(C… Pathogenic    criteri… frameshift … V321fs         
+#>  8     962575 NM_000397.4(C… Pathogenic    criteri… nonsense     W337*          
+#>  9    2737188 NM_000397.4(C… Pathogenic    criteri… frameshift … E347fs         
+#> 10    1367808 NM_000397.4(C… Pathogenic    criteri… nonsense     W361*          
+#> # ℹ 3 more variables: estrellas <int>, pos_proteina <int>, tipo <chr>
+```
+
+### 11.3 Pacientes simulados desde una enfermedad
+
+``` r
+
+apds <- hpo_enfermedades[hpo_enfermedades$enfermedad_id == "OMIM:615513" & !hpo_enfermedades$excluido, ]
+apds <- apds[order(-ifelse(is.na(apds$frecuencia), 0, apds$frecuencia)), ]
+iei_buscar_fenotipo(head(apds$hpo_id, 5), n = 5)
+#> Genes candidatos por fenotipo (enfermedad)
+#> Fenotipo: HP:0002205 Recurrent respiratory infections; HP:0012476 Decreased
+#> circulating specific pneumococcal antibody concentration; HP:0410018 Recurrent
+#> ear infections; HP:0008348 Decreased circulating IgG2 concentration; HP:0030381
+#> Increased transitional B cell proportion
+#> # A tibble: 5 × 6
+#>   gen    similitud especificidad enfermedad             herencia categorias_iuis
+#>   <chr>      <dbl>         <dbl> <chr>                  <chr>    <chr>          
+#> 1 PIK3CD     0.978         0.248 Immunodeficiency 14 (… AR/AD    3              
+#> 2 IKZF2      0.793         0.283 Immunodysregulation w… AD       1              
+#> 3 CTPS1      0.758         0.606 Immunodeficiency 24 (… AR       4              
+#> 4 ADA        0.712         0.295 Severe combined immun… AR       1              
+#> 5 IKBKG      0.712         0.197 Ectodermal dysplasia … XL       2
+#> Detalle de cada coincidencia en la columna coincidencias. Grafico: plot(x) o
+#> autoplot(x).
+```
+
+`hpo_enfermedades` tiene los signos de más de mil enfermedades de los
+genes del panel, con la frecuencia de cada uno. Tomar los más frecuentes
+de una enfermedad es simular un paciente típico. Con el síndrome de PI3K
+delta activada (OMIM:615513) PIK3CD sale primero. Con IPEX (OMIM:304790)
+sale primero IL2RA, cuya deficiencia da un cuadro parecido, y FOXP3
+queda segundo. Esos empates son los que obligan a mirar la secuencia.
+[`iei_validar_fenotipo()`](https://gentlenmoron.github.io/ieiprio/reference/iei_validar_fenotipo.md)
+repite el ejercicio con cientos de pacientes al azar.
+
+### 11.4 Secuencias propias a partir de la referencia
+
+``` r
+
+ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
+s <- paste(readLines(ref)[-1], collapse = "")
+practica <- substr(s, 301, 600)
+substr(practica, 151, 151) <- "C"
+mia <- iei_sanger(practica, gen = "BTK", sexo = "M", referencia = ref)
+#> secuencia: hebra +, 300 bases alineadas en X:101353840-101354139, identidad
+#> 99.7%.
+mia[, c("gen", "chr", "pos", "ref", "alt", "genotipo")]
+#> # A tibble: 1 × 6
+#>   gen   chr         pos ref   alt   genotipo
+#>   <chr> <chr>     <int> <chr> <chr> <chr>   
+#> 1 BTK   X     101353990 T     C     hemi
+```
+
+La referencia de BTK que trae el paquete empieza en X:101353540. El
+tramo de práctica va de X:101353840 a X:101354139, y su base 151 es
+X:101353990, justo donde está c.1632-2A\>G. Cambiarla por C reproduce
+esa variante. Cambiar cualquier otra base da una variante nueva para
+anotar, priorizar y ver en el dot plot.
+
+Con conexión esto vale para cualquier gen del panel. Se copia un tramo
+del gen en FASTA desde Ensembl o desde GenBank, se cambia una base y se
+pasa a
+[`iei_sanger()`](https://gentlenmoron.github.io/ieiprio/reference/iei_sanger.md)
+con el nombre del gen. El paquete descarga la referencia y ubica el
+tramo solo.
+
+### 11.5 Fuentes públicas
+
+``` r
+
+iei_extraer_variantes("Se encontró la variante STAT1 c.820C>T (p.Arg274Trp) en heterocigosis.")
+#> # A tibble: 1 × 4
+#>   entrada        tipo         genotipo linea
+#>   <chr>          <chr>        <chr>    <int>
+#> 1 STAT1:c.820C>T gen_y_cambio het          1
+```
+
+Un caso clínico publicado suele traer la variante escrita en HGVS y el
+genotipo en el texto. Basta con copiar el párrafo, o pasar el PDF
+completo a
+[`iei_variantes()`](https://gentlenmoron.github.io/ieiprio/reference/iei_variantes.md).
+Estas son las fuentes abiertas que mejor encajan con el paquete.
+
+| Fuente | Qué ofrece | Cómo entra en ieiprio |
+|----|----|----|
+| ClinVar | Variantes clasificadas por gen y por enfermedad | [`iei_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_gen.md), [`iei_variante()`](https://gentlenmoron.github.io/ieiprio/reference/iei_variante.md) |
+| gnomAD | Frecuencia de cada variante por población, con personas sanas homocigotas | [`iei_gnomad()`](https://gentlenmoron.github.io/ieiprio/reference/iei_gnomad.md) |
+| LOVD | Variantes publicadas, reunidas por gen | [`iei_variante()`](https://gentlenmoron.github.io/ieiprio/reference/iei_variante.md) con el HGVS |
+| PubMed Central | Casos clínicos de acceso abierto con variantes en HGVS | [`iei_variantes()`](https://gentlenmoron.github.io/ieiprio/reference/iei_variantes.md) con el PDF o el texto |
+| Ensembl y GenBank | Secuencias de referencia en FASTA | [`iei_sanger()`](https://gentlenmoron.github.io/ieiprio/reference/iei_sanger.md) |
+| Genome in a Bottle | VCF de genomas humanos de referencia, de libre uso | [`iei_leer_vcf()`](https://gentlenmoron.github.io/ieiprio/reference/iei_leer_vcf.md) e [`iei_filtrar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_filtrar.md) |
+| HPO y Orphanet | Signos de cada enfermedad | `hpo_enfermedades`, [`iei_buscar_hpo()`](https://gentlenmoron.github.io/ieiprio/reference/iei_buscar_hpo.md) |
+| PanelApp | Genes del panel y su nivel de evidencia | [`iei_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_panel.md), [`iei_actualizar_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_actualizar_panel.md) |
+
+Los VCF de Genome in a Bottle son genomas completos y pesan cientos de
+megabytes. Filtrados por el panel muestran cuántas variantes raras tiene
+una persona en estos genes, y por qué el filtrado por frecuencia y
+calidad pesa tanto como la anotación.
+
+## 12. Limitaciones
 
 El paquete analiza variantes puntuales e indels pequeñas. Las CNV y las
 variantes estructurales aparecen solo si el VCF ya las trae llamadas, y

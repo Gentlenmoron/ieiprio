@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ieiprio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
 portadora, sin conexión.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ab1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/Rtmp8mUYNl/sanger_1d26a34b165</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpXthYh8/sanger_1e445e89620b</span>.</span></span>
 <span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"btk_referencia.fa"</span>, package <span class="op">=</span> <span class="st">"ieiprio"</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="va">ab1</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
@@ -117,7 +117,9 @@ verificar en la secuencia y vuelven el análisis menos reproducible.</p>
 <p>La guía <a href="interpretar.html">Interpretación de resultados</a>
 explica cómo leer la salida, <a href="metodo.html">Método y
 parámetros</a> describe los cálculos y <a href="casos.html">Casos de
-ejemplo</a> trae tres análisis completos para copiar.</p>
+ejemplo</a> trae tres análisis completos para copiar. Quien no tiene
+datos propios encuentra en la sección 11 un banco de variantes reales y
+las fuentes públicas que entran en el paquete.</p>
 <blockquote>
 <p>Herramienta de apoyo e investigación. No es un informe diagnóstico ni
 reemplaza la clasificación ACMG/AMP hecha por un especialista.</p>
@@ -588,7 +590,6 @@ variantes quedan en cada paso.</p>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">anotado</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_anotar.html">iei_anotar</a></span><span class="op">(</span><span class="va">filtrado</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Consultando Ensembl VEP (GRCh38) para 5 variantes.</span></span>
 <span><span class="va">anotado</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_filtrar_frecuencia.html">iei_filtrar_frecuencia</a></span><span class="op">(</span><span class="va">anotado</span><span class="op">)</span></span>
 <span><span class="va">anotado</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"consecuencia"</span>, <span class="st">"af_gnomad"</span>, <span class="st">"clinvar"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
@@ -633,7 +634,7 @@ salen en el filtro de frecuencia o en el de ClinVar.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">prior</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EJEMPLO01.html"</span><span class="op">)</span>, paciente <span class="op">=</span> <span class="st">"EJEMPLO01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"EJEMPLO01"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/Rtmp8mUYNl/EJEMPLO01.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpXthYh8/EJEMPLO01.html</span>.</span></span></code></pre></div>
 <p>El argumento <code>paciente</code> es el código de la muestra y nunca
 un nombre. Con un VCF el reporte trae el control de calidad, la tabla
 priorizada, una ficha por variante con el diagrama de la proteína, la
@@ -654,7 +655,7 @@ todas las fuentes.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 1, baja 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/Rtmp8mUYNl/EJEMPLO01.html</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpXthYh8/EJEMPLO01.html</span></span></span></code></pre></div>
 <p><code><a href="../reference/iei_analizar.html">iei_analizar()</a></code> corre los pasos anteriores y deja un
 reporte por muestra en la carpeta indicada.</p>
 </div>
@@ -664,7 +665,7 @@ reporte por muestra en la carpeta indicada.</p>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sanger</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/Rtmp8mUYNl/sanger_1d2635283a0</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpXthYh8/sanger_1e443b0da1ee</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
@@ -733,37 +734,11 @@ nomenclatura HGVS, rsID y el gen seguido del cambio. Si el texto dice el
 genotipo, lo usa. Para una sola variante, <code><a href="../reference/iei_variante.html">iei_variante()</a></code> la
 ubica, la anota, la prioriza y muestra su ficha.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_variante.html">iei_variante</a></span><span class="op">(</span><span class="st">"BTK c.1632-2A&gt;G"</span>, genotipo <span class="op">=</span> <span class="st">"hemi"</span>, fenotipo <span class="op">=</span> <span class="st">"agammaglobulinemia"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Sin transcrito, <span style="color: #0000BB;">"BTK:c.1632-2A&gt;G"</span> corresponde a varias posiciones. Al anotar</span></span>
-<span><span class="co">#&gt;   se conserva la que coincide con esa nomenclatura en el transcrito MANE.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Para evitarlo, indica el transcrito: <span style="color: #0000BB;">"NM_000061.3:c.1632-2A&gt;G"</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fenotipo interpretado como:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">BTK c.1632-2A&gt;G</span> ──</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Proteina: -</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Consecuencia: splice acceptor variant (HIGH)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> gnomAD: ausente | ClinVar: pathogenic</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Predictores: SpliceAI 0.99</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Herencia del gen: XL | Genotipo: hemi</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Fenotipos del gen: Agammaglobulinemia and isolated hormone deficiency;</span></span>
-<span><span class="co">#&gt;   Agammaglobulinemia, X-linked; Agammaglobulinemia, X-linked 1 (y 6 mas)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; → Puntaje 14 (alta): ClinVar patogénica (+4); impacto alto (+3); ausente en</span></span>
-<span><span class="co">#&gt;   gnomAD (+1); predictores a favor (SpliceAI 0.99) (+1); hemicigota en gen</span></span>
-<span><span class="co">#&gt;   ligado al X (+2); fenotipo parecido con Agammaglobulinemia, X-linked</span></span>
-<span><span class="co">#&gt;   (OMIM:300755), similitud 1.00 y 1 de 1 términos exactos (+3)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; → ACMG sugerido: PVS1_Strong, PM2_Supporting, PP3, PP4</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_variante.html">iei_variante</a></span><span class="op">(</span><span class="st">"BTK c.1632-2A&gt;G"</span>, genotipo <span class="op">=</span> <span class="st">"hemi"</span>, fenotipo <span class="op">=</span> <span class="st">"agammaglobulinemia"</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Ensembl no respondió mientras se construía esta página, así que este
+bloque no muestra resultado.</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="cnv-del-vcf">9. CNV del VCF<a class="anchor" aria-label="anchor" href="#cnv-del-vcf"></a>
@@ -868,7 +843,419 @@ descarga del reporte y la validación de la búsqueda por fenotipo.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_app.html">iei_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="limitaciones">11. Limitaciones<a class="anchor" aria-label="anchor" href="#limitaciones"></a>
+<h2 id="datos-para-practicar">11. Datos para practicar<a class="anchor" aria-label="anchor" href="#datos-para-practicar"></a>
+</h2>
+<p>No hace falta una prueba genética propia para aprender a usar el
+paquete. Esta sección junta lugares de donde sacar variantes, secuencias
+y fenotipos reales, y la forma de llevarlos a ieiprio. A diferencia de
+los casos de ejemplo, aquí no hay un resultado esperado. La idea es
+explorar.</p>
+<div class="section level3">
+<h3 id="un-banco-de-variantes-reales">11.1 Un banco de variantes reales<a class="anchor" aria-label="anchor" href="#un-banco-de-variantes-reales"></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">variantes_practica</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"variante"</span>, <span class="st">"proteina"</span>, <span class="st">"genotipo"</span>, <span class="st">"enfermedad"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="16%">
+<col width="11%">
+<col width="7%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">gen</th>
+<th align="left">variante</th>
+<th align="left">proteina</th>
+<th align="left">genotipo</th>
+<th align="left">enfermedad</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">BTK</td>
+<td align="left">BTK c.1632-2A&gt;G</td>
+<td align="left"></td>
+<td align="left">hemi</td>
+<td align="left">Agammaglobulinemia ligada al X</td>
+</tr>
+<tr class="even">
+<td align="left">RAG1</td>
+<td align="left">RAG1 c.1186C&gt;T</td>
+<td align="left">p.Arg396Cys</td>
+<td align="left">het</td>
+<td align="left">Inmunodeficiencia combinada grave T-B-NK+</td>
+</tr>
+<tr class="odd">
+<td align="left">ADA</td>
+<td align="left">ADA c.646G&gt;A</td>
+<td align="left">p.Gly216Arg</td>
+<td align="left">hom_alt</td>
+<td align="left">Inmunodeficiencia combinada grave por déficit de
+ADA</td>
+</tr>
+<tr class="even">
+<td align="left">STAT3</td>
+<td align="left">STAT3 c.1144C&gt;T</td>
+<td align="left">p.Arg382Trp</td>
+<td align="left">het</td>
+<td align="left">Síndrome de hiper-IgE autosómico dominante</td>
+</tr>
+<tr class="odd">
+<td align="left">PIK3CD</td>
+<td align="left">PIK3CD c.3061G&gt;A</td>
+<td align="left">p.Glu1021Lys</td>
+<td align="left">het</td>
+<td align="left">Síndrome de PI3K delta activada (APDS1)</td>
+</tr>
+<tr class="even">
+<td align="left">TNFRSF13B</td>
+<td align="left">TNFRSF13B c.310T&gt;C</td>
+<td align="left">p.Cys104Arg</td>
+<td align="left">het</td>
+<td align="left">Inmunodeficiencia común variable 2</td>
+</tr>
+<tr class="odd">
+<td align="left">FOXP3</td>
+<td align="left">FOXP3 c.1150G&gt;A</td>
+<td align="left">p.Ala384Thr</td>
+<td align="left">hemi</td>
+<td align="left">Síndrome IPEX</td>
+</tr>
+<tr class="even">
+<td align="left">AIRE</td>
+<td align="left">AIRE c.769C&gt;T</td>
+<td align="left">p.Arg257Ter</td>
+<td align="left">hom_alt</td>
+<td align="left">Poliendocrinopatía autoinmune tipo 1 (APECED)</td>
+</tr>
+<tr class="odd">
+<td align="left">CYBB</td>
+<td align="left">CYBB c.676C&gt;T</td>
+<td align="left">p.Arg226Ter</td>
+<td align="left">hemi</td>
+<td align="left">Enfermedad granulomatosa crónica ligada al X</td>
+</tr>
+<tr class="even">
+<td align="left">NCF1</td>
+<td align="left">NCF1 c.75_76del</td>
+<td align="left">p.Tyr26fs</td>
+<td align="left">hom_alt</td>
+<td align="left">Enfermedad granulomatosa crónica autosómica
+recesiva</td>
+</tr>
+<tr class="odd">
+<td align="left">STAT1</td>
+<td align="left">STAT1 c.820C&gt;T</td>
+<td align="left">p.Arg274Trp</td>
+<td align="left">het</td>
+<td align="left">Candidiasis mucocutánea crónica por ganancia de función
+de STAT1</td>
+</tr>
+<tr class="even">
+<td align="left">MEFV</td>
+<td align="left">MEFV c.2080A&gt;G</td>
+<td align="left">p.Met694Val</td>
+<td align="left">hom_alt</td>
+<td align="left">Fiebre mediterránea familiar</td>
+</tr>
+</tbody>
+</table>
+<p><code>variantes_practica</code> trae doce variantes descritas en
+ClinVar, desde genes muy estudiados como BTK o CYBB hasta otros menos
+conocidos como AIRE, TNFRSF13B o NCF1. Cada fila tiene el genotipo con
+que suele causar la enfermedad y tres signos HPO de esa enfermedad, así
+que se analiza completa con una línea.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="va">variantes_practica</span><span class="op">[</span><span class="va">variantes_practica</span><span class="op">$</span><span class="va">gen</span> <span class="op">==</span> <span class="st">"STAT3"</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="../reference/iei_variante.html">iei_variante</a></span><span class="op">(</span><span class="va">v</span><span class="op">$</span><span class="va">variante</span>, genotipo <span class="op">=</span> <span class="va">v</span><span class="op">$</span><span class="va">genotipo</span>, fenotipo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">v</span><span class="op">$</span><span class="va">fenotipo</span>, <span class="st">";"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Ensembl no respondió mientras se construía esta página, así que este
+bloque no muestra resultado.</p>
+</blockquote>
+<p>La columna <code>que_ensena</code> dice qué mirar en cada una.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">variantes_practica</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"tipo"</span>, <span class="st">"que_ensena"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="4%">
+<col width="16%">
+<col width="78%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">gen</th>
+<th align="left">tipo</th>
+<th align="left">que_ensena</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">BTK</td>
+<td align="left">sitio aceptor de splicing</td>
+<td align="left">Está fuera del exón, en el sitio aceptor de splicing.
+Sirve para ver cómo pesan SpliceAI y PVS1 en una variante no
+codificante.</td>
+</tr>
+<tr class="even">
+<td align="left">RAG1</td>
+<td align="left">missense</td>
+<td align="left">En heterocigosis es solo portadora, porque la
+enfermedad es recesiva. El puntaje no la sube a prioridad alta.</td>
+</tr>
+<tr class="odd">
+<td align="left">ADA</td>
+<td align="left">missense</td>
+<td align="left">Missense recurrente en un gen recesivo. Causa la
+enfermedad cuando está en los dos alelos.</td>
+</tr>
+<tr class="even">
+<td align="left">STAT3</td>
+<td align="left">missense</td>
+<td align="left">Cae en el dominio de unión al ADN y actúa como
+dominante negativa. Una sola copia basta.</td>
+</tr>
+<tr class="odd">
+<td align="left">PIK3CD</td>
+<td align="left">missense</td>
+<td align="left">Ganancia de función en el dominio quinasa. El mismo gen
+tiene una forma recesiva por pérdida de función, así que el mecanismo
+cambia la lectura.</td>
+</tr>
+<tr class="even">
+<td align="left">TNFRSF13B</td>
+<td align="left">missense</td>
+<td align="left">Aparece también en personas sanas y se considera un
+factor de riesgo, no una causa suficiente. Sirve para ver cómo pesan la
+frecuencia en gnomAD y la evidencia del gen.</td>
+</tr>
+<tr class="odd">
+<td align="left">FOXP3</td>
+<td align="left">missense</td>
+<td align="left">Missense en un gen del cromosoma X. En un varón es
+hemicigota y basta para la enfermedad.</td>
+</tr>
+<tr class="even">
+<td align="left">AIRE</td>
+<td align="left">sin sentido</td>
+<td align="left">Variante sin sentido, la más frecuente en Finlandia.
+Sirve para ver PVS1 en un gen recesivo.</td>
+</tr>
+<tr class="odd">
+<td align="left">CYBB</td>
+<td align="left">sin sentido</td>
+<td align="left">Sin sentido en un gen del cromosoma X. Conviene
+compararla con la variante benigna de CYBB del exoma de ejemplo.</td>
+</tr>
+<tr class="even">
+<td align="left">NCF1</td>
+<td align="left">deleción con corrimiento del marco</td>
+<td align="left">NCF1 tiene pseudogenes casi idénticos. La nota de la
+variante avisa que con lecturas cortas puede pasar desapercibida.</td>
+</tr>
+<tr class="odd">
+<td align="left">STAT1</td>
+<td align="left">missense</td>
+<td align="left">Ganancia de función en el dominio coiled-coil. Las
+variantes con pérdida de función en STAT1 dan otra enfermedad,
+recesiva.</td>
+</tr>
+<tr class="even">
+<td align="left">MEFV</td>
+<td align="left">missense</td>
+<td align="left">Autoinflamatoria y frecuente en poblaciones del
+Mediterráneo oriental. Sirve para ver la frecuencia por grupo
+poblacional (grpmax).</td>
+</tr>
+</tbody>
+</table>
+<p>Cambiar el genotipo o el fenotipo enseña tanto como el caso correcto.
+RAG1 en <code>"hom_alt"</code> deja de ser portadora, y STAT3 con los
+signos de la fiebre mediterránea familiar pierde el aporte del fenotipo
+al puntaje.</p>
+</div>
+<div class="section level3">
+<h3 id="cualquier-gen-del-panel">11.2 Cualquier gen del panel<a class="anchor" aria-label="anchor" href="#cualquier-gen-del-panel"></a>
+</h3>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deficiencias_innatas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_panel.html">iei_panel</a></span><span class="op">(</span>categoria <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">deficiencias_innatas</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"herencia"</span>, <span class="st">"fenotipos"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 3</span></span></span>
+<span><span class="co">#&gt;   gen    herencia fenotipos                                                     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> CARD9  AR       <span style="color: #949494;">"</span>Candidiasis, familial, 2; 212050; CARD9 deficiency; Predispo…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CIB1   AR       <span style="color: #949494;">"</span>Epidermodysplasia verruciformis 3\t618267; HPV infections an…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CXCR2  AR       <span style="color: #949494;">"</span>WHIM syndrome 2, OMIM:619407<span style="color: #949494;">"</span>                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> CXCR4  AD       <span style="color: #949494;">"</span>WHIM syndrome, 193670; Myelokathexis, isolated; WHIM syndrom…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> CYBB   XL       <span style="color: #949494;">"</span>Immunodeficiency 34, mycobacteriosis, X-linked, 300645; Chro…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> DBR1   AR       <span style="color: #949494;">"</span>DBR1 deficiency; Defects in intrinsic and innate immunity; H…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> HMOX1  AR       <span style="color: #949494;">"</span>Heme oxygenase-1 deficiency, OMIM:614034; Hemolysis, nephrit…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> IFNGR1 AR/AD    <span style="color: #949494;">"</span>Immunodeficiency 27A, (AR) 209950; Immunodeficiency 27B, (AD…</span></span></code></pre></div>
+<p>El panel tiene más de 500 genes. <code><a href="../reference/iei_panel.html">iei_panel()</a></code> los filtra
+por categoría IUIS, herencia o nivel de evidencia, e
+<code><a href="../reference/iei_buscar_gen.html">iei_buscar_gen()</a></code> reconoce alias como TACI o p47phox. Con un
+gen elegido, <code><a href="../reference/iei_gen.html">iei_gen()</a></code> trae de ClinVar sus variantes
+patogénicas con la posición en la proteína, el cambio y las estrellas de
+revisión. Cualquiera de ellas entra después a
+<code><a href="../reference/iei_variante.html">iei_variante()</a></code>.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ficha</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_gen.html">iei_gen</a></span><span class="op">(</span><span class="st">"CYBB"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ficha</span><span class="op">$</span><span class="va">clinvar</span><span class="op">$</span><span class="va">variantes</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 9</span></span></span>
+<span><span class="co">#&gt;    clinvar_id variante       clasificacion revision consecuencia cambio_proteina</span></span>
+<span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    1<span style="text-decoration: underline;">196</span>543 NM_000397.4(C… Pathogenic    criteri… missense va… M1V            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     <span style="text-decoration: underline;">495</span>863 NM_000397.4(C… Pathogenic    criteri… frameshift … V27fs          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     <span style="text-decoration: underline;">862</span>779 NM_000397.4(C… Pathogenic    criteri… nonsense     R130*          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    1<span style="text-decoration: underline;">504</span>854 NM_000397.4(C… Likely patho… criteri… missense va… S142P          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    2<span style="text-decoration: underline;">630</span>151 NM_000397.4(C… Pathogenic    criteri… frameshift … I241fs         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     <span style="text-decoration: underline;">947</span>989 NM_000397.4(C… Pathogenic    criteri… nonsense     Y280*          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     <span style="text-decoration: underline;">503</span>616 NM_000397.4(C… Pathogenic    criteri… frameshift … V321fs         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     <span style="text-decoration: underline;">962</span>575 NM_000397.4(C… Pathogenic    criteri… nonsense     W337*          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    2<span style="text-decoration: underline;">737</span>188 NM_000397.4(C… Pathogenic    criteri… frameshift … E347fs         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    1<span style="text-decoration: underline;">367</span>808 NM_000397.4(C… Pathogenic    criteri… nonsense     W361*          </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: estrellas &lt;int&gt;, pos_proteina &lt;int&gt;, tipo &lt;chr&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="pacientes-simulados-desde-una-enfermedad">11.3 Pacientes simulados desde una enfermedad<a class="anchor" aria-label="anchor" href="#pacientes-simulados-desde-una-enfermedad"></a>
+</h3>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">apds</span> <span class="op">&lt;-</span> <span class="va">hpo_enfermedades</span><span class="op">[</span><span class="va">hpo_enfermedades</span><span class="op">$</span><span class="va">enfermedad_id</span> <span class="op">==</span> <span class="st">"OMIM:615513"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">hpo_enfermedades</span><span class="op">$</span><span class="va">excluido</span>, <span class="op">]</span></span>
+<span><span class="va">apds</span> <span class="op">&lt;-</span> <span class="va">apds</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">apds</span><span class="op">$</span><span class="va">frecuencia</span><span class="op">)</span>, <span class="fl">0</span>, <span class="va">apds</span><span class="op">$</span><span class="va">frecuencia</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="../reference/iei_buscar_fenotipo.html">iei_buscar_fenotipo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">apds</span><span class="op">$</span><span class="va">hpo_id</span>, <span class="fl">5</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Genes candidatos por fenotipo</span> (enfermedad)</span></span>
+<span><span class="co">#&gt; Fenotipo: HP:0002205 Recurrent respiratory infections; HP:0012476 Decreased</span></span>
+<span><span class="co">#&gt; circulating specific pneumococcal antibody concentration; HP:0410018 Recurrent</span></span>
+<span><span class="co">#&gt; ear infections; HP:0008348 Decreased circulating IgG2 concentration; HP:0030381</span></span>
+<span><span class="co">#&gt; Increased transitional B cell proportion</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
+<span><span class="co">#&gt;   gen    similitud especificidad enfermedad             herencia categorias_iuis</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIK3CD     0.978         0.248 Immunodeficiency 14 (… AR/AD    3              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> IKZF2      0.793         0.283 Immunodysregulation w… AD       1              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CTPS1      0.758         0.606 Immunodeficiency 24 (… AR       4              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ADA        0.712         0.295 Severe combined immun… AR       1              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> IKBKG      0.712         0.197 Ectodermal dysplasia … XL       2</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Detalle de cada coincidencia en la columna coincidencias. Grafico: plot(x) o</span></span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">autoplot(x).</span></span></span></code></pre></div>
+<p><code>hpo_enfermedades</code> tiene los signos de más de mil
+enfermedades de los genes del panel, con la frecuencia de cada uno.
+Tomar los más frecuentes de una enfermedad es simular un paciente
+típico. Con el síndrome de PI3K delta activada (OMIM:615513) PIK3CD sale
+primero. Con IPEX (OMIM:304790) sale primero IL2RA, cuya deficiencia da
+un cuadro parecido, y FOXP3 queda segundo. Esos empates son los que
+obligan a mirar la secuencia. <code><a href="../reference/iei_validar_fenotipo.html">iei_validar_fenotipo()</a></code> repite
+el ejercicio con cientos de pacientes al azar.</p>
+</div>
+<div class="section level3">
+<h3 id="secuencias-propias-a-partir-de-la-referencia">11.4 Secuencias propias a partir de la referencia<a class="anchor" aria-label="anchor" href="#secuencias-propias-a-partir-de-la-referencia"></a>
+</h3>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"btk_referencia.fa"</span>, package <span class="op">=</span> <span class="st">"ieiprio"</span><span class="op">)</span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ref</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">practica</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">s</span>, <span class="fl">301</span>, <span class="fl">600</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">practica</span>, <span class="fl">151</span>, <span class="fl">151</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"C"</span></span>
+<span><span class="va">mia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="va">practica</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
+<span><span class="co">#&gt; secuencia: hebra +, 300 bases alineadas en X:101353840-101354139, identidad</span></span>
+<span><span class="co">#&gt; 99.7%.</span></span>
+<span><span class="va">mia</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"chr"</span>, <span class="st">"pos"</span>, <span class="st">"ref"</span>, <span class="st">"alt"</span>, <span class="st">"genotipo"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
+<span><span class="co">#&gt;   gen   chr         pos ref   alt   genotipo</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> BTK   X     101<span style="text-decoration: underline;">353</span>990 T     C     hemi</span></span></code></pre></div>
+<p>La referencia de BTK que trae el paquete empieza en X:101353540. El
+tramo de práctica va de X:101353840 a X:101354139, y su base 151 es
+X:101353990, justo donde está c.1632-2A&gt;G. Cambiarla por C reproduce
+esa variante. Cambiar cualquier otra base da una variante nueva para
+anotar, priorizar y ver en el dot plot.</p>
+<p>Con conexión esto vale para cualquier gen del panel. Se copia un
+tramo del gen en FASTA desde Ensembl o desde GenBank, se cambia una base
+y se pasa a <code><a href="../reference/iei_sanger.html">iei_sanger()</a></code> con el nombre del gen. El paquete
+descarga la referencia y ubica el tramo solo.</p>
+</div>
+<div class="section level3">
+<h3 id="fuentes-públicas">11.5 Fuentes públicas<a class="anchor" aria-label="anchor" href="#fuentes-p%C3%BAblicas"></a>
+</h3>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_extraer_variantes.html">iei_extraer_variantes</a></span><span class="op">(</span><span class="st">"Se encontró la variante STAT1 c.820C&gt;T (p.Arg274Trp) en heterocigosis."</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt;   entrada        tipo         genotipo linea</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> STAT1:c.820C&gt;T gen_y_cambio het          1</span></span></code></pre></div>
+<p>Un caso clínico publicado suele traer la variante escrita en HGVS y
+el genotipo en el texto. Basta con copiar el párrafo, o pasar el PDF
+completo a <code><a href="../reference/iei_variantes.html">iei_variantes()</a></code>. Estas son las fuentes abiertas
+que mejor encajan con el paquete.</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th>Fuente</th>
+<th>Qué ofrece</th>
+<th>Cómo entra en ieiprio</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>ClinVar</td>
+<td>Variantes clasificadas por gen y por enfermedad</td>
+<td>
+<code><a href="../reference/iei_gen.html">iei_gen()</a></code>, <code><a href="../reference/iei_variante.html">iei_variante()</a></code>
+</td>
+</tr>
+<tr class="even">
+<td>gnomAD</td>
+<td>Frecuencia de cada variante por población, con personas sanas
+homocigotas</td>
+<td><code><a href="../reference/iei_gnomad.html">iei_gnomad()</a></code></td>
+</tr>
+<tr class="odd">
+<td>LOVD</td>
+<td>Variantes publicadas, reunidas por gen</td>
+<td>
+<code><a href="../reference/iei_variante.html">iei_variante()</a></code> con el HGVS</td>
+</tr>
+<tr class="even">
+<td>PubMed Central</td>
+<td>Casos clínicos de acceso abierto con variantes en HGVS</td>
+<td>
+<code><a href="../reference/iei_variantes.html">iei_variantes()</a></code> con el PDF o el texto</td>
+</tr>
+<tr class="odd">
+<td>Ensembl y GenBank</td>
+<td>Secuencias de referencia en FASTA</td>
+<td><code><a href="../reference/iei_sanger.html">iei_sanger()</a></code></td>
+</tr>
+<tr class="even">
+<td>Genome in a Bottle</td>
+<td>VCF de genomas humanos de referencia, de libre uso</td>
+<td>
+<code><a href="../reference/iei_leer_vcf.html">iei_leer_vcf()</a></code> e <code><a href="../reference/iei_filtrar.html">iei_filtrar()</a></code>
+</td>
+</tr>
+<tr class="odd">
+<td>HPO y Orphanet</td>
+<td>Signos de cada enfermedad</td>
+<td>
+<code>hpo_enfermedades</code>, <code><a href="../reference/iei_buscar_hpo.html">iei_buscar_hpo()</a></code>
+</td>
+</tr>
+<tr class="even">
+<td>PanelApp</td>
+<td>Genes del panel y su nivel de evidencia</td>
+<td>
+<code><a href="../reference/iei_panel.html">iei_panel()</a></code>, <code><a href="../reference/iei_actualizar_panel.html">iei_actualizar_panel()</a></code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Los VCF de Genome in a Bottle son genomas completos y pesan cientos
+de megabytes. Filtrados por el panel muestran cuántas variantes raras
+tiene una persona en estos genes, y por qué el filtrado por frecuencia y
+calidad pesa tanto como la anotación.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="limitaciones">12. Limitaciones<a class="anchor" aria-label="anchor" href="#limitaciones"></a>
 </h2>
 <p>El paquete analiza variantes puntuales e indels pequeñas. Las CNV y
 las variantes estructurales aparecen solo si el VCF ya las trae

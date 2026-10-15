@@ -20,6 +20,8 @@ resultado.
   panel IUIS de PanelApp.
 - Entrega un reporte HTML por paciente y exporta a Excel, VCF, BED o
   Phenopacket.
+- Trae un banco de variantes reales en genes conocidos y menos
+  conocidos, para practicar sin tener una secuencia propia.
 
 ## Instalación
 
@@ -86,6 +88,7 @@ ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.html).*
 | [`iei_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_gen.md) | Ficha de un gen con sus variantes de ClinVar |
 | [`iei_circos()`](https://gentlenmoron.github.io/ieiprio/reference/iei_circos.md), [`iei_cariograma()`](https://gentlenmoron.github.io/ieiprio/reference/iei_cariograma.md) | Panel, candidatos o variantes sobre el genoma |
 | [`iei_panel()`](https://gentlenmoron.github.io/ieiprio/reference/iei_panel.md), [`iei_buscar_gen()`](https://gentlenmoron.github.io/ieiprio/reference/iei_buscar_gen.md), [`iei_fuentes()`](https://gentlenmoron.github.io/ieiprio/reference/iei_fuentes.md) | Panel de genes y versiones de los datos |
+| `variantes_practica` | Banco de doce variantes reales para practicar, con su enfermedad y signos HPO |
 | [`iei_app()`](https://gentlenmoron.github.io/ieiprio/reference/iei_app.md) | Aplicación Shiny |
 
 ## Documentación
@@ -95,7 +98,7 @@ la referencia de cada función y cuatro guías.
 
 | Guía | Contenido |
 |----|----|
-| [Primeros pasos](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html) | Instalación, fundamentos y cada tipo de entrada |
+| [Primeros pasos](https://gentlenmoron.github.io/ieiprio/articles/ieiprio.html) | Instalación, fundamentos, cada tipo de entrada y datos para practicar |
 | [Interpretación de resultados](https://gentlenmoron.github.io/ieiprio/articles/interpretar.html) | El puntaje, la clasificación ACMG y la búsqueda por fenotipo |
 | [Método y parámetros](https://gentlenmoron.github.io/ieiprio/articles/metodo.html) | Fórmulas, umbrales, validación y referencias |
 | [Casos de ejemplo](https://gentlenmoron.github.io/ieiprio/articles/casos.html) | Tres análisis completos con datos para copiar |
@@ -111,7 +114,7 @@ Windows y Linux.
 ## Cita
 
 Rios Vasquez Y, Pavini N (2026). ieiprio: Priorización de variantes en
-genes de errores innatos de la inmunidad. Paquete de R versión 1.0.0.
+genes de errores innatos de la inmunidad. Paquete de R versión 1.0.1.
 <https://github.com/Gentlenmoron/ieiprio>
 
 `citation("ieiprio")` devuelve la referencia en BibTeX. El paquete se
