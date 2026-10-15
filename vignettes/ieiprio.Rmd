@@ -9,6 +9,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 8, fig.height = 6, out.width = "100%")
+options(knitr.kable.NA = "")
 en_vivo <- identical(Sys.getenv("IEIPRIO_EN_VIVO"), "true") &&
   tryCatch({
     httr2::request("https://rest.ensembl.org/info/ping") |>
@@ -55,7 +56,9 @@ verificar en la secuencia y vuelven el análisis menos reproducible.
 
 La guía [Interpretación de resultados](interpretar.html) explica cómo leer la
 salida, [Método y parámetros](metodo.html) describe los cálculos y
-[Casos de ejemplo](casos.html) trae tres análisis completos para copiar.
+[Casos de ejemplo](casos.html) trae tres análisis completos para copiar. Quien
+no tiene datos propios encuentra en la sección 11 un banco de variantes reales
+y las fuentes públicas que entran en el paquete.
 
 > Herramienta de apoyo e investigación. No es un informe diagnóstico ni
 > reemplaza la clasificación ACMG/AMP hecha por un especialista.
@@ -408,7 +411,123 @@ reporte y la validación de la búsqueda por fenotipo.
 iei_app()
 ```
 
-## 11. Limitaciones
+## 11. Datos para practicar
+
+No hace falta una prueba genética propia para aprender a usar el paquete. Esta
+sección junta lugares de donde sacar variantes, secuencias y fenotipos reales,
+y la forma de llevarlos a ieiprio. A diferencia de los casos de ejemplo, aquí
+no hay un resultado esperado. La idea es explorar.
+
+### 11.1 Un banco de variantes reales
+
+```{r}
+knitr::kable(variantes_practica[, c("gen", "variante", "proteina", "genotipo", "enfermedad")])
+```
+
+`variantes_practica` trae doce variantes descritas en ClinVar, desde genes muy
+estudiados como BTK o CYBB hasta otros menos conocidos como AIRE, TNFRSF13B o
+NCF1. Cada fila tiene el genotipo con que suele causar la enfermedad y tres
+signos HPO de esa enfermedad, así que se analiza completa con una línea.
+
+```{r, eval = en_vivo}
+v <- variantes_practica[variantes_practica$gen == "STAT3", ]
+iei_variante(v$variante, genotipo = v$genotipo, fenotipo = strsplit(v$fenotipo, ";")[[1]])
+```
+
+La columna `que_ensena` dice qué mirar en cada una.
+
+```{r}
+knitr::kable(variantes_practica[, c("gen", "tipo", "que_ensena")])
+```
+
+Cambiar el genotipo o el fenotipo enseña tanto como el caso correcto. RAG1 en
+`"hom_alt"` deja de ser portadora, y STAT3 con los signos de la fiebre
+mediterránea familiar pierde el aporte del fenotipo al puntaje.
+
+### 11.2 Cualquier gen del panel
+
+```{r}
+deficiencias_innatas <- iei_panel(categoria = 6)
+head(deficiencias_innatas[, c("gen", "herencia", "fenotipos")], 8)
+```
+
+El panel tiene más de 500 genes. `iei_panel()` los filtra por categoría IUIS,
+herencia o nivel de evidencia, e `iei_buscar_gen()` reconoce alias como TACI o
+p47phox. Con un gen elegido, `iei_gen()` trae de ClinVar sus variantes
+patogénicas con la posición en la proteína, el cambio y las estrellas de
+revisión. Cualquiera de ellas entra después a `iei_variante()`.
+
+```{r, eval = en_vivo}
+ficha <- iei_gen("CYBB")
+head(ficha$clinvar$variantes, 10)
+```
+
+### 11.3 Pacientes simulados desde una enfermedad
+
+```{r}
+apds <- hpo_enfermedades[hpo_enfermedades$enfermedad_id == "OMIM:615513" & !hpo_enfermedades$excluido, ]
+apds <- apds[order(-ifelse(is.na(apds$frecuencia), 0, apds$frecuencia)), ]
+iei_buscar_fenotipo(head(apds$hpo_id, 5), n = 5)
+```
+
+`hpo_enfermedades` tiene los signos de más de mil enfermedades de los genes
+del panel, con la frecuencia de cada uno. Tomar los más frecuentes de una
+enfermedad es simular un paciente típico. Con el síndrome de PI3K delta
+activada (OMIM:615513) PIK3CD sale primero. Con IPEX (OMIM:304790) sale
+primero IL2RA, cuya deficiencia da un cuadro parecido, y FOXP3 queda segundo.
+Esos empates son los que obligan a mirar la secuencia. `iei_validar_fenotipo()`
+repite el ejercicio con cientos de pacientes al azar.
+
+### 11.4 Secuencias propias a partir de la referencia
+
+```{r}
+ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
+s <- paste(readLines(ref)[-1], collapse = "")
+practica <- substr(s, 301, 600)
+substr(practica, 151, 151) <- "C"
+mia <- iei_sanger(practica, gen = "BTK", sexo = "M", referencia = ref)
+mia[, c("gen", "chr", "pos", "ref", "alt", "genotipo")]
+```
+
+La referencia de BTK que trae el paquete empieza en X:101353540. El tramo de
+práctica va de X:101353840 a X:101354139, y su base 151 es X:101353990, justo
+donde está c.1632-2A>G. Cambiarla por C reproduce esa variante. Cambiar
+cualquier otra base da una variante nueva para anotar, priorizar y ver en el
+dot plot.
+
+Con conexión esto vale para cualquier gen del panel. Se copia un tramo del gen
+en FASTA desde Ensembl o desde GenBank, se cambia una base y se pasa a
+`iei_sanger()` con el nombre del gen. El paquete descarga la referencia y ubica
+el tramo solo.
+
+### 11.5 Fuentes públicas
+
+```{r}
+iei_extraer_variantes("Se encontró la variante STAT1 c.820C>T (p.Arg274Trp) en heterocigosis.")
+```
+
+Un caso clínico publicado suele traer la variante escrita en HGVS y el
+genotipo en el texto. Basta con copiar el párrafo, o pasar el PDF completo a
+`iei_variantes()`. Estas son las fuentes abiertas que mejor encajan con el
+paquete.
+
+| Fuente | Qué ofrece | Cómo entra en ieiprio |
+| --- | --- | --- |
+| ClinVar | Variantes clasificadas por gen y por enfermedad | `iei_gen()`, `iei_variante()` |
+| gnomAD | Frecuencia de cada variante por población, con personas sanas homocigotas | `iei_gnomad()` |
+| LOVD | Variantes publicadas, reunidas por gen | `iei_variante()` con el HGVS |
+| PubMed Central | Casos clínicos de acceso abierto con variantes en HGVS | `iei_variantes()` con el PDF o el texto |
+| Ensembl y GenBank | Secuencias de referencia en FASTA | `iei_sanger()` |
+| Genome in a Bottle | VCF de genomas humanos de referencia, de libre uso | `iei_leer_vcf()` e `iei_filtrar()` |
+| HPO y Orphanet | Signos de cada enfermedad | `hpo_enfermedades`, `iei_buscar_hpo()` |
+| PanelApp | Genes del panel y su nivel de evidencia | `iei_panel()`, `iei_actualizar_panel()` |
+
+Los VCF de Genome in a Bottle son genomas completos y pesan cientos de
+megabytes. Filtrados por el panel muestran cuántas variantes raras tiene una
+persona en estos genes, y por qué el filtrado por frecuencia y calidad pesa
+tanto como la anotación.
+
+## 12. Limitaciones
 
 El paquete analiza variantes puntuales e indels pequeñas. Las CNV y las
 variantes estructurales aparecen solo si el VCF ya las trae llamadas, y la

@@ -156,3 +156,12 @@ similitud cercana a 1, y en el diagrama de cuerdas cada uno recibe cuerdas de
 los dos signos. La ficha de BTK muestra la herencia ligada al X, la categoría
 de deficiencias de anticuerpos y las variantes patogénicas de ClinVar sobre la
 proteína, con el dominio quinasa como el que más concentra.
+
+## 4. Para seguir practicando
+
+Los tres casos usan BTK. La sección 11 de
+[Primeros pasos](ieiprio.html) reúne un banco de doce variantes reales en otros
+genes, la forma de simular pacientes desde las enfermedades de HPO, cómo armar
+secuencias propias a partir de la referencia y las fuentes públicas que entran
+en el paquete.
+

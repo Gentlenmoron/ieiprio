@@ -134,6 +134,7 @@ reference:
   - hpo_terminos
   - hpo_enfermedades
   - genes_dificiles
+  - variantes_practica
   - fuentes_datos
 - title: internal
   contents:

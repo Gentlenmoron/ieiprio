@@ -117,3 +117,32 @@
 #'   Ontology, version indicada en [fuentes_datos].
 #'   <https://github.com/obophenotype/human-phenotype-ontology/releases>
 "hpo_enfermedades"
+
+#' Variantes reales para practicar
+#'
+#' Doce variantes descritas en ClinVar y en la literatura de su enfermedad,
+#' en genes conocidos y en otros menos conocidos del panel. Sirven para
+#' practicar sin tener una secuencia propia: cada fila trae la variante en
+#' el formato que acepta [iei_variante()], el genotipo con que suele causar
+#' la enfermedad y tres signos HPO de esa enfermedad, tomados de
+#' [hpo_enfermedades]. La columna `que_ensena` dice que aspecto del analisis
+#' muestra cada una.
+#'
+#' @format Un tibble con una fila por variante y columnas `gen`, `variante`
+#'   (gen y cambio en HGVS), `proteina` (cambio en la proteina, `NA` si no
+#'   aplica), `tipo` (consecuencia), `genotipo` (`"het"`, `"hom_alt"` o
+#'   `"hemi"`), `herencia`, `enfermedad`, `enfermedad_id` (OMIM), `fenotipo`
+#'   (codigos HPO separados por `;`) y `que_ensena`.
+#' @source Curacion propia en `data-raw/variantes_practica.csv`. Las variantes
+#'   se pueden revisar en ClinVar y los signos salen de la Human Phenotype
+#'   Ontology. La clasificacion de ClinVar puede cambiar; [iei_variante()]
+#'   la consulta al momento.
+#' @examples
+#' variantes_practica[, c("gen", "variante", "enfermedad")]
+#' v <- variantes_practica[variantes_practica$gen == "STAT1", ]
+#' strsplit(v$fenotipo, ";")[[1]]
+#' \dontrun{
+#' iei_variante(v$variante, genotipo = v$genotipo,
+#'              fenotipo = strsplit(v$fenotipo, ";")[[1]])
+#' }
+"variantes_practica"
