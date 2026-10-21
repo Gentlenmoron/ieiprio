@@ -76,7 +76,7 @@ sola si esta en la hebra reversa.
 
 ``` r
 ab1 <- iei_ejemplo_sanger()
-#> Cromatogramas de ejemplo en /tmp/RtmpKS5CK3/sanger_1986617445b3.
+#> Cromatogramas de ejemplo en /tmp/RtmphYR5wI/sanger_1a0818cd7d37.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "M", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,

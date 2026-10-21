@@ -75,13 +75,13 @@ hermana portadora. Cada caso tiene una lectura directa y una reversa.
 ``` r
 
 varon <- iei_sanger(iei_ejemplo_sanger("hemi"), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpBjFjLV/sanger_1d9417fbc238.
+#> Cromatogramas de ejemplo en /tmp/RtmpsK7xsp/sanger_1e18f708482.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
 #> identidad 99.8%.
 portadora <- iei_sanger(iei_ejemplo_sanger("het"), gen = "BTK", sexo = "F", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpBjFjLV/sanger_1d945e71e71f.
+#> Cromatogramas de ejemplo en /tmp/RtmpsK7xsp/sanger_1e182e0a9816.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -136,7 +136,7 @@ p2 <- iei_priorizar(iei_anotar(portadora, vep_json = vep), fenotipo = "agammaglo
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 iei_reporte(p2, file.path(tempdir(), "portadora.html"), dominios = FALSE)
 #> Reporte de "sanger" guardado en
-#> /tmp/RtmpBjFjLV/portadora.html.
+#> /tmp/RtmpsK7xsp/portadora.html.
 ```
 
 **Lo que deberías ver.** En el varón la variante es hemicigota y la
@@ -169,7 +169,7 @@ res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M",
 #> • neumonía recurrente → HP:0006532 Recurrent pneumonia
 #> ✔ Prioridad alta 1, media 1, baja 1
 #> 
-#> ✔ Reporte en /tmp/RtmpBjFjLV/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmpsK7xsp/EJEMPLO01.html
 iei_tabla(res)[, c("gen", "hgvs_c", "genotipo", "puntaje", "categoria", "acmg_clase")]
 #> # A tibble: 3 × 6
 #>   gen   hgvs_c                        genotipo puntaje categoria acmg_clase     

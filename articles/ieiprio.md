@@ -6,7 +6,7 @@ conexión.
 ``` r
 
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/Rtmp9NqZsE/sanger_1ddf312b5ba7.
+#> Cromatogramas de ejemplo en /tmp/RtmpuBYyHp/sanger_1e88676e101a.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
@@ -324,7 +324,7 @@ prior <- iei_priorizar(anotado, fenotipo = c("agammaglobulinemia", "neumonía re
 #> • neumonía recurrente → HP:0006532 Recurrent pneumonia
 prior
 #> Resultado de ieiprio • 1 muestra, 3 variantes
-#> Genoma GRCh38 • Ensembl VEP 116 • prioridad alta 1, media 1, baja 1
+#> Genoma GRCh38 • Ensembl VEP NA • prioridad alta 1, media 1, baja 1
 #> # A tibble: 3 × 8
 #>   muestra   gen   hgvs_c      hgvs_p      genotipo puntaje categoria acmg       
 #>   <chr>     <chr> <chr>       <chr>       <chr>      <dbl> <chr>     <chr>      
@@ -346,7 +346,7 @@ salen en el filtro de frecuencia o en el de ClinVar.
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/Rtmp9NqZsE/EJEMPLO01.html.
+#> /tmp/RtmpuBYyHp/EJEMPLO01.html.
 ```
 
 El argumento `paciente` es el código de la muestra y nunca un nombre.
@@ -369,7 +369,7 @@ res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M", fenotipo = "agammaglobulinemi
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 #> ✔ Prioridad alta 1, media 1, baja 1
 #> 
-#> ✔ Reporte en /tmp/Rtmp9NqZsE/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmpuBYyHp/EJEMPLO01.html
 ```
 
 [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
@@ -381,7 +381,7 @@ indicada.
 ``` r
 
 sanger <- iei_sanger(iei_ejemplo_sanger(), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/Rtmp9NqZsE/sanger_1ddf7018c364.
+#> Cromatogramas de ejemplo en /tmp/RtmpuBYyHp/sanger_1e8861bbcda7.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -515,7 +515,7 @@ summary(prior)
 #> 
 #> ── Resumen de ieiprio ──
 #> 
-#> Genoma GRCh38, Ensembl VEP 116
+#> Genoma GRCh38, Ensembl VEP NA
 #> 
 #> ── Variantes por prioridad
 #> categoria
@@ -636,9 +636,9 @@ knitr::kable(variantes_practica[, c("gen", "variante", "proteina", "genotipo", "
 
 `variantes_practica` trae doce variantes descritas en ClinVar, desde
 genes muy estudiados como BTK o CYBB hasta otros menos conocidos como
-AIRE, TNFRSF13B o NCF1. Cada fila tiene el genotipo con que suele causar
-la enfermedad y tres signos HPO de esa enfermedad, así que se analiza
-completa con una línea.
+AIRE, TNFRSF13B o NCF1. Cada fila tiene su transcrito MANE, su
+identificador de ClinVar, un genotipo y tres signos HPO de esa
+enfermedad, así que se analiza completa con una línea.
 
 ``` r
 

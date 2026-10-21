@@ -1,5 +1,19 @@
 # Changelog
 
+## ieiprio 1.0.2
+
+- `variantes_practica` suma las columnas `transcrito` (RefSeq MANE
+  Select) y `clinvar_id` (identificador VCV de ClinVar), verificadas
+  contra ClinVar el 2026-10-20. Cada fila se puede rastrear hasta su
+  registro en ClinVar.
+- La documentación del banco aclara que RAG1 en heterocigosis y
+  TNFRSF13B c.310T\>C son contraejemplos a propósito, y que el banco
+  sirve para practicar el flujo y no para medir rendimiento.
+- La prueba en vivo de BTK se salta cuando Ensembl no devuelve la
+  proteína, en vez de fallar.
+- `bslib (>= 0.9.0)` en Suggests, la versión mínima que usa la
+  aplicación.
+
 ## ieiprio 1.0.1
 
 - Nuevo dato `variantes_practica`, un banco de doce variantes reales de

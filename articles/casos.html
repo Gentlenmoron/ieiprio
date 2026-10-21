@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ieiprio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,13 +139,13 @@ hermana portadora. Cada caso tiene una lectura directa y una
 reversa.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">varon</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"hemi"</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpBjFjLV/sanger_1d9417fbc238</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpsK7xsp/sanger_1e18f708482</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="va">portadora</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpBjFjLV/sanger_1d945e71e71f</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpsK7xsp/sanger_1e182e0a9816</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
@@ -186,7 +186,7 @@ reversa.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
 <span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">p2</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"portadora.html"</span><span class="op">)</span>, dominios <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"sanger"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpBjFjLV/portadora.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpsK7xsp/portadora.html</span>.</span></span></code></pre></div>
 <p><strong>Lo que deberías ver.</strong> En el varón la variante es
 hemicigota y la fracción alélica es 1, porque el pico de T desaparece y
 solo queda C. En la portadora es heterocigota, con cerca de 45 % de la
@@ -217,7 +217,7 @@ recurrentes. Este caso necesita conexión para anotar.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> neumonía recurrente → HP:0006532 Recurrent pneumonia</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 1, baja 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpBjFjLV/EJEMPLO01.html</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpsK7xsp/EJEMPLO01.html</span></span></span>
 <span><span class="fu"><a href="../reference/iei_tabla.html">iei_tabla</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"genotipo"</span>, <span class="st">"puntaje"</span>, <span class="st">"categoria"</span>, <span class="st">"acmg_clase"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   gen   hgvs_c                        genotipo puntaje categoria acmg_clase     </span></span>

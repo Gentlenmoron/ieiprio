@@ -24,8 +24,11 @@ datos de ejemplo del paquete.
 3.  Haz el cambio y agrega pruebas en `tests/testthat/`. Las pruebas no
     deben depender de internet; usa `local_mocked_bindings()` para
     simular los servicios, como hacen las pruebas existentes.
-4.  Corre `devtools::document()`, `devtools::test()` y
-    `devtools::check()`.
+4.  Corre
+    [`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
+    [`devtools::test()`](https://devtools.r-lib.org/reference/test.html)
+    y
+    [`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
 5.  Agrega una línea en `NEWS.md` y abre un *pull request* explicando
     qué cambia y por qué.
 
