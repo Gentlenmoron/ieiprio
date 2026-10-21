@@ -6,16 +6,19 @@
 \title{Variantes reales para practicar}
 \format{
 Un tibble con una fila por variante y columnas \code{gen}, \code{variante}
-(gen y cambio en HGVS), \code{proteina} (cambio en la proteina, \code{NA} si no
-aplica), \code{tipo} (consecuencia), \code{genotipo} (\code{"het"}, \code{"hom_alt"} o
-\code{"hemi"}), \code{herencia}, \code{enfermedad}, \code{enfermedad_id} (OMIM), \code{fenotipo}
-(codigos HPO separados por \verb{;}) y \code{que_ensena}.
+(gen y cambio en HGVS), \code{transcrito} (RefSeq MANE Select del cambio),
+\code{clinvar_id} (identificador de variacion de ClinVar, \code{VCV} seguido de
+nueve digitos), \code{proteina} (cambio en la proteina, \code{NA} si no aplica),
+\code{tipo} (consecuencia), \code{genotipo} (\code{"het"}, \code{"hom_alt"} o \code{"hemi"}),
+\code{herencia}, \code{enfermedad}, \code{enfermedad_id} (OMIM), \code{fenotipo} (codigos
+HPO separados por \verb{;}) y \code{que_ensena}.
 }
 \source{
-Curacion propia en \code{data-raw/variantes_practica.csv}. Las variantes
-se pueden revisar en ClinVar y los signos salen de la Human Phenotype
-Ontology. La clasificacion de ClinVar puede cambiar; \code{\link[=iei_variante]{iei_variante()}}
-la consulta al momento.
+Curacion propia en \code{data-raw/variantes_practica.csv}. El transcrito
+y el identificador de ClinVar de cada fila se verificaron contra ClinVar
+el 2026-10-20. La clasificacion de ClinVar puede cambiar;
+\code{\link[=iei_variante]{iei_variante()}} la consulta al momento. Los signos salen de la Human
+Phenotype Ontology. \url{https://www.ncbi.nlm.nih.gov/clinvar/}
 }
 \usage{
 variantes_practica
@@ -23,14 +26,24 @@ variantes_practica
 \description{
 Doce variantes descritas en ClinVar y en la literatura de su enfermedad,
 en genes conocidos y en otros menos conocidos del panel. Sirven para
-practicar sin tener una secuencia propia: cada fila trae la variante en
-el formato que acepta \code{\link[=iei_variante]{iei_variante()}}, el genotipo con que suele causar
-la enfermedad y tres signos HPO de esa enfermedad, tomados de
-\link{hpo_enfermedades}. La columna \code{que_ensena} dice que aspecto del analisis
-muestra cada una.
+practicar sin tener una secuencia propia. Cada fila trae la variante en
+el formato que acepta \code{\link[=iei_variante]{iei_variante()}}, el transcrito MANE Select al que
+se refiere, su identificador de ClinVar, un genotipo y tres signos HPO de
+la enfermedad tomados de \link{hpo_enfermedades}. La columna \code{que_ensena} dice
+que aspecto del analisis muestra cada una.
+}
+\details{
+Dos filas son contraejemplos a proposito. RAG1 c.1186C>T aparece en
+heterocigosis en un gen recesivo, asi que representa a una portadora y no
+deberia subir a prioridad alta. TNFRSF13B c.310T>C es un factor de riesgo
+que tambien se encuentra en personas sanas y tiene clasificaciones en
+conflicto en ClinVar.
+
+El banco sirve para practicar el flujo del paquete. Doce casos no alcanzan
+para medir sensibilidad ni especificidad.
 }
 \examples{
-variantes_practica[, c("gen", "variante", "enfermedad")]
+variantes_practica[, c("gen", "variante", "clinvar_id")]
 v <- variantes_practica[variantes_practica$gen == "STAT1", ]
 strsplit(v$fenotipo, ";")[[1]]
 \dontrun{

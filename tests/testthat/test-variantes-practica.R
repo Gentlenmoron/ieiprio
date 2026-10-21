@@ -1,10 +1,23 @@
 test_that("variantes_practica trae las columnas y genes del panel", {
   expect_s3_class(variantes_practica, "tbl_df")
-  expect_named(variantes_practica, c("gen", "variante", "proteina", "tipo", "genotipo", "herencia",
-                                     "enfermedad", "enfermedad_id", "fenotipo", "que_ensena"))
+  expect_named(variantes_practica, c("gen", "variante", "transcrito", "clinvar_id", "proteina", "tipo",
+                                     "genotipo", "herencia", "enfermedad", "enfermedad_id", "fenotipo",
+                                     "que_ensena"))
   expect_true(all(variantes_practica$gen %in% iuis_panel$gen))
   expect_true(all(variantes_practica$genotipo %in% c("het", "hom_alt", "hemi")))
   expect_true(all(startsWith(variantes_practica$variante, paste0(variantes_practica$gen, " c."))))
+})
+
+test_that("cada variante trae su transcrito MANE y su identificador de ClinVar", {
+  expect_true(all(grepl("^NM_[0-9]+\\.[0-9]+$", variantes_practica$transcrito)))
+  expect_true(all(grepl("^VCV[0-9]{9}$", variantes_practica$clinvar_id)))
+  expect_equal(anyDuplicated(variantes_practica$clinvar_id), 0L)
+})
+
+test_that("RAG1 queda como portadora de un gen recesivo", {
+  rag1 <- variantes_practica[variantes_practica$gen == "RAG1", ]
+  expect_equal(rag1$genotipo, "het")
+  expect_equal(rag1$herencia, "AR")
 })
 
 test_that("los signos de cada variante estan anotados en su enfermedad", {

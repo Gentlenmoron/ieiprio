@@ -122,23 +122,35 @@
 #'
 #' Doce variantes descritas en ClinVar y en la literatura de su enfermedad,
 #' en genes conocidos y en otros menos conocidos del panel. Sirven para
-#' practicar sin tener una secuencia propia: cada fila trae la variante en
-#' el formato que acepta [iei_variante()], el genotipo con que suele causar
-#' la enfermedad y tres signos HPO de esa enfermedad, tomados de
-#' [hpo_enfermedades]. La columna `que_ensena` dice que aspecto del analisis
-#' muestra cada una.
+#' practicar sin tener una secuencia propia. Cada fila trae la variante en
+#' el formato que acepta [iei_variante()], el transcrito MANE Select al que
+#' se refiere, su identificador de ClinVar, un genotipo y tres signos HPO de
+#' la enfermedad tomados de [hpo_enfermedades]. La columna `que_ensena` dice
+#' que aspecto del analisis muestra cada una.
+#'
+#' Dos filas son contraejemplos a proposito. RAG1 c.1186C>T aparece en
+#' heterocigosis en un gen recesivo, asi que representa a una portadora y no
+#' deberia subir a prioridad alta. TNFRSF13B c.310T>C es un factor de riesgo
+#' que tambien se encuentra en personas sanas y tiene clasificaciones en
+#' conflicto en ClinVar.
+#'
+#' El banco sirve para practicar el flujo del paquete. Doce casos no alcanzan
+#' para medir sensibilidad ni especificidad.
 #'
 #' @format Un tibble con una fila por variante y columnas `gen`, `variante`
-#'   (gen y cambio en HGVS), `proteina` (cambio en la proteina, `NA` si no
-#'   aplica), `tipo` (consecuencia), `genotipo` (`"het"`, `"hom_alt"` o
-#'   `"hemi"`), `herencia`, `enfermedad`, `enfermedad_id` (OMIM), `fenotipo`
-#'   (codigos HPO separados por `;`) y `que_ensena`.
-#' @source Curacion propia en `data-raw/variantes_practica.csv`. Las variantes
-#'   se pueden revisar en ClinVar y los signos salen de la Human Phenotype
-#'   Ontology. La clasificacion de ClinVar puede cambiar; [iei_variante()]
-#'   la consulta al momento.
+#'   (gen y cambio en HGVS), `transcrito` (RefSeq MANE Select del cambio),
+#'   `clinvar_id` (identificador de variacion de ClinVar, `VCV` seguido de
+#'   nueve digitos), `proteina` (cambio en la proteina, `NA` si no aplica),
+#'   `tipo` (consecuencia), `genotipo` (`"het"`, `"hom_alt"` o `"hemi"`),
+#'   `herencia`, `enfermedad`, `enfermedad_id` (OMIM), `fenotipo` (codigos
+#'   HPO separados por `;`) y `que_ensena`.
+#' @source Curacion propia en `data-raw/variantes_practica.csv`. El transcrito
+#'   y el identificador de ClinVar de cada fila se verificaron contra ClinVar
+#'   el 2026-10-20. La clasificacion de ClinVar puede cambiar;
+#'   [iei_variante()] la consulta al momento. Los signos salen de la Human
+#'   Phenotype Ontology. <https://www.ncbi.nlm.nih.gov/clinvar/>
 #' @examples
-#' variantes_practica[, c("gen", "variante", "enfermedad")]
+#' variantes_practica[, c("gen", "variante", "clinvar_id")]
 #' v <- variantes_practica[variantes_practica$gen == "STAT1", ]
 #' strsplit(v$fenotipo, ";")[[1]]
 #' \dontrun{

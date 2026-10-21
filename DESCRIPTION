@@ -1,6 +1,6 @@
 Package: ieiprio
 Title: Priorizacion de Variantes en Genes de Errores Innatos de la Inmunidad
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Yando", "Rios Vasquez", , "yandoriosvasquez@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0006-8594-1433")),

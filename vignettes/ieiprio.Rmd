@@ -426,7 +426,7 @@ knitr::kable(variantes_practica[, c("gen", "variante", "proteina", "genotipo", "
 
 `variantes_practica` trae doce variantes descritas en ClinVar, desde genes muy
 estudiados como BTK o CYBB hasta otros menos conocidos como AIRE, TNFRSF13B o
-NCF1. Cada fila tiene el genotipo con que suele causar la enfermedad y tres
+NCF1. Cada fila tiene su transcrito MANE, su identificador de ClinVar, un genotipo y tres
 signos HPO de esa enfermedad, así que se analiza completa con una línea.
 
 ```{r, eval = en_vivo}
