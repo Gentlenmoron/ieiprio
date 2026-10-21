@@ -13,3 +13,4 @@ graphify-out/
 .mcp.json
 *.session
 .Rapp.history
+*.tar.gz

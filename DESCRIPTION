@@ -28,7 +28,7 @@ Imports:
     rlang,
     tibble
 Suggests:
-    bslib,
+    bslib (>= 0.9.0),
     circlize,
     covr,
     dplyr,

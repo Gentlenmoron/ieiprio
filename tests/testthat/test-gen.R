@@ -58,5 +58,6 @@ test_that("ClinVar en vivo para BTK", {
   expect_gt(g$clinvar$conteo$variantes[1], 50)
   expect_gt(nrow(g$clinvar$variantes), 50)
   expect_gt(mean(!is.na(g$clinvar$variantes$pos_proteina)), 0.5)
+  skip_if(is.null(g$proteina), "Ensembl no devolvio la proteina de BTK")
   expect_equal(g$proteina$largo, 659)
 })
