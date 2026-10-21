@@ -6,7 +6,7 @@ conexión.
 ``` r
 
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/RtmpuBYyHp/sanger_1e88676e101a.
+#> Cromatogramas de ejemplo en /tmp/RtmpFlB1ET/sanger_1e8279c14614.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
@@ -298,6 +298,7 @@ variantes quedan en cada paso.
 ``` r
 
 anotado <- iei_anotar(filtrado)
+#> Consultando Ensembl VEP (GRCh38) para 5 variantes.
 anotado <- iei_filtrar_frecuencia(anotado)
 anotado[, c("gen", "hgvs_c", "consecuencia", "af_gnomad", "clinvar")]
 #> # A tibble: 3 × 5
@@ -346,7 +347,7 @@ salen en el filtro de frecuencia o en el de ClinVar.
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/RtmpuBYyHp/EJEMPLO01.html.
+#> /tmp/RtmpFlB1ET/EJEMPLO01.html.
 ```
 
 El argumento `paciente` es el código de la muestra y nunca un nombre.
@@ -369,7 +370,7 @@ res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M", fenotipo = "agammaglobulinemi
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 #> ✔ Prioridad alta 1, media 1, baja 1
 #> 
-#> ✔ Reporte en /tmp/RtmpuBYyHp/EJEMPLO01.html
+#> ✔ Reporte en /tmp/RtmpFlB1ET/EJEMPLO01.html
 ```
 
 [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
@@ -381,7 +382,7 @@ indicada.
 ``` r
 
 sanger <- iei_sanger(iei_ejemplo_sanger(), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpuBYyHp/sanger_1e8861bbcda7.
+#> Cromatogramas de ejemplo en /tmp/RtmpFlB1ET/sanger_1e823cb561ce.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -708,6 +709,10 @@ entra después a
 ``` r
 
 ficha <- iei_gen("CYBB")
+#> Warning: No se pudo completar la consulta en línea para CYBB.
+#> ℹ Ensembl no está respondiendo (HTTP 500). ℹ Suele ser una caída temporal del
+#>   servidor. Intenta de nuevo en unos minutos. Caused by error in
+#>   `httr2::req_perform()`: ! HTTP 500 Internal Server Error.
 head(ficha$clinvar$variantes, 10)
 #> # A tibble: 10 × 9
 #>    clinvar_id variante       clasificacion revision consecuencia cambio_proteina

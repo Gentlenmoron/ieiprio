@@ -46,6 +46,8 @@ iei_dotplot(v1)
 ``` r
 
 a1 <- iei_anotar(v1, vep_json = vep)
+#> ℹ Sin consultar ClinVar (modo sin red): no hay estrellas ni PS1,
+#> PM5 o PM1.
 p1 <- iei_priorizar(a1, fenotipo = c("agammaglobulinemia", "neumonía recurrente"))
 #> ℹ Fenotipo interpretado como:
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
@@ -75,13 +77,13 @@ hermana portadora. Cada caso tiene una lectura directa y una reversa.
 ``` r
 
 varon <- iei_sanger(iei_ejemplo_sanger("hemi"), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpsK7xsp/sanger_1e18f708482.
+#> Cromatogramas de ejemplo en /tmp/RtmpyJCtxX/sanger_1e482de41e20.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
 #> identidad 99.8%.
 portadora <- iei_sanger(iei_ejemplo_sanger("het"), gen = "BTK", sexo = "F", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpsK7xsp/sanger_1e182e0a9816.
+#> Cromatogramas de ejemplo en /tmp/RtmpyJCtxX/sanger_1e481c4f16a6.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
@@ -132,11 +134,12 @@ consenso
 ``` r
 
 p2 <- iei_priorizar(iei_anotar(portadora, vep_json = vep), fenotipo = "agammaglobulinemia")
+#> ℹ Sin consultar ClinVar (modo sin red): no hay estrellas ni PS1, PM5 o PM1.
 #> ℹ Fenotipo interpretado como:
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 iei_reporte(p2, file.path(tempdir(), "portadora.html"), dominios = FALSE)
 #> Reporte de "sanger" guardado en
-#> /tmp/RtmpsK7xsp/portadora.html.
+#> /tmp/RtmpyJCtxX/portadora.html.
 ```
 
 **Lo que deberías ver.** En el varón la variante es hemicigota y la
@@ -159,32 +162,13 @@ recurrentes. Este caso necesita conexión para anotar.
 res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M",
                     fenotipo = c("agammaglobulinemia", "neumonía recurrente"),
                     carpeta = tempdir())
-#> 
-#> ── ieiprio ─────────────────────────────────────────────────────────────────────
-#> ℹ Leyendo ejemplo.vcf.gz
-#> ℹ Filtrando 4094 filas
-#> ℹ Anotando 5 variantes con Ensembl VEP
-#> ℹ Fenotipo interpretado como:
-#> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
-#> • neumonía recurrente → HP:0006532 Recurrent pneumonia
-#> ✔ Prioridad alta 1, media 1, baja 1
-#> 
-#> ✔ Reporte en /tmp/RtmpsK7xsp/EJEMPLO01.html
 iei_tabla(res)[, c("gen", "hgvs_c", "genotipo", "puntaje", "categoria", "acmg_clase")]
-#> # A tibble: 3 × 6
-#>   gen   hgvs_c                        genotipo puntaje categoria acmg_clase     
-#>   <chr> <chr>                         <chr>      <dbl> <chr>     <chr>          
-#> 1 BTK   ENST00000308731.8:c.1632-2A>G hemi        13.8 alta      Probablemente …
-#> 2 RAG1  ENST00000299440.6:c.1186C>T   het          6.7 media     Probablemente …
-#> 3 STAT1 NA                            het          3.6 baja      Significado in…
 ```
 
 ``` r
 
 iei_circos(res)
 ```
-
-![](casos_files/figure-html/unnamed-chunk-12-1.png)
 
 La búsqueda por fenotipo no necesita red.
 
@@ -227,37 +211,8 @@ plot(busqueda, tipo = "acordes")
 
 btk <- iei_gen("BTK")
 btk
-#> 
-#> ── BTK ──
-#> 
-#> • Herencia: XL ─ evidencia en PanelApp: verde
-#> • Mecanismo: pérdida de función o no especificado
-#> • Categoría IUIS: 3 Deficiencias predominantemente de anticuerpos (PanelApp,
-#> tabla IUIS)
-#> • Alias: ATK, PSCTK1, XLA
-#> • Ubicación: X:101,349,447-101,390,796 (GRCh38)
-#> • Fenotipos en PanelApp: Agammaglobulinemia and isolated hormone deficiency;
-#> Agammaglobulinemia, X-linked; Agammaglobulinemia, X-linked 1 (y 6 mas)
-#> • HPO: 77 términos; los más específicos: Complete or near-complete absence of
-#> specific antibody response to protein-conjugated Haemophilus influenzae type b
-#> vaccine, Enteroviral dermatomyositis syndrome, Enteroviral hepatitis,
-#> Bronchiolitis obliterans, Lymph node hypoplasia, Recurrent enteroviral
-#> infections
-#> • Proteína ENSP00000308176: 659 aa, dominios Pleckstrin homology domain, Zinc
-#> finger, Btk motif, SH3 domain, SH2 domain, Serine-threonine/tyrosine-protein
-#> kinase, catalytic domain
-#> • ClinVar (2026-10-21): patogenica 433, probablemente patogenica 136,
-#> significado incierto 222, probablemente benigna 230, benigna 72
-#> • Patogénicas y probablemente patogénicas por tipo: frameshift o indel 111,
-#> missense 90, sin sentido 57, splicing 46, otra 44, sinonima 2
-#> • Donde se concentran en la proteína: Serine-threonine/tyrosine-protein kinase,
-#> catalytic domain 112, Pleckstrin homology domain 46, fuera de dominios 23, SH2
-#> domain 22, Zinc finger, Btk motif 15, SH3 domain 8
-#> Grafico: plot(x) o autoplot(x); variantes de ClinVar en x$clinvar$variantes.
 plot(btk)
 ```
-
-![](casos_files/figure-html/unnamed-chunk-15-1.png)
 
 **Lo que deberías ver.** De las cinco variantes de ClinVar del ejemplo
 quedan tres. BTK c.1632-2A\>G queda primera en prioridad alta, con clase

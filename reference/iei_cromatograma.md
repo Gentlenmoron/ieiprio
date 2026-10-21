@@ -64,7 +64,7 @@ Un grafico de ggplot2.
 
 ``` r
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/RtmphYR5wI/sanger_1a083706e8f6.
+#> Cromatogramas de ejemplo en /tmp/Rtmpont26R/sanger_1a3950bf199f.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,

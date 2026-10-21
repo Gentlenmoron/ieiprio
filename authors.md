@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Gentlenmoron/ieiprio/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/Gentlenmoron/ieiprio/blob/v1.0.2/inst/CITATION)
 
 Rios Vasquez Y, Pavini N (2026). *ieiprio: Priorización de variantes en
 genes de errores innatos de la inmunidad*. Paquete de R versión 1.0.2,

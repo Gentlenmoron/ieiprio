@@ -70,7 +70,7 @@ conocido.
 
 ``` r
 v <- iei_validar_fenotipo(n = 20)
-#> Simulando casos ■■■■■■■■■■■■■■■                   45% | ETA:  1s
+#> Simulando casos ■■■■■■■■■■■■■                     40% | ETA:  2s
 #> Simulando casos ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 v
 #> Validacion de la busqueda por fenotipo

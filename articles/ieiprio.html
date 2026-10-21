@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Primeros pasos</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Gentlenmoron/ieiprio/blob/master/vignettes/ieiprio.Rmd" class="external-link"><code>vignettes/ieiprio.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Gentlenmoron/ieiprio/blob/v1.0.2/vignettes/ieiprio.Rmd" class="external-link"><code>vignettes/ieiprio.Rmd</code></a></small>
       <div class="d-none name"><code>ieiprio.Rmd</code></div>
     </div>
 
@@ -83,7 +83,7 @@
 portadora, sin conexión.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ab1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpuBYyHp/sanger_1e88676e101a</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpFlB1ET/sanger_1e8279c14614</span>.</span></span>
 <span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"btk_referencia.fa"</span>, package <span class="op">=</span> <span class="st">"ieiprio"</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="va">ab1</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
@@ -590,6 +590,7 @@ variantes quedan en cada paso.</p>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">anotado</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_anotar.html">iei_anotar</a></span><span class="op">(</span><span class="va">filtrado</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Consultando Ensembl VEP (GRCh38) para 5 variantes.</span></span>
 <span><span class="va">anotado</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_filtrar_frecuencia.html">iei_filtrar_frecuencia</a></span><span class="op">(</span><span class="va">anotado</span><span class="op">)</span></span>
 <span><span class="va">anotado</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gen"</span>, <span class="st">"hgvs_c"</span>, <span class="st">"consecuencia"</span>, <span class="st">"af_gnomad"</span>, <span class="st">"clinvar"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
@@ -634,7 +635,7 @@ salen en el filtro de frecuencia o en el de ClinVar.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">prior</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EJEMPLO01.html"</span><span class="op">)</span>, paciente <span class="op">=</span> <span class="st">"EJEMPLO01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"EJEMPLO01"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpuBYyHp/EJEMPLO01.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpFlB1ET/EJEMPLO01.html</span>.</span></span></code></pre></div>
 <p>El argumento <code>paciente</code> es el código de la muestra y nunca
 un nombre. Con un VCF el reporte trae el control de calidad, la tabla
 priorizada, una ficha por variante con el diagrama de la proteína, la
@@ -655,7 +656,7 @@ todas las fuentes.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 1, baja 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpuBYyHp/EJEMPLO01.html</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpFlB1ET/EJEMPLO01.html</span></span></span></code></pre></div>
 <p><code><a href="../reference/iei_analizar.html">iei_analizar()</a></code> corre los pasos anteriores y deja un
 reporte por muestra en la carpeta indicada.</p>
 </div>
@@ -665,7 +666,7 @@ reporte por muestra en la carpeta indicada.</p>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sanger</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpuBYyHp/sanger_1e8861bbcda7</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpFlB1ET/sanger_1e823cb561ce</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>
@@ -1097,6 +1098,10 @@ revisión. Cualquiera de ellas entra después a
 <code><a href="../reference/iei_variante.html">iei_variante()</a></code>.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ficha</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_gen.html">iei_gen</a></span><span class="op">(</span><span class="st">"CYBB"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: No se pudo completar la consulta en línea para CYBB.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Ensembl no está respondiendo (HTTP 500). <span style="color: #00BBBB;">ℹ</span> Suele ser una caída temporal del</span></span>
+<span><span class="co">#&gt;   servidor. Intenta de nuevo en unos minutos. <span style="font-weight: bold;">Caused by error in</span></span></span>
+<span><span class="co">#&gt;   <span style="font-weight: bold;">`httr2::req_perform()`:</span> <span style="color: #BBBB00;">!</span> HTTP 500 Internal Server Error.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ficha</span><span class="op">$</span><span class="va">clinvar</span><span class="op">$</span><span class="va">variantes</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 9</span></span></span>
 <span><span class="co">#&gt;    clinvar_id variante       clasificacion revision consecuencia cambio_proteina</span></span>
