@@ -83,7 +83,7 @@
 portadora, sin conexión.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ab1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="st">"het"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpXthYh8/sanger_1e445e89620b</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/Rtmp9NqZsE/sanger_1ddf312b5ba7</span>.</span></span>
 <span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"btk_referencia.fa"</span>, package <span class="op">=</span> <span class="st">"ieiprio"</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="va">ab1</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"F"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
@@ -634,7 +634,7 @@ salen en el filtro de frecuencia o en el de ClinVar.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/iei_reporte.html">iei_reporte</a></span><span class="op">(</span><span class="va">prior</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EJEMPLO01.html"</span><span class="op">)</span>, paciente <span class="op">=</span> <span class="st">"EJEMPLO01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reporte de <span style="color: #0000BB;">"EJEMPLO01"</span> guardado en</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/RtmpXthYh8/EJEMPLO01.html</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">/tmp/Rtmp9NqZsE/EJEMPLO01.html</span>.</span></span></code></pre></div>
 <p>El argumento <code>paciente</code> es el código de la muestra y nunca
 un nombre. Con un VCF el reporte trae el control de calidad, la tabla
 priorizada, una ficha por variante con el diagrama de la proteína, la
@@ -655,7 +655,7 @@ todas las fuentes.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> agammaglobulinemia → HP:0004432 Agammaglobulinemia</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prioridad alta 1, media 1, baja 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/RtmpXthYh8/EJEMPLO01.html</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reporte en <span style="color: #0000BB;">/tmp/Rtmp9NqZsE/EJEMPLO01.html</span></span></span></code></pre></div>
 <p><code><a href="../reference/iei_analizar.html">iei_analizar()</a></code> corre los pasos anteriores y deja un
 reporte por muestra en la carpeta indicada.</p>
 </div>
@@ -665,7 +665,7 @@ reporte por muestra en la carpeta indicada.</p>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sanger</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iei_sanger.html">iei_sanger</a></span><span class="op">(</span><span class="fu"><a href="../reference/iei_ejemplo_sanger.html">iei_ejemplo_sanger</a></span><span class="op">(</span><span class="op">)</span>, gen <span class="op">=</span> <span class="st">"BTK"</span>, sexo <span class="op">=</span> <span class="st">"M"</span>, referencia <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/RtmpXthYh8/sanger_1e443b0da1ee</span>.</span></span>
+<span><span class="co">#&gt; Cromatogramas de ejemplo en <span style="color: #0000BB;">/tmp/Rtmp9NqZsE/sanger_1ddf7018c364</span>.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,</span></span>
 <span><span class="co">#&gt; identidad 99.8%.</span></span>
 <span><span class="co">#&gt; BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,</span></span>

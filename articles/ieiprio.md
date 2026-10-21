@@ -6,7 +6,7 @@ conexión.
 ``` r
 
 ab1 <- iei_ejemplo_sanger("het")
-#> Cromatogramas de ejemplo en /tmp/RtmpXthYh8/sanger_1e445e89620b.
+#> Cromatogramas de ejemplo en /tmp/Rtmp9NqZsE/sanger_1ddf312b5ba7.
 ref <- system.file("extdata", "btk_referencia.fa", package = "ieiprio")
 v <- iei_sanger(ab1, gen = "BTK", sexo = "F", referencia = ref)
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
@@ -346,7 +346,7 @@ salen en el filtro de frecuencia o en el de ClinVar.
 
 iei_reporte(prior, file.path(tempdir(), "EJEMPLO01.html"), paciente = "EJEMPLO01")
 #> Reporte de "EJEMPLO01" guardado en
-#> /tmp/RtmpXthYh8/EJEMPLO01.html.
+#> /tmp/Rtmp9NqZsE/EJEMPLO01.html.
 ```
 
 El argumento `paciente` es el código de la muestra y nunca un nombre.
@@ -369,7 +369,7 @@ res <- iei_analizar(iei_ejemplo_vcf(), sexo = "M", fenotipo = "agammaglobulinemi
 #> • agammaglobulinemia → HP:0004432 Agammaglobulinemia
 #> ✔ Prioridad alta 1, media 1, baja 1
 #> 
-#> ✔ Reporte en /tmp/RtmpXthYh8/EJEMPLO01.html
+#> ✔ Reporte en /tmp/Rtmp9NqZsE/EJEMPLO01.html
 ```
 
 [`iei_analizar()`](https://gentlenmoron.github.io/ieiprio/reference/iei_analizar.md)
@@ -381,7 +381,7 @@ indicada.
 ``` r
 
 sanger <- iei_sanger(iei_ejemplo_sanger(), gen = "BTK", sexo = "M", referencia = ref)
-#> Cromatogramas de ejemplo en /tmp/RtmpXthYh8/sanger_1e443b0da1ee.
+#> Cromatogramas de ejemplo en /tmp/Rtmp9NqZsE/sanger_1ddf7018c364.
 #> BTK_c1632-2_F.ab1: hebra +, 461 bases alineadas en X:101353757-101354217,
 #> identidad 99.8%.
 #> BTK_c1632-2_R.ab1: hebra -, 461 bases alineadas en X:101353758-101354218,
